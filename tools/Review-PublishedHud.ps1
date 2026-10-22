@@ -195,7 +195,7 @@ try {
         if ($Label -eq 'Placa de vídeo') { Capture '05-placa-de-video' }
     }
     Navigate 'CPU e memória' 'CPU e memória'
-    foreach ($Action in 'Verificar memória RAM','Verificar armazenamento') {
+    foreach ($Action in '7-Zip','Autoruns') {
         Search $Action
         Invoke-NamedButton '+ Adicionar à fila'
         $Report.queueAdded++
