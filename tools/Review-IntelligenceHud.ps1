@@ -67,6 +67,9 @@ function Capture([string]$Name) {
     $text=@((Root).FindAll([System.Windows.Automation.TreeScope]::Descendants,[System.Windows.Automation.Condition]::TrueCondition)|
         Where-Object{-not $_.Current.IsOffscreen}|ForEach-Object{$_.Current.Name}|Where-Object{$_}|Select-Object -Unique)
     [IO.File]::WriteAllLines((Join-Path $Output "$Name.txt"),[string[]]$text)
+    $controls=@((Root).FindAll([System.Windows.Automation.TreeScope]::Descendants,[System.Windows.Automation.Condition]::TrueCondition)|
+        ForEach-Object{[pscustomobject]@{id=$_.Current.AutomationId;name=$_.Current.Name;type=$_.Current.ControlType.ProgrammaticName;offscreen=$_.Current.IsOffscreen}})
+    $controls|ConvertTo-Json -Depth 4|Set-Content (Join-Path $Output "$Name-controls.json") -Encoding UTF8
     $Report.captures+="$Name.png"
     Write-Host "Tela capturada: $Name"
 }

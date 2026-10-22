@@ -91,7 +91,8 @@ public sealed record MachineFacts
     public List<string> Capabilities { get; init; } = [];
     public bool Supported => IsWindowsClient && OsBuild >= 19045 && Architecture is "X64" or "Arm64";
     public string Fingerprint => IntelligenceLabels.Hash(string.Join("|", MachineId, UserId, OsBuild, Architecture, Cpu,
-        string.Join(";", Gpus), string.Join(";", GraphicsDrivers), InstalledRamGb?.ToString("R",System.Globalization.CultureInfo.InvariantCulture), Board));
+        LogicalProcessors,string.Join(";", Gpus), string.Join(";", GraphicsDrivers), InstalledRamGb?.ToString("R",System.Globalization.CultureInfo.InvariantCulture),
+        RamConfiguration,string.Join(";",MemoryModules),Board,Firmware));
 }
 
 public sealed record MetricSample
@@ -227,7 +228,7 @@ public sealed class ServiceSession
     public void InvalidateApproval() { AuthorizedIds.Clear(); ApprovedAt = null; ApprovedPlanHash = null; }
     public string PlanHash() => IntelligenceLabels.Hash(JsonSerializer.Serialize(new
     {
-        Id, Profile, Context = Context.ConditionsKey, Machine = Before?.Machine.Fingerprint,
+        Id, Profile, Context, Machine = Before?.Machine.Fingerprint,
         Recommendations = Recommendations.Where(r => AuthorizedIds.Contains(r.Id, StringComparer.Ordinal)).OrderBy(r => r.Id).ToArray()
     }));
 }

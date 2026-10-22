@@ -67,14 +67,21 @@ public sealed class IntelligenceTests
         ChangeCoordinator.Approve(s,[IntelligenceSettings.GameMode]);await new ChangeCoordinator(gateway,journal).ExecuteAsync(s,null,default);
         Assert.Equal("Aplicado e verificado",Assert.Single(s.Changes).State);Assert.Equal(SettingValue.Dword(1),gateway.Values[IntelligenceSettings.GameMode]);
     }
-    [Fact] public async Task AChangedPlanFailsClosedBeforeWriting()
+    [Theory][InlineData(false)][InlineData(true)]
+    public async Task AChangedPlanFailsClosedBeforeWriting(bool objectives)
     {
-        var s=Session();var gateway=new FakeSettings(s.Before!);ChangeCoordinator.Approve(s,[IntelligenceSettings.GameMode]);s.Context=s.Context with{Resolution="2560x1440"};
+        var s=Session();var gateway=new FakeSettings(s.Before!);ChangeCoordinator.Approve(s,[IntelligenceSettings.GameMode]);
+        s.Context=objectives?s.Context with{CustomObjectives="Objetivo alterado"}:s.Context with{Resolution="2560x1440"};
         await Assert.ThrowsAsync<InvalidOperationException>(()=>new ChangeCoordinator(gateway,new MemoryJournal()).ExecuteAsync(s,null,default));Assert.Empty(gateway.Writes);
     }
     [Fact] public async Task AnExpiredApprovalFailsClosed()
     {
         var s=Session();var gateway=new FakeSettings(s.Before!);ChangeCoordinator.Approve(s,[IntelligenceSettings.GameMode]);s.ApprovedAt=DateTimeOffset.UtcNow.AddHours(-1);
+        await Assert.ThrowsAsync<InvalidOperationException>(()=>new ChangeCoordinator(gateway,new MemoryJournal()).ExecuteAsync(s,null,default));Assert.Empty(gateway.Writes);
+    }
+    [Fact] public async Task AFutureDatedApprovalFailsClosed()
+    {
+        var s=Session();var gateway=new FakeSettings(s.Before!);ChangeCoordinator.Approve(s,[IntelligenceSettings.GameMode]);s.ApprovedAt=DateTimeOffset.UtcNow.AddHours(1);
         await Assert.ThrowsAsync<InvalidOperationException>(()=>new ChangeCoordinator(gateway,new MemoryJournal()).ExecuteAsync(s,null,default));Assert.Empty(gateway.Writes);
     }
     [Fact] public async Task ChangedHardwareOrDriverRequiresANewDiagnosis()
