@@ -143,7 +143,7 @@ function Open-Published([string]$Phase) {
         if ($null -ne $Process -and $Process.MainWindowTitle -eq $Title) {
             $Watch.Stop()
             $Report["${Phase}OpenSeconds"] = [Math]::Round($Watch.Elapsed.TotalSeconds, 2)
-            Write-Host "PowerShell $Phase: painel aberto em $($Report["${Phase}OpenSeconds"]) s."
+            Write-Host "PowerShell ${Phase}: painel aberto em $($Report["${Phase}OpenSeconds"]) s."
             return $Process
         }
         Start-Sleep -Milliseconds 500
