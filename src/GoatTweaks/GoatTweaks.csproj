@@ -11,6 +11,9 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Resource Include="Assets/goat-logo.png" />
+    <Compile Remove="Hardware/**/*.cs" />
+    <ProjectReference Include="../GoatTweaks.Windows/GoatTweaks.Windows.csproj" />
     <ProjectReference Include="../GoatTweaks.Core/GoatTweaks.Core.csproj" />
     <ProjectReference Include="../GoatTweaks.Runner/GoatTweaks.Runner.csproj" />
   </ItemGroup>

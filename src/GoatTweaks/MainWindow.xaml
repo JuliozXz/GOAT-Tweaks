@@ -1,6 +1,7 @@
 <Window x:Class="GoatTweaks.MainWindow" x:Name="RootWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:intelligence="clr-namespace:GoatTweaks.Intelligence"
         Title="GOAT Tweaks · Painel de atendimento" Style="{StaticResource {x:Type Window}}"
         Height="930" Width="1490" MinHeight="680" MinWidth="1024"
         WindowStartupLocation="CenterScreen" Closing="Window_Closing" SizeChanged="Window_SizeChanged">
@@ -27,8 +28,11 @@
         <Border Grid.RowSpan="3" Background="{StaticResource SidebarBrush}" BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,1,0">
             <DockPanel Margin="12,24,12,14">
                 <StackPanel DockPanel.Dock="Top" Margin="12,0,8,22">
-                    <Grid><TextBlock Text="GOAT" FontSize="29" FontWeight="Black" /><Border Background="{StaticResource AccentSoftBrush}" BorderBrush="#4E232E" BorderThickness="1" CornerRadius="5" Padding="7,3" HorizontalAlignment="Right" VerticalAlignment="Center"><TextBlock Text="v2.0" FontSize="10" Foreground="{StaticResource WarningBrush}" /></Border></Grid>
-                    <TextBlock Text="T W E A K S" FontSize="10" FontWeight="SemiBold" Foreground="{StaticResource MutedBrush}" Margin="1,0,0,0" />
+                    <Grid><Grid.ColumnDefinitions><ColumnDefinition Width="42"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                        <Border Width="35" Height="42" HorizontalAlignment="Left" ToolTip="Logo GOAT TWEAKS"><Border.Background><ImageBrush ImageSource="pack://application:,,,/Assets/goat-logo.png" Viewbox="0.285,0.265,0.43,0.45" ViewboxUnits="RelativeToBoundingBox" Stretch="Uniform" RenderOptions.BitmapScalingMode="HighQuality"/></Border.Background></Border>
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center"><TextBlock Text="GOAT" FontSize="26" FontWeight="Black"/><TextBlock Text="T W E A K S" FontSize="8" FontWeight="SemiBold" Foreground="{StaticResource MutedBrush}"/></StackPanel>
+                        <Border x:Name="BrandVersionBadge" Grid.Column="2" Background="{StaticResource AccentSoftBrush}" BorderBrush="#4E232E" BorderThickness="1" CornerRadius="5" Padding="5,3" VerticalAlignment="Center"><TextBlock Text="v3.0" FontSize="9" Foreground="{StaticResource WarningBrush}"/></Border>
+                    </Grid>
                 </StackPanel>
                 <Border DockPanel.Dock="Bottom" Style="{StaticResource PanelCard}" Padding="11" Margin="0,12,0,0" Background="#19191F">
                     <Grid><Grid.ColumnDefinitions><ColumnDefinition Width="36" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
@@ -102,6 +106,7 @@
                 <WrapPanel Margin="0,18,0,0"><Button Content="CPU e memória  →" Tag="cpu" Click="Navigate_Click" Margin="0,0,10,8" /><Button Content="Placa de vídeo  →" Tag="gpu" Click="Navigate_Click" Margin="0,0,10,8" /><Button Content="Drivers e periféricos  →" Tag="devices" Click="Navigate_Click" Margin="0,0,10,8" /></WrapPanel>
             </StackPanel>
         </ScrollViewer>
+        <intelligence:IntelligenceWorkspace x:Name="IntelligencePanel" Grid.Column="1" Grid.Row="1" Margin="26,0,20,8" Visibility="Collapsed" />
         <Grid x:Name="LibraryPanel" Grid.Column="1" Grid.Row="1" Margin="26,0,20,8" Visibility="Collapsed">
             <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="*" /></Grid.RowDefinitions>
             <StackPanel x:Name="ServiceIntro" Margin="0,0,0,17"><TextBlock x:Name="ServiceHeading" FontSize="24" FontWeight="SemiBold" TextWrapping="Wrap" /><TextBlock x:Name="ServiceDescription" Foreground="{StaticResource MutedBrush}" FontSize="12" TextWrapping="Wrap" Margin="0,9,0,0" /></StackPanel>
@@ -170,7 +175,7 @@
                     <TextBlock x:Name="RunSummaryLabel" Text="Nenhuma alteração aplicada" Foreground="{StaticResource MutedBrush}" FontSize="10" Margin="0,7,0,0" TextWrapping="Wrap" />
                 </StackPanel>
                 <StackPanel Grid.Row="4">
-                    <Button x:Name="ApplyButton" Content="Aplicar fila" Style="{StaticResource PrimaryButton}" Click="ApplyButton_Click" IsEnabled="False" Padding="12,11" />
+                    <Button x:Name="ApplyButton" Content="Executar ferramentas legadas" Style="{StaticResource PrimaryButton}" Click="ApplyButton_Click" IsEnabled="False" Padding="12,11" FontSize="11" />
                     <Grid Margin="0,8,0,0"><Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions><Button x:Name="ClearQueueButton" Content="Limpar fila" Margin="0,0,4,0" Click="ClearQueueButton_Click" FontSize="11" /><Button Grid.Column="1" Content="Pasta de logs" Margin="4,0,0,0" Click="OpenLogsFolderButton_Click" FontSize="11" /></Grid>
                 </StackPanel>
                 <TextBlock x:Name="RecentActivityHeading" Grid.Row="5" Text="ATIVIDADE RECENTE" Foreground="{StaticResource MutedBrush}" FontSize="10" Margin="0,22,0,8" />

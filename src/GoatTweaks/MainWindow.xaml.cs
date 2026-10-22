@@ -81,7 +81,7 @@ public partial class MainWindow : Window
         QueueCountLabel.Text = _queue.Count.ToString("00");
         Dashboard.QueueButton = $"Revisar fila · {_queue.Count:00}";
         Dashboard.QueueSummary = pending > 0 ? $"{pending} ação(ões) aguardando execução" : _queue.Count > 0 ? "Confira os resultados da execução" : "Sua fila está vazia";
-        ApplyButton.IsEnabled = pending > 0 && !_isApplying;
+        ApplyButton.IsEnabled = pending > 0 && !_isApplying && !IntelligencePanel.IsBusy;
         ClearQueueButton.IsEnabled = _queue.Count > 0 && !_isApplying;
         if (!_isApplying)
         {
@@ -109,9 +109,9 @@ public partial class MainWindow : Window
 
     private void Window_Closing(object? sender, CancelEventArgs e)
     {
-        if (!_isApplying) return;
+        if (!_isApplying && !IntelligencePanel.IsMutating) return;
         e.Cancel = true;
-        ShowStatus("Aguarde a conclusão da fila para fechar o aplicativo.", true);
+        ShowStatus("Aguarde a conclusão da operação de configurações para fechar o aplicativo.", true);
     }
 
     private void AddButton_Click(object sender, RoutedEventArgs e)
@@ -135,7 +135,7 @@ public partial class MainWindow : Window
     private void QueueAction(CatalogItem item, bool revert)
     {
         if (!CanEditQueue) return;
-        var request = item.Options.Count > 0 || item.FreeInputs.Count > 0
+        var request = item.Options.Count > 0 || item.FreeInputs.Count > 0 || ActionSafetyPolicy.RequiresManualReview(item)
             ? ShowActionDialog(item, revert)
             : new ActionRequest
             {
@@ -154,6 +154,13 @@ public partial class MainWindow : Window
         body.Children.Add(new TextBlock { Text = _workflow.Actions[item.Id].Title, FontSize = 20, FontWeight = FontWeights.SemiBold, TextWrapping = TextWrapping.Wrap });
         body.Children.Add(new TextBlock { Text = "Nome original: " + item.Title, FontSize = 11, Foreground = (Brush)FindResource("MutedBrush"), TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 6, 0, 0) });
         body.Children.Add(new TextBlock { Text = item.Description, Margin = new Thickness(0, 8, 0, 12), TextWrapping = TextWrapping.Wrap });
+        body.Children.Add(new TextBlock { Text = "Ferramenta original preservada. O diário do GOAT Intelligence cobre somente seus ajustes gerenciados; scripts legados não possuem restauração exata garantida. Revise os efeitos e os backups específicos antes de executar.", TextWrapping = TextWrapping.Wrap, Foreground = (Brush)FindResource("WarningBrush"), Margin = new Thickness(0,0,0,12) });
+        CheckBox? manualReview = null;
+        if(ActionSafetyPolicy.RequiresManualReview(item))
+        {
+            manualReview = new CheckBox { Content = new TextBlock { Text = "Revisei manualmente a compatibilidade, os riscos e o procedimento de restauração. Executarei esta ferramenta isoladamente.", TextWrapping = TextWrapping.Wrap }, Margin = new Thickness(0,0,0,12) };
+            body.Children.Add(manualReview);
+        }
         body.Children.Add(new TextBlock
         {
             Text = PreviewDetails(item),
@@ -295,10 +302,13 @@ public partial class MainWindow : Window
                     OptionKey = (optionBox?.SelectedItem as CatalogOption)?.Key,
                     Inputs = answers,
                     Revert = revert,
-                    ConsoleWindow = item.ConsoleRequired || console?.IsChecked == true,
+                    ConsoleWindow = item.ConsoleRequired || console?.IsChecked == true || ActionSafetyPolicy.RequiresManualReview(item),
                     Enabled = enabled?.IsChecked,
+                    ManualReviewAcknowledged = manualReview?.IsChecked == true,
                     AdvancedModeEnabled = AdvancedModeCheck.IsChecked == true
                 };
+                if(ActionSafetyPolicy.RequiresManualReview(item) && manualReview?.IsChecked != true)
+                    throw new InvalidOperationException("Marque a revisão manual desta ferramenta de nível 3 antes de prosseguir.");
                 window.DialogResult = true;
             }
             catch (Exception exception)
@@ -311,12 +321,14 @@ public partial class MainWindow : Window
 
     private async void ApplyButton_Click(object sender, RoutedEventArgs e)
     {
-        if (_isApplying) return;
+        if (_isApplying || IntelligencePanel.IsBusy) return;
         var actions = _queue.Where(action => action.State == "pending").ToList();
         if (actions.Count == 0) return;
         try
         {
             foreach (var action in actions) ActionSafetyPolicy.Validate(action.Item, action.Request);
+            if(actions.Count>1 && actions.Any(action=>ActionSafetyPolicy.RequiresManualReview(action.Item)))
+                throw new InvalidOperationException("Uma ferramenta de nível 3 precisa ser executada manualmente e sozinha.");
             var ids = actions.Select(action => action.Item.Id).ToList();
             if (_conflicts.FindExclusiveViolation(ids) is { } exclusive)
             {
@@ -332,6 +344,7 @@ public partial class MainWindow : Window
         catch (Exception exception) { ShowStatus(exception.Message, true); return; }
 
         _isApplying = true;
+        IntelligencePanel.LegacyExecutionActive = true;
         CanEditQueue = false;
         _runActions = actions;
         _runById = actions.ToDictionary(action => action.Item.Id, StringComparer.Ordinal);
@@ -410,8 +423,9 @@ public partial class MainWindow : Window
             await _logReadTask;
             await RefreshLogsAsync();
             _isApplying = false;
+            IntelligencePanel.LegacyExecutionActive = false;
             CanEditQueue = true;
-            ApplyButton.Content = "Aplicar fila";
+            ApplyButton.Content = "Executar ferramentas legadas";
             var ok = actions.Count(action => action.State == "success");
             var failed = actions.Count(action => action.State == "failed");
             var canceled = actions.Count(action => action.State == "canceled");
@@ -488,6 +502,9 @@ public partial class MainWindow : Window
         if (!CanEditQueue) return;
         try { ActionSafetyPolicy.Validate(item, request); }
         catch (Exception exception) { ShowStatus(exception.Message, true); return; }
+        if(_queue.Any(a=>a.State=="pending" && a.Item.Id!=item.Id) &&
+            (ActionSafetyPolicy.RequiresManualReview(item) || _queue.Any(a=>a.State=="pending" && ActionSafetyPolicy.RequiresManualReview(a.Item))))
+        {ShowStatus("Ferramentas de nível 3 exigem revisão manual e fila isolada. As demais funções continuam disponíveis no catálogo.",true);return;}
         var ids = _queue.Where(action => action.State == "pending" && action.Item.Id != item.Id)
             .Select(action => action.Item.Id).Append(item.Id).ToList();
         if (_conflicts.FindExclusiveViolation(ids) is { } exclusive)

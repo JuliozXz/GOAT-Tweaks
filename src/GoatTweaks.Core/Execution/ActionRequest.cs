@@ -9,6 +9,7 @@ public sealed class ActionRequest
     public bool ConsoleWindow { get; set; }
     public bool? Enabled { get; set; }
     public bool AdvancedModeEnabled { get; set; }
+    public bool ManualReviewAcknowledged { get; set; }
     // Kept for compatibility with requests exported by earlier versions.
     public string? Confirmation { get; set; }
     public string? WinSuxConfirmation { get; set; }

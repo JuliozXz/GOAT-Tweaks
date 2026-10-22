@@ -51,6 +51,7 @@ public static class HardwareDiscovery
         };
         try
         {
+            process.StartInfo.Environment["PSModulePath"] = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System),"WindowsPowerShell","v1.0","Modules");
             process.Start();
             var stderr = process.StandardError.ReadToEndAsync(CancellationToken.None);
             try

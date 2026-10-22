@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <EmbeddedResource Include="../../catalog/intelligence-inventory.json" LogicalName="GoatTweaks.Core.intelligence-inventory.json" />
     <EmbeddedResource Include="../../catalog/catalog.json" LogicalName="GoatTweaks.Core.catalog.json" />
     <EmbeddedResource Include="../../catalog/conflicts.json" LogicalName="GoatTweaks.Core.conflicts.json" />
     <EmbeddedResource Include="../../third_party/**/*">

@@ -22,10 +22,14 @@ public static class ActionSafetyPolicy
             ? "Fluxo destrutivo: reinicializa o Windows, altera a segurança e não tem reversão automática."
             : "Ação de impacto elevado ou com mudanças em componentes sensíveis do Windows.";
 
+    public static bool RequiresManualReview(CatalogItem item) => RequiresAdvancedMode(item);
+
     public static void Validate(CatalogItem item, ActionRequest request)
     {
         if (RequiresAdvancedMode(item) && !request.AdvancedModeEnabled)
             throw new InvalidOperationException(
                 "Ação bloqueada no modo cliente. Habilite o modo avançado e revise a prévia.");
+        if (RequiresManualReview(item) && !request.ManualReviewAcknowledged)
+            throw new InvalidOperationException("Nível 3: a revisão manual desta ferramenta original é obrigatória. Ela não possui restauração exata garantida pelo GOAT Intelligence.");
     }
 }

@@ -59,7 +59,7 @@ internal sealed class ActionExecutor(CatalogService catalog, JsonlLogWriter log,
             ?? throw new InvalidDataException("Ultimate script path is invalid.");
         var option = request.Revert ? item.Revert : request.OptionKey;
         var input = UltimateInputBuilder.Build(item, option, request.Inputs);
-        if (UltimateRunPolicy.UseConsoleWindow(item.ConsoleRequired, request.ConsoleWindow))
+        if (ActionSafetyPolicy.RequiresManualReview(item) || UltimateRunPolicy.UseConsoleWindow(item.ConsoleRequired, request.ConsoleWindow))
         {
             var info = new ProcessStartInfo("powershell.exe")
             {
@@ -103,10 +103,14 @@ internal sealed class ActionExecutor(CatalogService catalog, JsonlLogWriter log,
     {
         var scriptPath = CatalogIntegrity.ResolveSourcePath(item, baseDirectory)
             ?? throw new InvalidDataException("WinSux script path is invalid.");
-        var process = await StartProcessAsync("powershell.exe",
-            ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", scriptPath], null, false);
-        return process;
+        var info = new ProcessStartInfo(ProcessCommandPowerShell()) { UseShellExecute = true, WindowStyle = ProcessWindowStyle.Normal };
+        foreach(var arg in new[]{"-NoProfile","-ExecutionPolicy","Bypass","-File",scriptPath}) info.ArgumentList.Add(arg);
+        using var process=Process.Start(info)??throw new IOException("Não foi possível abrir a ferramenta original em console visível.");
+        await process.WaitForExitAsync();
+        return (process.ExitCode,"Execução manual da ferramenta original em console visível.","");
     }
+
+    private static string ProcessCommandPowerShell()=>Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System),"WindowsPowerShell","v1.0","powershell.exe");
 
     private async Task<(int ExitCode, string Stdout, string Stderr)> RunWinUtilAsync(
         CatalogItem item, ActionRequest request, string baseDirectory)

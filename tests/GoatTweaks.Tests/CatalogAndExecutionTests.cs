@@ -101,6 +101,32 @@ public sealed class CatalogAndExecutionTests
         Assert.Equal(original.Actions[0].Confirmation, clone.Actions[0].Confirmation);
     }
 
+    [Theory]
+    [InlineData("WinSux", "low", false)]
+    [InlineData("Ultimate", "high", true)]
+    [InlineData("RyTuneX", "high", true)]
+    public void Sensitive_legacy_tools_require_explicit_manual_review(string source, string risk, bool admin)
+    {
+        var item = new CatalogItem { Id = "manual:test", Source = source, Risk = risk, RequiresAdmin = admin };
+        Assert.True(ActionSafetyPolicy.RequiresManualReview(item));
+        Assert.Throws<InvalidOperationException>(() => ActionSafetyPolicy.Validate(item,
+            new ActionRequest { ItemId = item.Id, AdvancedModeEnabled = true }));
+        Assert.Throws<InvalidOperationException>(() => ActionSafetyPolicy.Validate(item,
+            new ActionRequest { ItemId = item.Id, ManualReviewAcknowledged = true }));
+        ActionSafetyPolicy.Validate(item, new ActionRequest
+        { ItemId = item.Id, AdvancedModeEnabled = true, ManualReviewAcknowledged = true });
+    }
+
+    [Fact]
+    public void Manual_review_acknowledgment_survives_the_isolated_runner_request()
+    {
+        var original = new ActionRequest { ItemId = "manual:test", AdvancedModeEnabled = true, ManualReviewAcknowledged = true, ConsoleWindow = true };
+        var clone = JsonSerializer.Deserialize<ActionRequest>(JsonSerializer.Serialize(original));
+        Assert.NotNull(clone);
+        Assert.True(clone.ManualReviewAcknowledged);
+        Assert.True(clone.ConsoleWindow);
+    }
+
     [Fact]
     public void Lead_conflicts_have_valid_schema_exclusive_pipeline_and_block_user_choice_pair()
     {
@@ -150,7 +176,7 @@ public sealed class CatalogAndExecutionTests
     {
         var root = RepositoryRoot();
         var extractionScript = "import json,sys;sys.path.insert(0,'tools');import extract_rytunex as e;s=e.read_source(e.SOURCE);print(json.dumps([e.extract(s,x) for x in e.SIGNATURES]))";
-        var extraction = Run("python3", ["-c", extractionScript], root);
+        var extraction = Run(OperatingSystem.IsWindows() ? "python" : "python3", ["-c", extractionScript], root);
         Assert.Equal(0, extraction.ExitCode);
         var spans = JsonSerializer.Deserialize<string[]>(extraction.Stdout)!;
         var generated = File.ReadAllBytes(Path.Combine(root, "src", "GoatTweaks.Runner", "RyTuneX", "OptimizationOptions.Extracted.cs"));

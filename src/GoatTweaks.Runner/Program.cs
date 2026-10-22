@@ -80,6 +80,8 @@ public static class RunnerEntry
             if (!catalog.ById.TryGetValue(request.ItemId, out var selected))
                 throw new InvalidDataException($"Unknown catalog item: {request.ItemId}");
             ActionSafetyPolicy.Validate(selected, request);
+            if(batch.Actions.Count>1 && ActionSafetyPolicy.RequiresManualReview(selected))
+                throw new InvalidDataException("Ferramentas de nível 3 não podem ser agrupadas para execução automática.");
         }
         if (!IsElevated())
         {
