@@ -58,10 +58,12 @@ Detalhes da organização, identificação e limitações de hardware estão em 
 Instale .NET 10 SDK e PowerShell 7 em um ambiente de desenvolvimento e execute:
 
 ```powershell
-./tools/Publish-Release.ps1 -Repository JuliozXz/GOAT-Tweaks -Version v2.0.1
+./tools/Publish-Release.ps1 -Repository JuliozXz/GOAT-Tweaks -Version v2.0.2
 ```
 
 O script compila o aplicativo e gera `dist/GOATTweaks.exe`, seu SHA-256, `dist/GOATTweaks-win-x64.zip`, o SHA-256 do ZIP e `dist/goat.ps1`. O inicializador recebe os hashes da mesma compilação e permanece em ASCII sem BOM para compatibilidade com o Windows PowerShell 5.1. O script não executa testes nem ações de ajuste do Windows.
+
+Antes de empacotar, a publicação lê os assemblies compilados sem executar o aplicativo. Ela exige o índice de serviços no assembly principal, compara os recursos incorporados com os JSON de origem e confere a cobertura das ações. Um recurso ausente, deslocado para um assembly de idioma ou divergente impede a publicação.
 
 O workflow **Publicar GOAT Tweaks** em GitHub Actions faz a mesma compilação e publica os cinco arquivos em uma release. A publicação inicia ao enviar uma alteração de versão em `release.json` para `main`. Também é possível executá-lo manualmente com a versão desejada ou enviar uma tag no formato `v1.0.0`. A release só deixa de ser rascunho depois que todos os arquivos são anexados. Versões já publicadas não são sobrescritas.
 

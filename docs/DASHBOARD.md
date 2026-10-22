@@ -6,6 +6,8 @@ O painel usa a estrutura visual da referência fornecida pelo responsável, adap
 
 `catalog/workflow.pt-BR.json` associa cada um dos 619 IDs originais a exatamente um serviço e um assunto, com um título em português. `tools/build_workflow.py` gera esse índice de forma determinística; os nomes técnicos dos programas são preservados. O catálogo original continua sendo a fonte dos comandos, parâmetros, riscos, flags e permissões. O aplicativo confere se o índice cobre o catálogo inteiro ao carregar.
 
+O índice tem `WithCulture=false` no projeto WPF: o sufixo `pt-BR` pertence ao nome do JSON, que deve estar no manifesto do assembly principal. A ferramenta `tools/GoatTweaks.ResourceGuard` lê os assemblies compilados por metadados, confere os bytes incorporados e a cobertura do catálogo antes do empacotamento. Ela não carrega nem executa o aplicativo do Windows.
+
 1. Limpeza: arquivos temporários/disco, remoção de programas, apps do Windows, navegadores e desinstaladores.
 2. CPU e memória: diagnóstico, cache/compressão e agendamento do processador.
 3. Placa de vídeo: limpeza/instalação de drivers, NVIDIA/AMD/Intel, renderização, diagnóstico e bibliotecas.

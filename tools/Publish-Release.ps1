@@ -35,6 +35,14 @@ foreach ($Line in [IO.File]::ReadAllLines((Join-Path $ThirdParty 'SHA256SUMS')))
     --output $PublishDirectory
 if ($LASTEXITCODE -ne 0) { throw "A compilação falhou (código $LASTEXITCODE)." }
 
+# Inspect the compiled manifest and embedded bytes without loading or executing the app.
+# A localized-looking JSON filename must not silently move the required index to a satellite.
+$AssemblyDirectory = Join-Path $Root 'src/GoatTweaks/bin/Release/net10.0-windows/win-x64'
+$ResourceGuard = Join-Path $Root 'tools/GoatTweaks.ResourceGuard/GoatTweaks.ResourceGuard.csproj'
+& $Dotnet.Source run --project $ResourceGuard --configuration Release --disable-build-servers `
+    -p:UseSharedCompilation=false -- $AssemblyDirectory $Root
+if ($LASTEXITCODE -ne 0) { throw 'Os recursos obrigatórios do aplicativo não foram incorporados corretamente. Publicação cancelada.' }
+
 New-Item -ItemType Directory -Path $OutputDirectory -Force | Out-Null
 $Executable = Join-Path $PublishDirectory 'GOATTweaks.exe'
 if (-not (Test-Path -LiteralPath $Executable -PathType Leaf)) { throw 'A compilação não produziu GOATTweaks.exe.' }
