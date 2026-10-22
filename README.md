@@ -1,6 +1,24 @@
 # GOAT Tweaks
 
-Painel de atendimento para Windows com identificação do computador e 619 ações de Ultimate, winutil, RyTuneX e WinSux organizadas por área, preservando os arquivos originais incorporados.
+Plataforma local de diagnóstico e atendimento para Windows. O **GOAT Intelligence** reúne inventário, evidências, plano autorizado, backups específicos e validação antes/depois. As 619 ações de Ultimate, winutil, RyTuneX e WinSux continuam organizadas nas 11 áreas originais.
+
+## GOAT Intelligence e Service Mode
+
+1. Abra **GOAT Intelligence** ou **GOAT Service Mode** e registre o problema, o jogo e as condições do teste.
+2. Selecione **FPS Máximo**, **Competitivo**, **Equilibrado**, **Diagnóstico** ou **Personalizado**. O perfil inicial é Diagnóstico, que bloqueia aplicação e restauração de configurações.
+3. Execute a coleta delimitada. O diagnóstico separa observações confirmadas de hipóteses e informa quando precisa de um teste direcionado.
+4. Revise o plano. Cada recomendação mostra evidência, proposta, benefício esperado, risco, confiança, compatibilidade, reinício e restauração. Nenhum ajuste é selecionado por padrão.
+5. Em um perfil de execução, selecione e autorize somente os ajustes relevantes de nível 2. O motor salva o estado anterior antes de escrever e verifica cada resultado. A autorização é específica, expira e não é reaproveitada após interrupção.
+6. Repita o diagnóstico e, quando possível, a mesma medição de quadros. Importe CSV real do PresentMon ou selecione sua instalação de console para capturar sem injeção.
+7. Exporte o relatório HTML. FPS médio, 1% low, frametime e p99 só aparecem quando medidos. Condições diferentes, dados ausentes ou comparação inadequada produzem resultado inconclusivo.
+
+**Escopo automático:** três alvos gerenciados: Modo de Jogo explicitamente desativado, captura histórica explicitamente ativada e transição Economia de energia → Equilibrado já instalado em desktop identificado e na tomada. Cada um exige compatibilidade, estado conhecido e plano autorizado. Os perfis não aplicam listas universais e não alteram limites OEM de notebooks. Nenhum ganho de FPS é prometido.
+
+As 619 ferramentas antigas permanecem acessíveis; elas não receberam uma garantia artificial de backup/reversão exata. Operações sensíveis exigem modo avançado, revisão manual explícita e execução isolada. BIOS, firmware, overclock, undervolt e desativação de segurança ficam fora do motor automático.
+
+Atendimentos e backups ficam em `%LOCALAPPDATA%\GoatTweaks\Intelligence\sessions`. Após reiniciar, reabra o aplicativo e use **Atendimentos** para retomar. Autorizações anteriores são invalidadas, sem reaplicar mudanças. WPR/WPA e sensores compartilhados do LibreHardwareMonitor são opcionais; o aplicativo não instala essas ferramentas ou drivers de monitoramento.
+
+Arquitetura, métodos, inventário e limites: [Intelligence](docs/INTELLIGENCE.md) e [inventário completo](docs/INTELLIGENCE-INVENTORY.md).
 
 ## Abrir a interface
 
@@ -25,13 +43,13 @@ O runtime .NET está incluído no aplicativo e é responsável por boa parte do 
 1. Confira os cartões da **Visão geral** ou abra **Meu hardware**: usuário, processador, GPU, RAM/geração e placa-mãe. A identificação ocorre em segundo plano.
 2. Use **Preparar o atendimento** para encontrar criação/gerenciamento de pontos de restauração e backup do Registro. O atalho apenas abre o assunto; escolha a ação adequada ao cliente.
 3. Abra um dos **11 serviços por área**, selecione o assunto e clique em **Adicionar à fila**. Parâmetros aparecem quando necessários; **Detalhes** é opcional. A busca encontra ações de todas as áreas, inclusive sem digitar acentos.
-4. Abra **Revisar fila**, remova o que não deseja e clique em **Aplicar fila**. Acompanhe o resultado individual de cada ação. Os resultados permanecem visíveis até limpar ou remover os itens.
+4. Abra **Revisar fila**, remova o que não deseja e clique em **Executar ferramentas legadas**. Acompanhe o resultado individual de cada ação. Os resultados permanecem visíveis até limpar ou remover os itens.
 
 Os serviços são: **Limpeza**, **CPU e memória**, **Placa de vídeo**, **Drivers e periféricos**, **Rede e internet**, **Windows e interface**, **Privacidade e segurança**, **Energia e suspensão**, **Instalar programas**, **Preparação e reparos** e **Avançado e BIOS**. Cada serviço reúne assuntos específicos e permite filtrar pela origem.
 
 Ferramentas como DDU, CPU-Z e desinstaladores ficam na área em que são usadas, com a indicação **Instalar programa / ferramenta**. A instalação da ferramenta e o atendimento realizado dentro dela são operações distintas.
 
-O modo cliente inicia com ações sensíveis bloqueadas. Use o seletor **Avançado** para liberar essas ações nesta sessão. Foram removidas as confirmações digitadas AVANCADO, CONFIRMAR e WINSUX. O UAC do Windows e as interações exigidas pelos scripts originais continuam fazendo parte das ações correspondentes. O fluxo completo do WinSux exige execução isolada.
+O modo cliente inicia com ações sensíveis bloqueadas. Use o seletor **Avançado** e revise explicitamente a operação para executar uma ferramenta sensível, isoladamente. Não há confirmações digitadas AVANCADO, CONFIRMAR e WINSUX. O UAC do Windows e as interações exigidas pelos scripts originais continuam fazendo parte das ações correspondentes.
 
 **Restaurar padrão** usa a reversão fornecida pelo projeto de origem; não recupera um backup das configurações anteriores do cliente. O catálogo e as proteções reduzem riscos, mas não garantem compatibilidade ou ausência de falhas em todas as máquinas. Mantenha um backup adequado antes de aplicar ajustes.
 
@@ -58,7 +76,7 @@ Detalhes da organização, identificação e limitações de hardware estão em 
 Instale .NET 10 SDK e PowerShell 7 em um ambiente de desenvolvimento e execute:
 
 ```powershell
-./tools/Publish-Release.ps1 -Repository JuliozXz/GOAT-Tweaks -Version v2.0.2
+./tools/Publish-Release.ps1 -Repository JuliozXz/GOAT-Tweaks -Version v3.0.0
 ```
 
 O script compila o aplicativo e gera `dist/GOATTweaks.exe`, seu SHA-256, `dist/GOATTweaks-win-x64.zip`, o SHA-256 do ZIP e `dist/goat.ps1`. O inicializador recebe os hashes da mesma compilação e permanece em ASCII sem BOM para compatibilidade com o Windows PowerShell 5.1. O script não executa testes nem ações de ajuste do Windows.
@@ -71,7 +89,9 @@ O workflow **Publicar GOAT Tweaks** em GitHub Actions faz a mesma compilação e
 
 ## Estado de validação
 
-Esta revisão não executou uma nova suíte de testes nem aplicou ajustes no Windows. Foram conferidos a compilação, o pacote, a integridade dos recursos e a abertura real do painel em Windows x64 e Windows 11 ARM64 com emulação x64. A conferência de abertura não valida todos os ajustes nas máquinas dos clientes. A procedência dos recursos e os limites da análise estão em [docs/SECURITY-REVIEW.md](docs/SECURITY-REVIEW.md). O plano de validação manual está em `docs/VM-TEST-PLAN.md`.
+O workflow **Validar GOAT Intelligence** executa testes do motor, regressões das funções existentes, coleta real e restauração dos três alvos em VM descartável, inspeção dos recursos e navegação da interface. Os dados sintéticos pertencem apenas aos testes isolados, nunca ao painel. As evidências e limitações verificadas acompanham [docs/INTELLIGENCE.md](docs/INTELLIGENCE.md).
+
+Uma VM não comprova estabilidade em todos os computadores nem ganhos reais em jogos. Temperaturas, clocks e FPS permanecem indisponíveis até existir uma fonte compatível e uma medição real. A procedência dos recursos incorporados está em [docs/SECURITY-REVIEW.md](docs/SECURITY-REVIEW.md).
 
 ## Fontes e licença
 

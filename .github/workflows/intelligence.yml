@@ -9,7 +9,11 @@ permissions:
   contents: read
 jobs:
   windows:
-    runs-on: windows-2022
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [windows-2022, windows-11-arm]
+    runs-on: ${{ matrix.runner }}
     timeout-minutes: 30
     defaults:
       run:
@@ -27,6 +31,9 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: '3.13'
+      - name: Conferir scripts locais no Windows PowerShell 5.1
+        shell: powershell
+        run: ./tools/Confirm-IntelligenceScripts.ps1
       - name: Testar motor, autorizações, reversões e comparação de métricas
         run: dotnet test tests/GoatTweaks.Intelligence.Tests/GoatTweaks.Intelligence.Tests.csproj -c Release --logger trx --results-directory artifacts/tests
       - name: Preparar origem fixada para regressão do catálogo
@@ -53,12 +60,12 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: goat-intelligence-windows
+          name: goat-intelligence-${{ matrix.runner }}
           path: artifacts/
           retention-days: 30
       - name: Guardar pacote candidato
         uses: actions/upload-artifact@v7
         with:
-          name: goat-intelligence-candidate
+          name: goat-intelligence-candidate-${{ matrix.runner }}
           path: dist/
           retention-days: 14

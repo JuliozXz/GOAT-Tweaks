@@ -33,7 +33,7 @@ public sealed class WindowsDiagnostics
         try {
             $events=@(Get-WinEvent -FilterHashtable @{LogName='System';Id=@(4101,17,18,19);StartTime=(Get-Date).AddDays(-1)} -MaxEvents 100 -ErrorAction SilentlyContinue |
                 Where-Object {$_.ProviderName -match 'WHEA|^Display$'} | Select-Object -First 30 |
-                Select-Object @{n='At';e={$_.TimeCreated.ToUniversalTime().ToString('o')}},ProviderName,Id,@{n='Message';e={if($_.Message){$_.Message.Substring(0,[Math]::Min(800,$_.Message.Length))}else{''}})
+                Select-Object @{n='At';e={$_.TimeCreated.ToUniversalTime().ToString('o')}},ProviderName,Id,@{n='Message';e={if($_.Message){$_.Message.Substring(0,[Math]::Min(800,$_.Message.Length))}else{''}}})
             Emit 'events' $events
         } catch {Emit 'unavailable' @('Eventos do sistema: ' + $_.Exception.Message)}
         """;

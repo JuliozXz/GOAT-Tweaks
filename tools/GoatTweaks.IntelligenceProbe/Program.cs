@@ -8,6 +8,7 @@ if(!OperatingSystem.IsWindows() || args.Length!=2 || args[0]!="--isolated-github
 var output=Path.GetFullPath(args[1]);Directory.CreateDirectory(output);
 var diagnostics=new WindowsDiagnostics();var gateway=new WindowsSettingsGateway(diagnostics);
 var results=new Dictionary<string,object?> { ["isolatedVm"]=true,["physicalGamingBenchmark"]=false,["legacyActionsApplied"]=0 };
+var machineForFlow=await diagnostics.ReadMachineAsync(default);
 var roundtrips=new List<object>();
 foreach(var id in new[]{IntelligenceSettings.GameMode,IntelligenceSettings.BackgroundCapture})
 {
@@ -21,6 +22,23 @@ foreach(var id in new[]{IntelligenceSettings.GameMode,IntelligenceSettings.Backg
         if(await gateway.ReadAsync(id,default)!=SettingValue.Dword(0)) throw new IOException("Falha na leitura DWORD 0 de "+id);
         await gateway.WriteAsync(id,SettingValue.Dword(1),default);
         if(await gateway.ReadAsync(id,default)!=SettingValue.Dword(1)) throw new IOException("Falha na leitura DWORD 1 de "+id);
+        if(machineForFlow.Supported)
+        {
+            var baseline=id==IntelligenceSettings.GameMode?SettingValue.Dword(0):SettingValue.Dword(1);
+            await gateway.WriteAsync(id,baseline,default);
+            var snapshot=new DiagnosticSnapshot{Machine=machineForFlow,FinishedAt=DateTimeOffset.UtcNow,Settings=new(){[id]=baseline}};
+            var flow=new ServiceSession{Before=snapshot,Profile=OptimizationProfile.Balanced,Context=new(){Game="Verificação isolada de reversão nativa"}};
+            flow.Recommendations=RecommendationEngine.Build(snapshot,flow.Context,flow.Profile);
+            var journal=new SessionStore(Path.Combine(output,"native-change-journals"));
+            ChangeCoordinator.Approve(flow,[id]);
+            var coordinator=new ChangeCoordinator(gateway,journal);
+            await coordinator.ExecuteAsync(flow,null,default);
+            if(flow.Changes.Single().State!="Aplicado e verificado") throw new IOException("O fluxo nativo não aplicou o ajuste: "+id);
+            var recovered=await journal.LoadAsync(flow.Id);recovered.InvalidateApproval();
+            await coordinator.RestoreAsync(recovered,null,default);
+            if(recovered.Changes.Single().State!="Restaurado e verificado" || await gateway.ReadAsync(id,default)!=baseline)
+                throw new IOException("O fluxo nativo não restaurou o ajuste após retomar: "+id);
+        }
     }
     finally
     {
@@ -36,6 +54,7 @@ foreach(var id in new[]{IntelligenceSettings.GameMode,IntelligenceSettings.Backg
     roundtrips.Add(new {id,original,restored=await gateway.ReadAsync(id,default),verified=true,keyExisted});
 }
 results["registryRoundtrips"]=roundtrips;
+results["nativeCoordinatorFlow"]=machineForFlow.Supported?"Aplicação autorizada, diário, retomada e restauração dos dois valores do Registro conferidos":"Windows Server não é elegível; fluxo de escrita gerenciada não executado neste sistema";
 var originalPower=await gateway.ReadAsync(IntelligenceSettings.PowerPlan,default);
 var powerMachine=await diagnostics.ReadMachineAsync(default);
 if(powerMachine.AvailablePowerPlans.Contains(IntelligenceSettings.BalancedGuid,StringComparer.OrdinalIgnoreCase) && originalPower.Exists)
@@ -59,7 +78,8 @@ Console.WriteLine("Coletando diagnóstico inicial real na VM.");
 var before=await diagnostics.CaptureAsync(TimeSpan.FromSeconds(12),null,new Progress<string>(Console.WriteLine),default);
 foreach(var unavailable in before.Unavailable) Console.WriteLine("Dado ausente: "+unavailable);
 if(before.Samples.Count<5 || string.IsNullOrWhiteSpace(before.Machine.Cpu) || before.Machine.Cpu.Contains("não informado",StringComparison.OrdinalIgnoreCase)
-    || before.Machine.Gpus.Count==0 || before.Machine.InstalledRamGb<=0 || before.Machine.MachineId.Length==0 || !before.Samples.Any(s=>s.MemoryPercent.HasValue))
+    || before.Machine.Gpus.Count==0 || before.Machine.InstalledRamGb<=0 || before.Machine.OsBuild<19045 || string.IsNullOrWhiteSpace(before.Machine.BootId)
+    || before.Machine.MachineId.Length==0 || !before.Samples.Any(s=>s.MemoryPercent.HasValue))
     throw new InvalidDataException("Diagnóstico nativo sem dados mínimos.");
 var session=new ServiceSession{Before=before,Context=new(){Game="Verificação de interface e diagnóstico na VM",Symptom="Conferir coleta real e relatórios sem benchmark de jogo"},Profile=OptimizationProfile.Diagnostic};
 session.Findings=RecommendationEngine.Diagnose(before,session.Context);session.Recommendations=RecommendationEngine.Build(before,session.Context,session.Profile);

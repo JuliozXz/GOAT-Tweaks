@@ -203,6 +203,7 @@ public partial class IntelligenceWorkspace : UserControl
     private async void Execute_Click(object sender,RoutedEventArgs e)=>await WorkAsync(async token=>
     {
         var coordinator=new ChangeCoordinator(new WindowsSettingsGateway(_diagnostics),_store);
+        _session.Stage=ServiceStage.Execution;RefreshStage();
         await coordinator.ExecuteAsync(_session,Progress(),token);
         RefreshChangeResults();
         RestartStatus.Text=_session.Stage==ServiceStage.Restart?"Há ajustes que exigem reinicialização. Salve o atendimento e retome depois de reiniciar manualmente.":"Nenhum ajuste gerenciado exigiu reinicialização. Reinicie o jogo se necessário e repita o teste nas mesmas condições.";
@@ -231,6 +232,7 @@ public partial class IntelligenceWorkspace : UserControl
     private async void Validate_Click(object sender,RoutedEventArgs e)=>await WorkAsync(async token=>
     {
         if(_session.Before is null) throw new InvalidOperationException("Faça o diagnóstico inicial primeiro.");
+        _session.Stage=ServiceStage.Validation;RefreshStage();
         WorkspaceTabs.SelectedIndex=3;_liveSamples.Clear();
         _session.After=await _diagnostics.CaptureAsync(Duration,SampleProgress(),Progress(),token);
         if(_session.After.Machine.MachineId!=_session.Before.Machine.MachineId || _session.After.Machine.UserId!=_session.Before.Machine.UserId)
