@@ -122,11 +122,16 @@ public sealed class IntelligenceTests
         Assert.Equal(SettingValue.Dword(1),gateway.Values[IntelligenceSettings.BackgroundCapture]);Assert.Equal(SettingValue.Dword(1),gateway.Values[IntelligenceSettings.GameMode]);
         Assert.Contains(s.Changes,c=>c.State=="Falhou · estado anterior restaurado");Assert.Contains(s.Changes,c=>c.State=="Aplicado e verificado");
     }
-    [Fact] public async Task RestorationUsesTheSavedOriginalStateAndVerifiesIt()
+    [Theory]
+    [InlineData(IntelligenceSettings.GameMode)]
+    [InlineData(IntelligenceSettings.BackgroundCapture)]
+    [InlineData(IntelligenceSettings.PowerPlan)]
+    public async Task RestorationUsesTheSavedOriginalStateAndVerifiesIt(string id)
     {
         var s=Session();var gateway=new FakeSettings(s.Before!);var c=new ChangeCoordinator(gateway,new MemoryJournal());
-        ChangeCoordinator.Approve(s,[IntelligenceSettings.GameMode]);await c.ExecuteAsync(s,null,default);await c.RestoreAsync(s,null,default);
-        Assert.Equal(SettingValue.Dword(0),gateway.Values[IntelligenceSettings.GameMode]);Assert.Equal("Restaurado e verificado",Assert.Single(s.Changes).State);
+        var original=gateway.Values[id];
+        ChangeCoordinator.Approve(s,[id]);await c.ExecuteAsync(s,null,default);await c.RestoreAsync(s,null,default);
+        Assert.Equal(original,gateway.Values[id]);Assert.Equal("Restaurado e verificado",Assert.Single(s.Changes).State);
     }
     [Fact] public async Task RestorationWillNotOverwriteAnUnexpectedThirdPartyChange()
     {

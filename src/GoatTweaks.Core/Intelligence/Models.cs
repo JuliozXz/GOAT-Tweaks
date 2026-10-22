@@ -173,6 +173,8 @@ public sealed record Recommendation
     public string Evidence { get; init; } = "";
     public string Proposal { get; init; } = "";
     public string ExpectedBenefit { get; init; } = "";
+    public string ProbableImpact { get; init; } = "Não determinado; depende de teste direcionado neste computador";
+    public string Reversibility { get; init; } = "Análise sem alteração; intervenções externas exigem procedimento próprio";
     public string Confidence { get; init; } = "Baixa";
     public string Risk { get; init; } = "";
     public string Compatibility { get; init; } = "";

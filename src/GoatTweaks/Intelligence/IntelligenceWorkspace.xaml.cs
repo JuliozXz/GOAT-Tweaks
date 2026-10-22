@@ -117,6 +117,7 @@ public partial class IntelligenceWorkspace : UserControl
         if(!_ready) return;
         var idle=!IsBusy && !LegacyExecutionActive;
         IdentificationFields.IsEnabled=idle;
+        DiagnoseButton.IsEnabled=idle;
         RecommendationsList.IsEnabled=idle;
         ApproveButton.IsEnabled=idle && _session.Before is not null && _session.Profile!=OptimizationProfile.Diagnostic &&
             !_session.Changes.Any(c=>c.State is "Aplicado e verificado" or "Preparado" or "Revisão necessária") && _recommendations.Any(r=>r.Selected && r.CanAuthorize);
@@ -395,6 +396,8 @@ public partial class IntelligenceWorkspace : UserControl
         MachineSummary.Text="Execute uma análise para identificar o computador.";CompatibilitySummary.Text="";ExecutionLog.Clear();
         StartupSummary.Text=StorageSummary.Text=PowerSummary.Text="";
         CpuMetric.Text=RamMetric.Text=GpuMetric.Text=DiskMetric.Text="Não disponível";
+        CpuThreadMetric.Text=MemoryMetric.Text=DiskLatencyMetric.Text="";
+        SensorSummary.Text="Temperaturas e frequências: não disponíveis até detectar sensores compatíveis.";
         TelemetryStatus.Text="Aguardando coleta. O monitor avançado não permanece ativo em segundo plano.";
         Context_Changed(this,new RoutedEventArgs());RefreshComparisons();RefreshStage();UpdateControls();WorkspaceTabs.SelectedIndex=0;Status("Novo atendimento · perfil Diagnóstico por padrão.");
         });
@@ -414,10 +417,11 @@ public partial class IntelligenceWorkspace : UserControl
         KnowledgeList.ItemsSource=_knowledge.Where(k=>query.Length==0 || (k.Name+" "+k.TechnicalName+" "+k.Category).Contains(query,StringComparison.CurrentCultureIgnoreCase))
             .Select(k=>new KnowledgeRow(k)).ToArray();
     }
-    public sealed record ProfileChoice(OptimizationProfile Value,string Name);
-    public sealed record StepRow(ServiceStage Stage,string Label,Brush Brush);
+    public sealed record ProfileChoice(OptimizationProfile Value,string Name) { public override string ToString()=>Name; }
+    public sealed record StepRow(ServiceStage Stage,string Label,Brush Brush) { public override string ToString()=>Label; }
     public sealed class RecommendationRow(Recommendation definition):INotifyPropertyChanged
     {
+        public override string ToString()=>Title;
         private bool _selected;
         public Recommendation Definition{get;}=definition;
         public string Title=>Definition.Title;
@@ -426,11 +430,12 @@ public partial class IntelligenceWorkspace : UserControl
         public string Evidence=>Definition.Evidence;
         public bool CanAuthorize=>Definition.CanAuthorize;
         public bool Selected{get=>_selected;set{_selected=value;PropertyChanged?.Invoke(this,new PropertyChangedEventArgs(nameof(Selected)));}}
-        public string Details=>$"Problema: {Definition.Problem}\n\nAjuste: {Definition.Proposal}\n\nBenefício esperado: {Definition.ExpectedBenefit}\n\nConfiança: {Definition.Confidence}\n\nRiscos: {Definition.Risk}\n\nCompatibilidade: {Definition.Compatibility}\n\nPré-requisitos: {Definition.Prerequisites}\n\nRestauração: {Definition.Restoration}\n\nReinicialização: {(Definition.RestartRequired?"Necessária":"Não prevista; reiniciar jogo pode ser necessário")}";
+        public string Details=>$"Problema: {Definition.Problem}\n\nAjuste: {Definition.Proposal}\n\nBenefício esperado: {Definition.ExpectedBenefit}\n\nImpacto provável: {Definition.ProbableImpact}\n\nConfiança: {Definition.Confidence}\n\nRiscos: {Definition.Risk}\n\nCompatibilidade: {Definition.Compatibility}\n\nPré-requisitos: {Definition.Prerequisites}\n\nReversibilidade: {Definition.Reversibility}\n\nRestauração: {Definition.Restoration}\n\nReinicialização: {(Definition.RestartRequired?"Necessária":"Não prevista; reiniciar jogo pode ser necessário")}";
         public event PropertyChangedEventHandler? PropertyChanged;
     }
     public sealed class KnowledgeRow(KnowledgeEntry entry)
     {
+        public override string ToString()=>Name;
         public string Name=>entry.Name;public string Category=>entry.Category;public string Reliability=>entry.Reliability;
         public string Details=>$"Nome técnico: {entry.TechnicalName}\n\nDescrição: {entry.Description}\n\nObjetivo: {entry.Objective}\n\nFontes / justificativa: {string.Join("\n",entry.EvidenceSources)}\n\nCompatibilidade: {entry.Compatibility}\n\nEfeitos adversos: {entry.AdverseEffects}\n\nAplicação: {entry.Application}\n\nReversão: {entry.Restoration}\n\nÚltima validação de benefício: {entry.LastValidated??"Não realizada individualmente"}\nÚltima revisão: {entry.LastReviewed}\nNível de automação: {entry.AutomationLevel}";
     }

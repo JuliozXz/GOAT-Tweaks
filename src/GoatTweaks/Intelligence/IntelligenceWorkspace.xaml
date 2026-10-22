@@ -31,6 +31,7 @@
   <ProgressBar x:Name="WorkProgress" Grid.Row="2" Margin="0,0,8,10" Height="3" Minimum="0" Maximum="1" Value="0"/>
   <TabControl x:Name="WorkspaceTabs" Grid.Row="3">
    <TabItem Header="Identificação">
+    <Grid><Grid.RowDefinitions><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
      <StackPanel Margin="0,5,9,10" x:Name="IdentificationFields">
       <Border Style="{StaticResource CompactCard}"><StackPanel><TextBlock Text="Objetivo do atendimento" FontSize="17" FontWeight="SemiBold"/><TextBlock Text="Escolha o perfil e descreva o problema. O diagnóstico não altera configurações." Style="{StaticResource Body}" Margin="0,6,0,14"/>
@@ -57,9 +58,10 @@
        <CheckBox x:Name="ShadersCheck" Content="Shaders compilados e cena aquecida antes da medição" Checked="Context_Changed" Unchecked="Context_Changed" Margin="0,13,0,8"/>
        <CheckBox x:Name="ConditionsCheck" Content="Conferi e registrei as condições da medição" Checked="Context_Changed" Unchecked="Context_Changed"/>
       </StackPanel></Border>
-      <WrapPanel><Button x:Name="DiagnoseButton" Content="Executar GOAT Intelligence" Style="{StaticResource PrimaryButton}" Click="Diagnose_Click" Margin="0,0,8,8"/><Button Content="Atendimentos salvos" Click="History_Click" Margin="0,0,8,8"/></WrapPanel>
      </StackPanel>
     </ScrollViewer>
+    <WrapPanel Grid.Row="1" Margin="0,10,0,0"><Button x:Name="DiagnoseButton" Content="Executar GOAT Intelligence" Style="{StaticResource PrimaryButton}" Click="Diagnose_Click" Margin="0,0,8,0"/><Button Content="Atendimentos salvos" Click="History_Click"/></WrapPanel>
+    </Grid>
    </TabItem>
    <TabItem Header="Diagnóstico">
     <ScrollViewer VerticalScrollBarVisibility="Auto"><StackPanel Margin="0,5,9,10">

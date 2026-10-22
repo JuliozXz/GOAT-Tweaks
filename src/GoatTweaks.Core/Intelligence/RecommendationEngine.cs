@@ -101,6 +101,8 @@ public static class RecommendationEngine
             {
                 Id = id, Title = entry.Name, Problem = relevant ? entry.Objective : "A configuração atual não justifica esta alteração.",
                 Evidence = evidence, Proposal = entry.Application, ExpectedBenefit = benefit, Confidence = "Moderada para a configuração; benefício de desempenho requer teste",
+                ProbableImpact=id==IntelligenceSettings.PowerPlan?"Pode ser relevante se o plano Economia de energia limita a carga; benefício não medido":"Baixo ou incerto; depende do jogo e de a função estar sendo usada",
+                Reversibility="Automática para o alvo gerenciado: restaurar o valor original salvo, com verificação e sem sobrescrever mudanças externas",
                 Risk = risk, Compatibility = entry.Compatibility, Restoration = entry.Restoration,
                 Prerequisites = "Mesma máquina/usuário; estado anterior íntegro; configuração ainda igual à prévia; autorização específica no plano.",
                 Classification = !supported || !known || !canApply ? RecommendationClass.Incompatible : change ? RecommendationClass.NeedsTest : RecommendationClass.NoDemonstratedBenefit,
@@ -158,7 +160,8 @@ public static class RecommendationEngine
             ExpectedBenefit = "Estabilidade e integridade preservadas; nenhum ganho de FPS prometido.", Confidence = "Alta para a restrição de automação",
             Risk = "Significativo; possíveis falhas, menor proteção, incompatibilidade ou dano conforme a operação.",
             Compatibility = "Avaliação específica do fabricante e do jogo é obrigatória.", Restoration = "Reversão não garantida; procedimentos específicos devem ser verificados antes de qualquer intervenção.",
-            Classification = RecommendationClass.NotRecommended, AutomationLevel = 3
+            Classification = RecommendationClass.NotRecommended, AutomationLevel = 3,
+            Reversibility="Não garantida para uma intervenção manual externa; não executável pelo motor"
         });
         return result;
     }

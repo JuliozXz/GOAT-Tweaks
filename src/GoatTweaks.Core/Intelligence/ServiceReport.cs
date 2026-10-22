@@ -49,6 +49,7 @@ public static class ServiceReport
             Table(["Campo", "Descrição"], new List<string[]>
             {
                 new[] { "Problema / evidência",r.Problem + " " + r.Evidence }, new[] { "Ajuste proposto",r.Proposal }, new[] { "Benefício esperado",r.ExpectedBenefit },
+                new[] { "Impacto provável",r.ProbableImpact },new[] { "Reversibilidade",r.Reversibility },
                 new[] { "Confiança",r.Confidence }, new[] { "Risco e efeitos colaterais",r.Risk }, new[] { "Compatibilidade",r.Compatibility }, new[] { "Pré-requisitos",r.Prerequisites },
                 new[] { "Reinicialização",r.RestartRequired ? "Necessária" : "Não prevista; reiniciar jogo/aplicativo pode ser necessário" },
                 new[] { "Restauração",r.Restoration }, new[] { "Resultado", change is null ? "Ignorado / não executado neste atendimento" : change.State + (change.Error.Length > 0 ? " · " + change.Error : "") }
