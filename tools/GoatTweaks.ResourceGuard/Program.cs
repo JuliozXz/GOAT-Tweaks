@@ -24,8 +24,10 @@ try
     var root = Path.GetFullPath(args[1]);
     var index = ReadResource(Path.Combine(directory, "GOATTweaks.dll"), "GoatTweaks.workflow.pt-BR.json");
     var catalog = ReadResource(Path.Combine(directory, "GoatTweaks.Core.dll"), "GoatTweaks.Core.catalog.json");
+    var intelligence = ReadResource(Path.Combine(directory, "GoatTweaks.Core.dll"), "GoatTweaks.Core.intelligence-inventory.json");
     RequireSourceMatch(index, Path.Combine(root, "catalog", "workflow.pt-BR.json"));
     RequireSourceMatch(catalog, Path.Combine(root, "catalog", "catalog.json"));
+    RequireSourceMatch(intelligence, Path.Combine(root, "catalog", "intelligence-inventory.json"));
     using var workflowJson = JsonDocument.Parse(index);
     using var catalogJson = JsonDocument.Parse(catalog);
     var services = workflowJson.RootElement.GetProperty("services").EnumerateArray().Select(s => Required(s, "id")).ToArray();
@@ -43,6 +45,10 @@ try
     }
     if (originalIds.Length != indexedIds.Count || !indexedIds.SetEquals(originalIds))
         throw new InvalidDataException("O índice incorporado não cobre todas as ações do catálogo compilado.");
+    using var knowledgeJson = JsonDocument.Parse(intelligence);
+    var knowledgeIds = knowledgeJson.RootElement.EnumerateArray().Select(k=>Required(k,"Id")).ToArray();
+    if(knowledgeIds.Length!=originalIds.Length || !knowledgeIds.ToHashSet(StringComparer.Ordinal).SetEquals(originalIds.Select(id=>"legacy:"+id)))
+        throw new InvalidDataException("O inventário do Intelligence não preserva todas as funções originais.");
     Console.WriteLine($"Recursos compilados conferidos: índice no assembly principal; {indexedIds.Count} ações em {areas.Count} serviços; conteúdo idêntico às fontes.");
     return 0;
 }

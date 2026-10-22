@@ -171,6 +171,8 @@ public partial class IntelligenceWorkspace : UserControl
         finally { _filling=false; }
         FindingsList.ItemsSource=_session.Findings.Select(f=>new {f.Title,f.Evidence,f.NextTest,Status=f.Kind.Label()}).ToArray();
         MachineSummary.Text=$"{snapshot.Machine.Computer} · {snapshot.Machine.User}\n{snapshot.Machine.Os} · {snapshot.Machine.Architecture}\nCPU: {snapshot.Machine.Cpu}\nGPU: {string.Join(" / ",snapshot.Machine.Gpus)}\nDrivers: {string.Join(" / ",snapshot.Machine.GraphicsDrivers)}\nRAM: {snapshot.Machine.InstalledRamGb:0.##} GB · {snapshot.Machine.RamConfiguration}\nPlaca-mãe: {snapshot.Machine.Board}\nFirmware: {snapshot.Machine.Firmware}\nTipo: {(snapshot.Machine.Notebook==true?"Notebook":snapshot.Machine.Notebook==false?"Desktop":"Não confirmado")}";
+        MachineSummary.Text+="\n"+snapshot.Machine.CpuTopology+"\n"+string.Join("\n",snapshot.Machine.MemoryModules)+"\n"+
+            string.Join("\n",snapshot.Machine.FirmwareFeatures.Concat(snapshot.Machine.GraphicsFeatures).Select(f=>f.Key+": "+f.Value));
         CompatibilitySummary.Text=snapshot.Machine.Supported?"Sistema elegível para as verificações individuais. Compatibilidade de cada ajuste ainda é conferida antes da escrita.":"Diagnóstico disponível. Alterações automáticas não são habilitadas neste sistema/build; requer Windows 10 22H2 ou Windows 11 compatível.";
         ProcessesList.ItemsSource=snapshot.Processes.Take(15).Select(p=>$"{p.Name} · PID {p.Id} · CPU {(p.CpuPercent.HasValue?p.CpuPercent.Value.ToString("0.0")+"%":"não disponível")} · RAM {p.WorkingSetMb:0} MB").ToArray();
         StartupSummary.Text=snapshot.Startup.Count==0?"Nenhuma entrada Run/pasta de inicialização encontrada nas consultas disponíveis.":string.Join("\n",snapshot.Startup.Take(30).Select(s=>$"{s.Name} · {s.Location}"));
@@ -202,6 +204,7 @@ public partial class IntelligenceWorkspace : UserControl
     {
         var coordinator=new ChangeCoordinator(new WindowsSettingsGateway(_diagnostics),_store);
         await coordinator.ExecuteAsync(_session,Progress(),token);
+        RefreshChangeResults();
         RestartStatus.Text=_session.Stage==ServiceStage.Restart?"Há ajustes que exigem reinicialização. Salve o atendimento e retome depois de reiniciar manualmente.":"Nenhum ajuste gerenciado exigiu reinicialização. Reinicie o jogo se necessário e repita o teste nas mesmas condições.";
         PhaseBox.SelectedIndex=1;
         Status($"Execução encerrada: {_session.Changes.Count(c=>c.State=="Aplicado e verificado")} ajuste(s) verificado(s). O desempenho ainda precisa de validação.");
@@ -210,6 +213,7 @@ public partial class IntelligenceWorkspace : UserControl
     {
         if(_session.Profile==OptimizationProfile.Diagnostic) throw new InvalidOperationException("O perfil Diagnóstico não executa restaurações.");
         await new ChangeCoordinator(new WindowsSettingsGateway(_diagnostics),_store).RestoreAsync(_session,Progress(),token);
+        RefreshChangeResults();
         Status("Restauração concluída com verificação por ajuste. Confira o diário para operações que exigem revisão.");
     },mutating:true);
     private async void Restart_Click(object sender,RoutedEventArgs e)=>await WorkAsync(async token=>
@@ -354,7 +358,7 @@ public partial class IntelligenceWorkspace : UserControl
         await WorkAsync(async token=>
         {
             var session=await _store.LoadAsync(selected.Id,token);session.InvalidateApproval();_session=session;
-            FillContext();PopulateAnalysis(recompute:false);RefreshComparisons();
+            FillContext();PopulateAnalysis(recompute:false);RefreshComparisons();RefreshChangeResults();
             _liveSamples.Clear();foreach(var sample in (_session.After??_session.Before)?.Samples??[]) ShowSample(sample,false);
             WorkspaceTabs.SelectedIndex=_session.Before is null?0:2;
             await _store.SaveAsync(_session,token);
@@ -373,6 +377,11 @@ public partial class IntelligenceWorkspace : UserControl
         }
         finally{_filling=false;}
         UpdateProfileDescription();
+    }
+    private void RefreshChangeResults()
+    {
+        foreach(var record in _session.Changes)
+            AppendLog(record.Title+" · "+record.State+(record.Error.Length>0?" · "+record.Error:""));
     }
     private async void Save_Click(object sender,RoutedEventArgs e)=>await WorkAsync(async token=>{await _store.SaveAsync(_session,token);await RefreshSessionsAsync();Status("Atendimento salvo com configurações, plano, backups e medições disponíveis.");});
     private async void NewSession_Click(object sender,RoutedEventArgs e)

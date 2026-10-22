@@ -26,12 +26,17 @@ public static class ServiceReport
             {
                 new[] { "Computador / usuário", before.Machine.Computer + " / " + before.Machine.User }, new[] { "Sistema", before.Machine.Os + " / " + before.Machine.Architecture },
                 new[] { "CPU", before.Machine.Cpu }, new[] { "GPU / driver", string.Join(" / ",before.Machine.Gpus) + " / " + string.Join(" / ",before.Machine.GraphicsDrivers) },
+                new[] { "Modelo / topologia",before.Machine.ComputerModel+" / "+before.Machine.CpuTopology },
                 new[] { "RAM", $"{before.Machine.InstalledRamGb:0.##} GB · {before.Machine.RamConfiguration}" }, new[] { "Placa-mãe / firmware", before.Machine.Board + " / " + before.Machine.Firmware },
                 new[] { "Jogo / versão", session.Context.Game + " / " + session.Context.GameVersion }, new[] { "Problema relatado", session.Context.Symptom },
                 new[] { "Cena", session.Context.Scenario }, new[] { "Gráficos", session.Context.Resolution + " / " + session.Context.GraphicsPreset + " / " + session.Context.RefreshRate },
                 new[] { "FPS / sincronização", session.Context.FpsLimit + " / " + session.Context.Synchronization },
                 new[] { "Condições confirmadas", session.Context.HasComparableConditions ? "Sim, declaradas pelo técnico" : "Não; comparação inconclusiva" }
             });
+            Table(["Inventário adicional (snapshot)","Estado informado"],
+                before.Machine.FirmwareFeatures.Concat(before.Machine.GraphicsFeatures).Select(p=>new[]{p.Key,p.Value})
+                .Concat(before.Machine.MemoryModules.Select(m=>new[]{"Módulo de memória",m}))
+                .Concat(before.Machine.PhysicalStorage.Select(d=>new[]{"Armazenamento físico",d})));
         }
         html.Append("<h2>Diagnóstico</h2>");
         Table(["Estado", "Observação", "Evidência", "Próximo teste"], session.Findings.Select(f => new[] { f.Kind.Label(), f.Title, f.Evidence, f.NextTest }));
@@ -65,6 +70,9 @@ public static class ServiceReport
             });
         Paragraph("Método: FPS = 1000 / média dos intervalos MsBetweenPresents. 1% low = 1000 / média do 1% de intervalos mais lentos. p99 usa posto mais próximo. Não é o FPS interno do jogo nem uma medição direta de latência de entrada.");
         html.Append("<h2>Telemetria e estabilidade</h2>");
+        static string State(DiagnosticSnapshot? s,string id)=>s?.Settings.GetValueOrDefault(id) is {} v
+            ?v.Exists?$"{v.Kind}: {v.Data}":"Valor ausente (padrão não presumido)":"Consulta não disponível";
+        Table(["Configuração verificada","Antes","Depois"],IntelligenceSettings.Managed.Select(id=>new[]{id,State(before,id),State(session.After,id)}));
         static string Avg(DiagnosticSnapshot? s, Func<MetricSample,double?> selector, string unit)
         { var v = s?.Samples.Select(selector).Where(v => v.HasValue).Select(v => v!.Value).ToArray(); return v?.Length > 0 ? $"{v.Average():0.00} {unit} ({v.Length} leituras)" : "Não disponível"; }
         Table(["Leitura observada", "Antes", "Depois"], new List<string[]>

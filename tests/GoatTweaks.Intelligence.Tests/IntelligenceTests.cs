@@ -93,6 +93,28 @@ public sealed class IntelligenceTests
         var s=Session();var gateway=new FakeSettings(s.Before!);ChangeCoordinator.Approve(s,[IntelligenceSettings.GameMode]);
         await Assert.ThrowsAsync<IOException>(()=>new ChangeCoordinator(gateway,new MemoryJournal{FailOnSave=2}).ExecuteAsync(s,null,default));Assert.Empty(gateway.Writes);
     }
+    [Fact] public async Task InterruptedPreparedPlanCannotBeReusedWithoutReview()
+    {
+        var s=Session();var gateway=new FakeSettings(s.Before!);ChangeCoordinator.Approve(s,[IntelligenceSettings.GameMode]);
+        var coordinator=new ChangeCoordinator(gateway,new MemoryJournal{FailOnSave=2});
+        await Assert.ThrowsAsync<IOException>(()=>coordinator.ExecuteAsync(s,null,default));
+        Assert.Null(s.ApprovedPlanHash);
+        await Assert.ThrowsAsync<InvalidOperationException>(()=>coordinator.ExecuteAsync(s,null,default));
+        Assert.Empty(gateway.Writes);
+    }
+    [Fact] public void HardwareGuidanceUsesDetectedVendorsAndPreservesNotebookDrivers()
+    {
+        var guidance=HardwareGuidance.DriverReview(Machine() with{Cpu="AMD Ryzen 7",Gpus=["AMD Radeon", "NVIDIA GeForce"],Notebook=true,ComputerModel="Fixture Notebook"});
+        Assert.Contains("Notebook Fixture Notebook",guidance);Assert.Contains("Chipset AMD",guidance);Assert.Contains("NVIDIA:",guidance);Assert.Contains("AMD Graphics:",guidance);
+        Assert.DoesNotContain("Intel Graphics:",guidance);Assert.Contains("não afirma que estejam desatualizadas",guidance);
+    }
+    [Fact] public void ReportedDiskHealthIsAnObservationAndHddPresenceIsNotABottleneck()
+    {
+        var snapshot=Snapshot() with{Machine=Machine() with{PhysicalDisks=[new("Fixture HD","HD",1)]}};
+        var findings=RecommendationEngine.Diagnose(snapshot,Context());
+        Assert.Equal(EvidenceKind.Confirmed,findings.Single(f=>f.Id.StartsWith("storage.health.",StringComparison.Ordinal)).Kind);
+        Assert.Equal(EvidenceKind.Information,findings.Single(f=>f.Id=="storage.media").Kind);
+    }
     [Fact] public async Task FailedWriteIsCompensatedAndOtherIndependentOperationsContinue()
     {
         var s=Session();var gateway=new FakeSettings(s.Before!){FailOnceAfterWrite=IntelligenceSettings.BackgroundCapture};

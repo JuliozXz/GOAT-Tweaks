@@ -63,7 +63,7 @@ public sealed class WindowsDiagnostics
                 }
                 catch (JsonException) { unavailable.Add("Pacote de diagnóstico local ilegível; esse dado não foi usado."); }
             }
-            if (extra.ExitCode != 0) unavailable.Add("Uma ou mais consultas de diagnóstico não concluíram.");
+            if (extra.ExitCode != 0) unavailable.Add("Uma ou mais consultas de diagnóstico não concluíram: "+extra.Error.Trim()[..Math.Min(1200,extra.Error.Trim().Length)]);
         }
         catch (OperationCanceledException) when (!token.IsCancellationRequested) { unavailable.Add("Tempo limite das consultas CIM/eventos. Dados incompletos não são estimados."); }
         string[] plans = [];
@@ -92,12 +92,16 @@ public sealed class WindowsDiagnostics
             Computer = Environment.MachineName, User = Environment.UserName, Os = _hardware.WindowsName,
             OsBuild = Number(os,"BuildNumber"), IsWindowsClient = Number(os,"ProductType") == 1,
             Architecture = RuntimeInformation.OSArchitecture.ToString(), Cpu = _hardware.CpuName, LogicalProcessors = _hardware.Processors.Sum(p=>p.Threads),
+            CpuTopology = _hardware.CpuSummary, ComputerModel = Text(system,"Manufacturer")+" "+Text(system,"Model"),
             Gpus = _hardware.Graphics.Select(g=>g.Name).ToList(), GraphicsDrivers = _hardware.Graphics.Select(g=>g.Driver).ToList(),
             InstalledRamGb = _hardware.InstalledMemory > 0 ? _hardware.InstalledMemory/1073741824d : _hardware.UsableMemory > 0 ? _hardware.UsableMemory/1073741824d : null,
             RamConfiguration = _hardware.RamSummary, Board = _hardware.BoardName, Firmware = _hardware.BiosVersion, Notebook = notebook,
+            MemoryModules = _hardware.Modules.Select(m=>$"{m.Slot}: {HardwareSnapshot.FormatBytes(m.Capacity)} · {HardwareSnapshot.MemoryType(m.Type)} · {(m.Speed>0?m.Speed+" MHz informados pelo Windows":"velocidade não declarada")}").ToList(),
             OnAcPower = powerKnown && power.AcLineStatus is 0 or 1 ? power.AcLineStatus == 1 : null,
             BootId = Text(os,"LastBootUpTime"), AvailablePowerPlans = plans.ToList(),
             PhysicalStorage = Values(packets,"physical").Select(d=>$"{Text(d,"FriendlyName")} · {(Number(d,"MediaType") == 4 ? "SSD" : Number(d,"MediaType")==3 ? "HD" : "mídia não declarada")} · estado {Number(d,"HealthStatus")}").ToList(),
+            PhysicalDisks = Values(packets,"physical").Select(d=>new PhysicalDiskObservation(Text(d,"FriendlyName"),Number(d,"MediaType")==4?"SSD":Number(d,"MediaType")==3?"HD":"Não declarado",int.TryParse(Text(d,"HealthStatus"),out var health)?health:null)).ToList(),
+            FirmwareFeatures = ReadFirmwareFeatures(), GraphicsFeatures = ReadGraphicsFeatures(),
             Capabilities = ["Inventário CIM local", "Contadores Windows quando disponíveis", "Sensores compartilhados opcionais", "PresentMon/WPR opcionais instalados pelo técnico"]
         };
         if (_hardware.FailedQueries > 0) unavailable.Add($"Inventário: {_hardware.FailedQueries} consulta(s) de hardware sem resultado completo.");
@@ -158,6 +162,32 @@ public sealed class WindowsDiagnostics
             Startup=ReadStartup(unavailable),Drivers=drivers,Issues=issues,Settings=settings,Unavailable=unavailable.Distinct().ToList() };
     }
     private sealed record ProcessPoint(int Id,string Name,TimeSpan Cpu,long Memory,long Tick,DateTime Start);
+    private static Dictionary<string,string> ReadFirmwareFeatures()
+    {
+        var result=new Dictionary<string,string>();
+        result["Modo de firmware"]=GetFirmwareType(out var type)?type switch{1=>"BIOS legado",2=>"UEFI",_=>"Não disponível"}:"Não disponível";
+        result["Inicialização Segura"]=ReadMachineRegistry(@"SYSTEM\CurrentControlSet\Control\SecureBoot\State","UEFISecureBootEnabled") switch
+        {0=>"Desativada (estado informado pelo Windows)",1=>"Ativada (estado informado pelo Windows)",_=>"Não disponível"};
+        result["XMP/EXPO, voltagem e limites térmicos"]="Não expostos por esta fonte; consultar firmware/fabricante manualmente";
+        return result;
+    }
+    private static Dictionary<string,string> ReadGraphicsFeatures()=>new()
+    {
+        ["Preferência HwSchMode (snapshot)"]=ReadMachineRegistry(@"SYSTEM\CurrentControlSet\Control\GraphicsDrivers","HwSchMode") is {} mode
+            ?$"DWORD {mode}; não confirma agendamento ativo nem suporte do driver. Conferir em Configurações de gráficos."
+            :"Não declarada; padrão e suporte dependem do Windows/driver",
+        ["VRR, frequência efetiva e painel do fabricante"]="Consultar as configurações de exibição e do jogo; não inferidos da preferência de registro"
+    };
+    private static int? ReadMachineRegistry(string path,string name)
+    {
+        try
+        {
+            using var root=RegistryKey.OpenBaseKey(RegistryHive.LocalMachine,RegistryView.Registry64);
+            using var key=root.OpenSubKey(path);
+            return key?.GetValueKind(name)==RegistryValueKind.DWord?key.GetValue(name) as int?:null;
+        }
+        catch(Exception ex) when(ex is IOException or UnauthorizedAccessException or System.Security.SecurityException){return null;}
+    }
     private static Dictionary<int,ProcessPoint> Processes()
     {
         var values = new Dictionary<int,ProcessPoint>();
@@ -191,4 +221,5 @@ public sealed class WindowsDiagnostics
     private static int NumberValue(JsonElement e) => int.TryParse(e.ToString(),out var value) ? value : 0;
     [StructLayout(LayoutKind.Sequential)] private struct PowerStatus { public byte AcLineStatus,BatteryFlag,BatteryLifePercent,StatusFlag;public uint BatteryLifeTime,BatteryFullLifeTime; }
     [DllImport("kernel32.dll")] [return:MarshalAs(UnmanagedType.Bool)] private static extern bool GetSystemPowerStatus(out PowerStatus status);
+    [DllImport("kernel32.dll")] [return:MarshalAs(UnmanagedType.Bool)] private static extern bool GetFirmwareType(out uint type);
 }

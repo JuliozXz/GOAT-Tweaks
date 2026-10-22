@@ -109,7 +109,7 @@ public partial class MainWindow : Window
 
     private void Window_Closing(object? sender, CancelEventArgs e)
     {
-        if (!_isApplying && !IntelligencePanel.IsMutating) return;
+        if (!_isApplying && IntelligencePanel?.IsMutating != true) return;
         e.Cancel = true;
         ShowStatus("Aguarde a conclusão da operação de configurações para fechar o aplicativo.", true);
     }

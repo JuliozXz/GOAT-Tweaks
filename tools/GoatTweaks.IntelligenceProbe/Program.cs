@@ -57,6 +57,7 @@ if(powerMachine.AvailablePowerPlans.Contains(IntelligenceSettings.BalancedGuid,S
 else results["powerPlanRoundtripLimitation"]="Plano Equilibrado ou estado original indisponível na VM; reversão não exercitada neste ambiente.";
 Console.WriteLine("Coletando diagnóstico inicial real na VM.");
 var before=await diagnostics.CaptureAsync(TimeSpan.FromSeconds(12),null,new Progress<string>(Console.WriteLine),default);
+foreach(var unavailable in before.Unavailable) Console.WriteLine("Dado ausente: "+unavailable);
 if(before.Samples.Count<5 || string.IsNullOrWhiteSpace(before.Machine.Cpu) || before.Machine.Cpu.Contains("não informado",StringComparison.OrdinalIgnoreCase)
     || before.Machine.Gpus.Count==0 || before.Machine.InstalledRamGb<=0 || before.Machine.MachineId.Length==0 || !before.Samples.Any(s=>s.MemoryPercent.HasValue))
     throw new InvalidDataException("Diagnóstico nativo sem dados mínimos.");

@@ -36,7 +36,13 @@ public partial class App : System.Windows.Application
         catch (Exception exception)
         {
             Environment.ExitCode = 1;
-            MessageBox.Show($"Não foi possível abrir o GOAT Tweaks.\n\n{exception.Message}",
+            try
+            {
+                var directory=Path.Combine(GoatPaths.LocalRoot,"logs");Directory.CreateDirectory(directory);
+                File.WriteAllText(Path.Combine(directory,"startup-error.txt"),exception.ToString());
+            }
+            catch(Exception logging) when(logging is IOException or UnauthorizedAccessException) { }
+            MessageBox.Show($"Não foi possível abrir o GOAT Tweaks.\n\n{exception.GetBaseException().Message}",
                 "GOAT Tweaks", MessageBoxButton.OK, MessageBoxImage.Error);
             Shutdown();
         }

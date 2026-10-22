@@ -71,10 +71,13 @@ public sealed record MachineFacts
     public string Architecture { get; init; } = "";
     public string Cpu { get; init; } = "";
     public int LogicalProcessors { get; init; }
+    public string CpuTopology { get; init; } = "Não disponível";
+    public string ComputerModel { get; init; } = "";
     public List<string> Gpus { get; init; } = [];
     public List<string> GraphicsDrivers { get; init; } = [];
     public double? InstalledRamGb { get; init; }
     public string RamConfiguration { get; init; } = "Não disponível";
+    public List<string> MemoryModules { get; init; } = [];
     public string Board { get; init; } = "";
     public string Firmware { get; init; } = "";
     public bool? Notebook { get; init; }
@@ -82,6 +85,9 @@ public sealed record MachineFacts
     public string BootId { get; init; } = "";
     public List<string> AvailablePowerPlans { get; init; } = [];
     public List<string> PhysicalStorage { get; init; } = [];
+    public List<PhysicalDiskObservation> PhysicalDisks { get; init; } = [];
+    public Dictionary<string,string> FirmwareFeatures { get; init; } = [];
+    public Dictionary<string,string> GraphicsFeatures { get; init; } = [];
     public List<string> Capabilities { get; init; } = [];
     public bool Supported => IsWindowsClient && OsBuild >= 19045 && Architecture is "X64" or "Arm64";
     public string Fingerprint => IntelligenceLabels.Hash(string.Join("|", MachineId, UserId, OsBuild, Architecture, Cpu,
@@ -111,6 +117,7 @@ public sealed record StorageObservation(string Drive, double TotalGb, double Fre
     public double FreePercent => TotalGb > 0 ? 100 * FreeGb / TotalGb : 0;
 }
 public sealed record StartupObservation(string Name, string Location);
+public sealed record PhysicalDiskObservation(string Model, string Media, int? HealthStatus);
 public sealed record DriverObservation(string Device, string Version, int ErrorCode);
 public sealed record SystemIssue(DateTimeOffset At, string Source, int EventId, string Message);
 public sealed record Finding(string Id, string Title, EvidenceKind Kind, string Evidence, string NextTest);

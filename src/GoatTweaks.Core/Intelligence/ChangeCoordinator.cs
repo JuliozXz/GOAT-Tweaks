@@ -35,12 +35,16 @@ public sealed class ChangeCoordinator(ISettingsGateway settings, ISessionJournal
         using var mutation = journal.AcquireMutationLock();
         if (session.Profile == OptimizationProfile.Diagnostic || session.Before is null || session.ApprovedAt is null ||
             DateTimeOffset.UtcNow - session.ApprovedAt > TimeSpan.FromMinutes(30) ||
+            session.ApprovedAt > DateTimeOffset.UtcNow.AddMinutes(1) ||
+            session.Changes.Any(c => c.State is "Aplicado e verificado" or "Preparado" or "Revisão necessária") ||
             session.AuthorizedIds.Count == 0 || session.ApprovedPlanHash != session.PlanHash())
             throw new InvalidOperationException("Plano ausente, alterado ou expirado. Revise a prévia e autorize novamente.");
         var machine = await settings.ReadMachineAsync(token);
         if (!machine.Supported || machine.Fingerprint != session.Before.Machine.Fingerprint)
             throw new InvalidOperationException("Máquina, usuário, sistema ou driver mudou desde o diagnóstico. Refaça a análise.");
         session.Stage = ServiceStage.Execution;
+        // Approval is single use, including interruption after a durable prepared record.
+        session.ApprovedPlanHash = null;
         await journal.SaveAsync(session, token);
         foreach (var id in session.AuthorizedIds.ToArray())
         {

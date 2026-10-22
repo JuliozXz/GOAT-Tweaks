@@ -151,6 +151,8 @@ catch{
     throw
 }
 finally{
+    $StartupError=Join-Path $env:LOCALAPPDATA 'GoatTweaks\logs\startup-error.txt'
+    if(Test-Path $StartupError){Copy-Item $StartupError (Join-Path $Output 'startup-error.txt')}
     $Report|ConvertTo-Json -Depth 8|Set-Content (Join-Path $Output 'hud-verification.json') -Encoding UTF8
     if($null -ne $App){if(-not $App.HasExited){$null=$App.CloseMainWindow();if(-not $App.WaitForExit(10000)){$App.Kill()}};$App.Dispose()}
     [GoatHudDesktop]::RestoreScreen()

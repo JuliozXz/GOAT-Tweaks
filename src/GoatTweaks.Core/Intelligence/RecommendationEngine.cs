@@ -46,6 +46,18 @@ public static class RecommendationEngine
             Add("space." + disk.Drive, "Pouco espaço em " + disk.Drive, EvidenceKind.Confirmed,
                 $"{disk.FreeGb:0.0} GB livres de {disk.TotalGb:0.0} GB ({disk.FreePercent:0.0}%).",
                 "Revisar arquivos e aplicativos com o técnico; não apagar caches de shaders ou arquivos do jogo indiscriminadamente.");
+        foreach(var disk in snapshot.Machine.PhysicalDisks.Where(d=>d.HealthStatus is >0))
+            Add("storage.health."+IntelligenceLabels.Hash(disk.Model)[..12],"Armazenamento informa alerta de saúde",EvidenceKind.Confirmed,
+                $"{disk.Model} · {disk.Media} · HealthStatus {disk.HealthStatus} informado pelo provedor de armazenamento; não substitui diagnóstico do fabricante.",
+                "Priorizar backup dos dados e ferramenta oficial do fabricante antes de otimizar ou executar manutenção de escrita. Não tentar corrigir com tweaks.");
+        if(snapshot.Machine.Notebook==true)
+            Add("hardware.notebook","Limites de notebook preservados",EvidenceKind.Information,
+                snapshot.Machine.ComputerModel+" · alimentação: "+(snapshot.Machine.OnAcPower==true?"tomada":snapshot.Machine.OnAcPower==false?"bateria":"não confirmada"),
+                "Usar perfis térmicos/energia do fabricante. O motor não altera plano OEM, voltagem ou refrigeração.");
+        if(snapshot.Machine.PhysicalDisks.Any(d=>d.Media=="HD"))
+            Add("storage.media","HD identificado; localização do jogo precisa ser conferida",EvidenceKind.Information,
+                string.Join(" / ",snapshot.Machine.PhysicalDisks.Where(d=>d.Media=="HD").Select(d=>d.Model)),
+                "Se o jogo estiver no HD e houver travadas de carregamento, medir I/O do jogo e verificar requisitos de armazenamento oficiais. A presença de HD não confirma gargalo.");
         foreach (var driver in snapshot.Drivers.Where(d => d.ErrorCode != 0))
             Add("driver." + driver.Device, "Dispositivo relata erro", EvidenceKind.Confirmed,
                 $"{driver.Device}: ConfigManagerErrorCode = {driver.ErrorCode}; driver {driver.Version}.",
@@ -127,6 +139,16 @@ public static class RecommendationEngine
                 Restoration = "Análise sem alterações. Qualquer intervenção manual exige procedimento próprio.",
                 Classification = RecommendationClass.NeedsTest, AutomationLevel = 1
             });
+        result.Add(new Recommendation
+        {
+            Id="hardware.driver-review",Title="Revisar drivers compatíveis com este hardware",Problem="Compatibilidade e procedência dos drivers precisam de revisão específica do modelo.",
+            Evidence=snapshot.Machine.Cpu+" · "+string.Join(" / ",snapshot.Machine.Gpus)+" · drivers "+string.Join(" / ",snapshot.Machine.GraphicsDrivers),
+            Proposal=HardwareGuidance.DriverReview(snapshot.Machine),ExpectedBenefit="Corrigir uma incompatibilidade confirmada quando houver; nenhum ganho estimado nem atualização presumida.",
+            Confidence="Alta para o inventário disponível; necessidade de atualização não confirmada",Risk="Instalação manual pode exigir reinício e causar regressões. Conferir pacote exato e procedimento do fabricante.",
+            Compatibility=snapshot.Machine.Os+" · "+snapshot.Machine.Architecture+" · "+snapshot.Machine.Board,
+            Prerequisites="Revisar requisitos oficiais do jogo e notas do driver para o modelo detectado.",Restoration="A análise é somente leitura. Uma instalação externa exige guardar o pacote anterior e verificar a reversão do fabricante.",
+            Classification=RecommendationClass.NeedsTest,AutomationLevel=1
+        });
         result.Add(new Recommendation
         {
             Id = "manual.security", Title = "Preservar segurança, firmware e proteções do fabricante",
