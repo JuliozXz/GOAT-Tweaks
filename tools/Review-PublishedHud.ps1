@@ -131,10 +131,20 @@ function Invoke-NamedButton([string]$Name) {
 function Open-Published([string]$Phase) {
     $Before = [DateTime]::Now
     $Watch = [Diagnostics.Stopwatch]::StartNew()
-    $Bootstrap = Start-Process -FilePath $WindowsPowerShell -ArgumentList @('-NoLogo','-NoProfile','-NonInteractive','-Command', $Command) -PassThru `
-        -RedirectStandardOutput (Join-Path $OutputDirectory "$Phase-powershell.txt") -RedirectStandardError (Join-Path $OutputDirectory "$Phase-powershell-errors.txt")
+    $Bootstrap = [Diagnostics.Process]::new()
+    $Bootstrap.StartInfo = [Diagnostics.ProcessStartInfo]::new($WindowsPowerShell, ('-NoLogo -NoProfile -NonInteractive -Command "' + $Command + '"'))
+    $Bootstrap.StartInfo.UseShellExecute = $false
+    $Bootstrap.StartInfo.CreateNoWindow = $true
+    $Bootstrap.StartInfo.RedirectStandardOutput = $true
+    $Bootstrap.StartInfo.RedirectStandardError = $true
+    $null = $Bootstrap.Start()
+    $OutputTask = $Bootstrap.StandardOutput.ReadToEndAsync()
+    $ErrorTask = $Bootstrap.StandardError.ReadToEndAsync()
     try {
         if (-not $Bootstrap.WaitForExit(360000)) { $Bootstrap.Kill(); throw 'O comando não concluiu o download no prazo da conferência.' }
+        [IO.File]::WriteAllText((Join-Path $OutputDirectory "$Phase-powershell.txt"), $OutputTask.GetAwaiter().GetResult())
+        [IO.File]::WriteAllText((Join-Path $OutputDirectory "$Phase-powershell-errors.txt"), $ErrorTask.GetAwaiter().GetResult())
+        $Report["${Phase}ExitCode"] = $Bootstrap.ExitCode
         if ($Bootstrap.ExitCode -ne 0) { throw "O comando do PowerShell falhou: $Phase (código $($Bootstrap.ExitCode))." }
     }
     finally { $Bootstrap.Dispose() }
