@@ -20,6 +20,10 @@ Atendimentos e backups ficam em `%LOCALAPPDATA%\GoatTweaks\Intelligence\sessions
 
 Arquitetura, métodos, inventário e limites: [Intelligence](docs/INTELLIGENCE.md) e [inventário completo](docs/INTELLIGENCE-INVENTORY.md).
 
+![GOAT Intelligence em execução real no Windows](docs/screenshots/v3-intelligence-monitor.png)
+
+Captura da VM de validação: leituras reais da janela encerrada, sem benchmark de jogo. [Ver janela compacta](docs/screenshots/v3-intelligence-compact.png).
+
 ## Abrir a interface
 
 Execute no PowerShell:

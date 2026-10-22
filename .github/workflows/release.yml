@@ -87,3 +87,13 @@ jobs:
           if ($LASTEXITCODE -ne 0) { throw 'Não foi possível concluir a publicação da release.' }
           "Comando de inicialização:" >> $env:GITHUB_STEP_SUMMARY
           "irm https://github.com/$env:GITHUB_REPOSITORY/releases/latest/download/goat.ps1 | iex" >> $env:GITHUB_STEP_SUMMARY
+      - name: Conferir comando publico no Windows PowerShell 5.1
+        run: ./tools/Confirm-WindowsStartup.ps1 -PublishedLauncher -ReportDirectory artifacts/published-launcher
+      - name: Guardar evidencia do comando publico
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: comando-${{ env.RELEASE_TAG }}
+          path: artifacts/published-launcher/
+          retention-days: 30
+          if-no-files-found: warn
