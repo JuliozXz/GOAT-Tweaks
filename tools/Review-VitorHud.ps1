@@ -131,7 +131,8 @@ function Open-Tab([string]$Id, [string]$Name) {
     Start-Sleep -Seconds 2
     try {
         $Tabs = Find-Control 'WPFTabNav'
-        $Selected = $Tabs.GetCurrentPattern([System.Windows.Automation.SelectionPattern]::Pattern).GetSelection()
+        $Selection = $Tabs.GetCurrentPattern([System.Windows.Automation.SelectionPattern]::Pattern)
+        $Selected = $Selection.Current.GetSelection()
         if ($Selected.Count -gt 0) {
             $Actual = $Selected[0].Current.Name
             if ($Actual -and $Actual -ne $Name) { throw "A navegação selecionou $Actual em vez de $Name." }
