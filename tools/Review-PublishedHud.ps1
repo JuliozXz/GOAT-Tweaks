@@ -1,4 +1,4 @@
-[CmdletBinding()]
+﻿[CmdletBinding()]
 param([string]$OutputDirectory = (Join-Path $PSScriptRoot '..\artifacts\hud'))
 $ErrorActionPreference = 'Stop'
 $PSNativeCommandUseErrorActionPreference = $false
@@ -15,6 +15,8 @@ $Report = [ordered]@{
     initialCachePresent = (Test-Path -LiteralPath $Executable); pages = @();
     queueAdded = 0; queueCleared = $false; appliedActions = 0;
 }
+$Report.automationPowerShell = $PSVersionTable.PSVersion.ToString()
+$Report.hashModule = (Get-Command Get-FileHash -ErrorAction Stop).Module.Path
 $App = $null
 
 Add-Type -AssemblyName UIAutomationClient, UIAutomationTypes, System.Windows.Forms, System.Drawing
@@ -132,7 +134,7 @@ function Open-Published([string]$Phase) {
     $Bootstrap = Start-Process -FilePath $WindowsPowerShell -ArgumentList @('-NoLogo','-NoProfile','-NonInteractive','-Command', $Command) -PassThru `
         -RedirectStandardOutput (Join-Path $OutputDirectory "$Phase-powershell.txt") -RedirectStandardError (Join-Path $OutputDirectory "$Phase-powershell-errors.txt")
     try {
-        if (-not $Bootstrap.WaitForExit(360000)) { $Bootstrap.Kill($true); throw 'O comando não concluiu o download no prazo da conferência.' }
+        if (-not $Bootstrap.WaitForExit(360000)) { $Bootstrap.Kill(); throw 'O comando não concluiu o download no prazo da conferência.' }
         if ($Bootstrap.ExitCode -ne 0) { throw "O comando do PowerShell falhou: $Phase (código $($Bootstrap.ExitCode))." }
     }
     finally { $Bootstrap.Dispose() }
@@ -155,7 +157,7 @@ function Close-App {
         $App.Refresh()
         if (-not $App.HasExited) {
             $null = $App.CloseMainWindow()
-            if (-not $App.WaitForExit(5000)) { $App.Kill($true) }
+            if (-not $App.WaitForExit(5000)) { $App.Kill() }
         }
         $App.Dispose()
     }
