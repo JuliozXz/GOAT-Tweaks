@@ -68,8 +68,13 @@ function Get-AppWindow {
     if ($App.HasExited) { throw "O PowerShell do aplicativo encerrou (código $($App.ExitCode))." }
     $Condition = [System.Windows.Automation.PropertyCondition]::new([System.Windows.Automation.AutomationElement]::ProcessIdProperty, $App.Id)
     $Windows = [System.Windows.Automation.AutomationElement]::RootElement.FindAll([System.Windows.Automation.TreeScope]::Children, $Condition)
+    $Report.windowCandidates = @($Windows | ForEach-Object {
+        [ordered]@{ name = $_.Current.Name; className = $_.Current.ClassName; framework = $_.Current.FrameworkId; handle = $_.Current.NativeWindowHandle }
+    })
     foreach ($Window in $Windows) {
-        if ($Window.Current.Name -like 'GOAT Tweaks*' -and $Window.Current.ClassName -like 'HwndWrapper*') {
+        # UI Automation reports a WPF Window's class as "Window"; the native
+        # HwndWrapper name is not guaranteed to be the automation class name.
+        if ($Window.Current.Name -like 'GOAT Tweaks*' -and ($Window.Current.FrameworkId -eq 'WPF' -or $Window.Current.ClassName -like 'HwndWrapper*')) {
             $script:AppWindow = $Window
             $script:WindowHandle = [IntPtr]::new($Window.Current.NativeWindowHandle)
             return $Window
@@ -124,8 +129,8 @@ function Open-Tab([string]$Id, [string]$Name) {
     $null = [GoatHudDesktop]::SetForegroundWindow($script:WindowHandle)
     [GoatHudDesktop]::Click([int]$Point.X, [int]$Point.Y)
     Start-Sleep -Seconds 2
-    $Tabs = Find-Control 'WPFTabNav'
     try {
+        $Tabs = Find-Control 'WPFTabNav'
         $Selected = $Tabs.GetCurrentPattern([System.Windows.Automation.SelectionPattern]::Pattern).GetSelection()
         if ($Selected.Count -gt 0) {
             $Actual = $Selected[0].Current.Name
@@ -134,7 +139,7 @@ function Open-Tab([string]$Id, [string]$Name) {
     }
     catch [System.InvalidOperationException] { Write-Host 'A navegação será registrada pela captura da área visível.' }
 }
-function Scroll-Bottom {
+function Scroll-Page([double]$Percent) {
     $Candidates = @()
     foreach ($Element in (Get-AppWindow).FindAll([System.Windows.Automation.TreeScope]::Descendants, [System.Windows.Automation.Condition]::TrueCondition)) {
         if ($Element.Current.IsOffscreen) { continue }
@@ -145,7 +150,7 @@ function Scroll-Bottom {
         }
     }
     $Largest = $Candidates | Sort-Object Area -Descending | Select-Object -First 1
-    if ($null -ne $Largest) { $Largest.Pattern.SetScrollPercent(-1, 100); Start-Sleep -Milliseconds 700 }
+    if ($null -ne $Largest) { $Largest.Pattern.SetScrollPercent(-1, $Percent); Start-Sleep -Milliseconds 700 }
 }
 
 try {
@@ -197,11 +202,11 @@ try {
     Capture-Hud '01-install' 'Install'
     Open-Tab 'WPFTab2BT' 'Tweaks'
     Capture-Hud '02-tweaks' 'Tweaks'
-    Scroll-Bottom
+    Scroll-Page 100
     Capture-Hud '03-tweaks-final' 'Tweaks - parte inferior'
     Open-Tab 'WPFTab7BT' 'Ultimate'
     Capture-Hud '04-ultimate' 'Ultimate'
-    Scroll-Bottom
+    Scroll-Page 100
     Capture-Hud '05-ultimate-final' 'Ultimate - parte inferior'
     Open-Tab 'WPFTab3BT' 'Config'
     Capture-Hud '06-config' 'Config'
@@ -211,8 +216,7 @@ try {
     Capture-Hud '08-win11-creator' 'Win11 Creator'
     Open-Tab 'WPFTab2BT' 'Tweaks'
     # Return to the top so the AppX navigation button is visible.
-    Open-Tab 'WPFTab3BT' 'Config'
-    Open-Tab 'WPFTab2BT' 'Tweaks'
+    Scroll-Page 0
     $Appx = Find-Control 'WPFAppxRemoval'
     if ($Appx.Current.IsOffscreen) {
         $Pattern = $null
