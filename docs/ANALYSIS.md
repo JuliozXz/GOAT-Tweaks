@@ -1,6 +1,6 @@
 # Análise dos quatro materiais
 
-Os quatro links estavam acessíveis. Todos têm código-fonte completo e nenhum traz executável sem fonte. Os commits fixados e o inventário completo de cada ação (arquivo de origem, admin, risco, áreas afetadas, reversão e downloads) estão em [FUNCTION-MAP.md](FUNCTION-MAP.md). Os conflitos estão em [CONFLICTS.md](CONFLICTS.md).
+Os quatro projetos têm fontes disponíveis para os recursos incorporados. Os scripts também baixam binários externos durante algumas ações; a disponibilidade das fontes dos projetos não certifica esses downloads. Os commits fixados e o inventário de cada ação (arquivo de origem, admin, risco, áreas afetadas, reversão e downloads) estão em [FUNCTION-MAP.md](FUNCTION-MAP.md). Os conflitos estão em [CONFLICTS.md](CONFLICTS.md), e a revisão de procedência em [SECURITY-REVIEW.md](SECURITY-REVIEW.md).
 
 | Material | Tecnologia / licença | Windows | Admin | Itens no GOAT Tweaks |
 |---|---|---|---|---|
@@ -26,7 +26,7 @@ Os quatro links estavam acessíveis. Todos têm código-fonte completo e nenhum 
 
 Nenhum desses binários foi executado no ambiente de desenvolvimento. O comportamento deles só é observável no teste em VM Windows isolada, e o upstream não publica hash para a maioria.
 
-## Itens de alto risco (exigem confirmação digitada no app)
+## Itens de alto risco (exigem modo avançado no app, sem confirmação digitada)
 UAC (`EnableLUA=0`), Defender/SmartScreen/Firewall, VBS/HVCI/Core Isolation, lista de drivers vulneráveis, Spectre/Meltdown, DEP, bypass de assinatura de driver, `bcdedit`, BitLocker, atualizações do Windows, remoção de drivers (DDU), reset de fábrica/reinstalação/autounattend, conversão de edição/ativação e o WinSux completo.
 
 ## Pontos que exigem atenção

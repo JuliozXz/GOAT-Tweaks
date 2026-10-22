@@ -15,6 +15,7 @@
     <ProjectReference Include="../GoatTweaks.Runner/GoatTweaks.Runner.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="../../catalog/workflow.pt-BR.json" LogicalName="GoatTweaks.workflow.pt-BR.json" />
+    <!-- This JSON is loaded by exact manifest name, not by ResourceManager satellite lookup. -->
+    <EmbeddedResource Include="../../catalog/workflow.pt-BR.json" LogicalName="GoatTweaks.workflow.pt-BR.json" WithCulture="false" />
   </ItemGroup>
 </Project>
