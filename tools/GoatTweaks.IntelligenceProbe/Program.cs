@@ -9,6 +9,7 @@ var output=Path.GetFullPath(args[1]);Directory.CreateDirectory(output);
 var diagnostics=new WindowsDiagnostics();var gateway=new WindowsSettingsGateway(diagnostics);
 var results=new Dictionary<string,object?> { ["isolatedVm"]=true,["physicalGamingBenchmark"]=false,["legacyActionsApplied"]=0 };
 var machineForFlow=await diagnostics.ReadMachineAsync(default);
+Console.WriteLine($"Identificação: {machineForFlow.Os} · {machineForFlow.Architecture} · {machineForFlow.Cpu} · RAM {machineForFlow.InstalledRamGb} GB");
 var roundtrips=new List<object>();
 foreach(var id in new[]{IntelligenceSettings.GameMode,IntelligenceSettings.BackgroundCapture})
 {

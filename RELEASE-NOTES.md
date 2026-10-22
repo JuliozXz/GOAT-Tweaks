@@ -1,16 +1,23 @@
-GOAT Tweaks v2.0.2 corrige a falha de abertura com a mensagem “Índice de serviços ausente”.
+GOAT Tweaks v3.0.0 — GOAT Intelligence
 
-O compilador interpretava o sufixo pt-BR do JSON como uma indicação de idioma e colocava o índice em um assembly de recursos separado. O carregador do painel procurava esse conteúdo no assembly principal e encerrava a abertura.
+O painel evolui para um fluxo local de diagnóstico, plano autorizado, alterações rastreáveis e validação. O motor usa regras explicáveis sobre evidências reais; não estima FPS nem aplica todos os tweaks disponíveis.
 
-- O índice agora é incorporado explicitamente ao assembly principal, com WithCulture=false e o mesmo nome de manifesto esperado pelo carregador.
-- A publicação passa a inspecionar os assemblies compilados sem executar o aplicativo: exige o recurso no local correto, compara os bytes com os JSON de origem e confere a cobertura das 619 ações nas 11 áreas.
-- Um índice ausente, em um assembly de idioma, divergente ou incompleto impede a criação do pacote publicado.
-- Mantidos o painel preto e vermelho, a identificação de hardware, os serviços por assunto e o download com tentativas, retomada e mecanismo alternativo.
+- GOAT Intelligence e GOAT Service Mode: identificação, diagnóstico, plano, execução isolada, conferência de reinício, validação e relatório HTML.
+- Cinco perfis: FPS Máximo, Competitivo, Equilibrado, Diagnóstico e Personalizado. Diagnóstico inicia por padrão e bloqueia alterações e restaurações.
+- Inventário de CPU, GPU/drivers, RAM/módulos/geração disponível, placa-mãe, firmware/UEFI, alimentação, armazenamento, inicialização, processos e eventos. Dados não disponíveis são informados explicitamente.
+- Recomendações com evidência, impacto provável, confiança, risco, compatibilidade e restauração. Uso elevado de CPU/GPU ou temperatura isolada produz hipótese, sem afirmar um gargalo.
+- Três alvos gerenciados: preferência explícita do Modo de Jogo, captura histórica e Economia de energia → Equilibrado em desktop elegível. Cada alteração exige seleção e autorização, backup específico antes da escrita, verificação e reversão protegida contra mudanças externas.
+- Atendimentos persistentes, retomada sem reaplicação automática e aprovação de uso único. Nenhuma alteração de BIOS, firmware, voltagem, overclock, undervolt, anticheat ou desativação de segurança pelo motor automático.
+- PresentMon opcional/CSV real para FPS médio, 1% low, frametime e p99. Condições divergentes tornam a comparação inconclusiva. WPR/WPA opcionais usam rastreios próprios, sem interferir em gravações de terceiros.
+- As 619 ações originais permanecem nas 11 áreas. Ferramentas sensíveis exigem revisão manual explícita e execução isolada; não foram declaradas automaticamente reversíveis ou benéficas.
+- Identidade preta e vermelha preservada e logo enviada pelo usuário incorporada ao aplicativo.
 
-Esta correção trata do empacotamento do painel. Não altera os scripts originais ou suas ações no Windows.
+Os testes do motor, regressões do catálogo, verificações nativas e capturas da interface ficam nos artefatos de GitHub Actions. Métodos, escopo e evidências estão em `docs/INTELLIGENCE.md`.
 
-Validação: compilação, conferência dos recursos e abertura real do painel em Windows x64 e Windows 11 ARM64 com emulação x64. A janela permaneceu aberta e respondendo, identificou o hardware local e não aplicou ajustes. O inicializador gerado foi analisado pelo próprio Windows PowerShell 5.1. Não foi executada uma nova suíte de testes ou qualquer ação da fila.
+Uma VM não comprova estabilidade em todos os computadores ou melhora em jogos. Temperaturas e clocks dependem de sensores existentes; benchmarks dependem de medição e condições comparáveis. Não há garantia de ganho de FPS ou ausência de falhas em todo hardware.
 
-A revisão comparou os 327 arquivos incorporados às versões fixadas dos quatro projetos originais: conteúdos idênticos, com normalização apenas de quebras de linha em 126 arquivos do winutil. Não foi identificado componente malicioso nessa inspeção. As funções originais de Defender, SmartScreen e UAC foram preservadas conforme solicitado.
+Abrir no PowerShell:
 
-O workflow de publicação analisa os recursos e o pacote com Microsoft Defender e exige a abertura do painel antes de disponibilizar os downloads. Os resultados, as versões do mecanismo e das assinaturas e a captura da interface ficam nos artefatos da execução. Essa análise não certifica arquivos externos baixados posteriormente pelas ações nem garante o mesmo resultado em todos os antivírus. A revisão anterior desta correção registrou ausência de detecções com assinaturas 1.461.144.0; o bloqueio relatado da versão anterior não pôde ser atribuído sem o nome da ameaça. Detalhes em docs/SECURITY-REVIEW.md.
+```powershell
+irm https://github.com/JuliozXz/GOAT-Tweaks/releases/latest/download/goat.ps1 | iex
+```

@@ -105,6 +105,7 @@ public sealed class WindowsDiagnostics
             Capabilities = ["Inventário CIM local", "Contadores Windows quando disponíveis", "Sensores compartilhados opcionais", "PresentMon/WPR opcionais instalados pelo técnico"]
         };
         if (_hardware.FailedQueries > 0) unavailable.Add($"Inventário: {_hardware.FailedQueries} consulta(s) de hardware sem resultado completo.");
+        if(_hardware.DiscoveryWarning.Length>0) unavailable.Add(_hardware.DiscoveryWarning);
         if (notebook is null) unavailable.Add("Tipo desktop/notebook não confirmado; ajustes de energia não serão automatizados.");
         return (facts,packets,unavailable);
     }

@@ -6,7 +6,7 @@ on:
       version:
         description: Versão da release (por exemplo, v1.0.0)
         required: true
-        default: v2.0.2
+        default: v3.0.0
         type: string
   push:
     branches:
@@ -56,6 +56,9 @@ jobs:
           "RELEASE_TAG=$Tag" >> $env:GITHUB_ENV
       - name: Compilar e preparar os arquivos
         run: ./tools/Publish-Release.ps1 -Repository $env:GITHUB_REPOSITORY -Version $env:RELEASE_TAG
+      - name: Conferir scripts locais no Windows PowerShell 5.1
+        shell: powershell
+        run: ./tools/Confirm-IntelligenceScripts.ps1
       - name: Analisar recursos e pacote com Microsoft Defender
         run: ./tools/Inspect-PackageWithDefender.ps1
       - name: Conferir abertura do painel e sintaxe do Windows PowerShell

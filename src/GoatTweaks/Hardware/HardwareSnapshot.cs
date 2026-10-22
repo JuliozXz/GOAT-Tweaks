@@ -20,6 +20,7 @@ public sealed record HardwareSnapshot
     public ulong UsableMemory { get; init; }
     public bool Detected { get; init; }
     public int FailedQueries { get; init; }
+    public string DiscoveryWarning { get; init; } = "";
     public DateTimeOffset? UpdatedAt { get; init; }
 
     public string CpuName => Processors.Count == 0 ? (Detected ? Unknown : "Identificando processador…") : string.Join(" + ", Processors.Select(p => p.Name));

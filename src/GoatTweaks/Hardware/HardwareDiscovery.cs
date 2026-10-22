@@ -36,9 +36,10 @@ public static class HardwareDiscovery
     private static async Task<HardwareSnapshot> CollectAsync(HardwareSnapshot previous, CancellationToken cancellationToken)
     {
         using var timeout = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-        timeout.CancelAfter(TimeSpan.FromSeconds(22));
+        timeout.CancelAfter(TimeSpan.FromSeconds(50));
         var packets = new Dictionary<string, JsonElement>(StringComparer.Ordinal);
         var failures = 0;
+        var warning = "";
         using var process = new Process
         {
             StartInfo = new ProcessStartInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System),
@@ -53,10 +54,24 @@ public static class HardwareDiscovery
         {
             process.StartInfo.Environment["PSModulePath"] = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System),"WindowsPowerShell","v1.0","Modules");
             process.Start();
+            var stdout = process.StandardOutput.ReadToEndAsync(CancellationToken.None);
             var stderr = process.StandardError.ReadToEndAsync(CancellationToken.None);
             try
             {
-                while (await process.StandardOutput.ReadLineAsync(timeout.Token) is { } line)
+                await process.WaitForExitAsync(timeout.Token);
+            }
+            finally
+            {
+                if (!process.HasExited)
+                {
+                    try { process.Kill(entireProcessTree: true); }
+                    catch (InvalidOperationException) { }
+                    catch (System.ComponentModel.Win32Exception) { }
+                }
+                await process.WaitForExitAsync(CancellationToken.None);
+                // Drain both streams while the child runs, then decode complete packets.
+                // This also preserves packets emitted before a slow provider times out.
+                foreach(var line in (await stdout).Split('\n',StringSplitOptions.RemoveEmptyEntries))
                 {
                     if (line.Length > 262144) continue;
                     try
@@ -72,24 +87,14 @@ public static class HardwareDiscovery
                     catch (KeyNotFoundException) { }
                     catch (InvalidOperationException) { }
                 }
-                await process.WaitForExitAsync(timeout.Token);
-                if (process.ExitCode != 0) failures++;
-            }
-            finally
-            {
-                if (!process.HasExited)
-                {
-                    try { process.Kill(entireProcessTree: true); }
-                    catch (InvalidOperationException) { }
-                    catch (System.ComponentModel.Win32Exception) { }
-                }
+                if (process.ExitCode != 0) { failures++;warning="O inventário local terminou com erro: "+(await stderr).Trim(); }
                 await stderr;
             }
         }
-        catch (OperationCanceledException) { failures++; }
-        catch (System.ComponentModel.Win32Exception) { failures++; }
-        catch (IOException) { failures++; }
-        catch (InvalidOperationException) { failures++; }
+        catch (OperationCanceledException) { failures++;warning="O inventário local excedeu 50 segundos. Resultados incompletos não foram estimados."; }
+        catch (System.ComponentModel.Win32Exception ex) { failures++;warning=ex.Message; }
+        catch (IOException ex) { failures++;warning=ex.Message; }
+        catch (InvalidOperationException ex) { failures++;warning=ex.Message; }
         cancellationToken.ThrowIfCancellationRequested();
 
         IEnumerable<JsonElement> Values(string kind) => packets.TryGetValue(kind, out var values) && values.ValueKind == JsonValueKind.Array
@@ -117,7 +122,7 @@ public static class HardwareDiscovery
             WindowsName = Text(os, "Caption") is { Length: > 0 } caption ? caption + " · build " + Text(os, "BuildNumber") : previous.WindowsName,
             BiosVersion = packets.ContainsKey("bios") ? Text(bios, "SMBIOSBIOSVersion") : previous.BiosVersion,
             UsableMemory = memory?.Total ?? previous.UsableMemory,
-            Detected = true, FailedQueries = Math.Max(failures, 6 - packets.Count), UpdatedAt = DateTimeOffset.Now
+            Detected = true, FailedQueries = Math.Max(failures, 6 - packets.Count), DiscoveryWarning=warning[..Math.Min(warning.Length,1200)], UpdatedAt = DateTimeOffset.Now
         };
     }
 
