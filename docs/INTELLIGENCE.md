@@ -16,7 +16,7 @@ O motor é local, determinístico e orientado a evidências. Não consulta um mo
 | Hardware | Modelo de CPU/GPU, driver, RAM, módulos/geração quando exposta, placa-mãe, firmware, tipo de computador, alimentação e mídia física. Notebook ou tipo/alimentação desconhecidos impedem a regra automática de energia. |
 | Conhecimento | Regras nativas e inventário das 619 ações originais com nome em português, nome técnico, origem, risco, compatibilidade, aplicação, reversão e confiabilidade. Validação individual de benefício não é inventada. |
 | Painel | Amostras reais, origem/horário, dados ausentes explícitos, histórico de CPU e comparação de medições. Coleta avançada termina sozinha e não fica rodando por padrão. |
-| Jogos | Contexto do executável, versão, cena, resolução, gráficos/API, frequência, limite de FPS, sincronização e aquecimento de shaders. ETW sem injeção; nenhum arquivo de jogo ou anticheat é alterado. |
+| Jogos | Referências oficiais datadas para CS2/Fortnite, conferência parcial de RAM/threads e orientação específica de teste; outros jogos por contexto manual. Executável, versão, cena, resolução, gráficos/API, frequência, limite de FPS, sincronização e shaders registrados. ETW sem injeção; nenhum arquivo de jogo ou anticheat é alterado. |
 | Limites de automação | Nível 1: leitura. Nível 2: somente alvos gerenciados selecionados em plano aprovado. Nível 3: revisão/intervenção manual; fora do Intelligence automático. Ferramentas legadas sensíveis exigem revisão explícita e execução isolada. |
 | Preservação e verificação | Inventário completo em `INTELLIGENCE-INVENTORY.md`, testes de políticas/diário/reversão/métricas, verificador Windows e fluxo da interface em VM. Limites de validação devem acompanhar a versão publicada. |
 
@@ -76,8 +76,27 @@ Documentação consultada:
 - https://github.com/GameTechDev/PresentMon/blob/main/README-ConsoleApplication.md
 - https://github.com/LibreHardwareMonitor/LibreHardwareMonitor
 
+## Referências de jogos
+
+`GameReferences.cs` mantém nome, executável, fonte oficial, data de revisão, requisitos quantitativos e orientação de teste separados da interface. CS2 e Fortnite possuem referência inicial; outros jogos continuam disponíveis por entrada manual. Quantidade de RAM e threads pode ser confrontada com a referência, mas equivalência entre modelos de CPU/GPU, VRAM e suporte de API não é inferida. Atender o mínimo quantitativo não comprova compatibilidade completa nem desempenho.
+
+As referências foram conferidas em 22/10/2026 e podem mudar:
+
+- Valve / Steam: https://store.steampowered.com/app/730/CounterStrike_2/?l=brazilian
+- Epic Games: https://www.epicgames.com/help/c-37599050/c-32343914/a16548002?lang=en-US
+
+Selecionar uma referência não significa que o jogo foi encontrado ou executado. Versão, cena e condições continuam sob confirmação do técnico. A troca de referência limpa a confirmação e o aquecimento de shaders. Não existe base universal de equivalência de GPUs nem consulta automática a benchmarks externos.
+
+## Evidência de verificação
+
+O [workflow funcional de 22/10/2026](https://github.com/JuliozXz/GOAT-Tweaks/actions/runs/39857491370) passou em Windows Server 2022 x64 (build 20348) e Windows 11 ARM64 (build 26200; aplicativo x64 sob emulação). Em cada ambiente: 36 testes do motor e 22 regressões do catálogo, inspeção de recursos incorporados, diagnóstico inicial/posterior real, persistência, bloqueio de escrita no perfil Diagnóstico, ida/volta dos três alvos no adaptador Windows e captura WPR própria. No Windows 11, aplicação autorizada, diário, retomada e restauração pelo coordenador também foram exercitados para os dois valores do Registro. As 11 telas do fluxo foram capturadas pelo aplicativo real.
+
+A revisão final acrescenta quatro testes de referências de jogos e a conferência visual da logo, janela compacta e retomada pela interface. A execução final e suas capturas são vinculadas no registro da versão; testes unitários usam fixtures apenas no projeto de testes.
+
+Limites da conferência: nenhum jogo foi executado na VM; não existem ganhos de FPS medidos. O parser de PresentMon foi testado com fixtures, mas a captura de um jogo real depende da ferramenta instalada e da sua compatibilidade. WPR foi exercitado; análise manual no WPA não foi realizada. Sensores térmicos/clocks e geração de RAM não expostos pela VM permaneceram indisponíveis. A retomada de dados foi conferida, mas a VM não foi reiniciada fisicamente no meio de um atendimento. Estabilidade prolongada e identificação em modelos físicos distintos exigem validação no computador atendido.
+
 ## Limites que devem permanecer visíveis
 
 Uma VM não valida desempenho em jogos nem sensores de hardware físico. Sistemas Windows Server permitem diagnóstico na conferência, mas não são classificados como clientes elegíveis para ajustes automáticos. Regras não devem ser ampliadas sem teste de compatibilidade, backup e reversão. Ausência de novos eventos de erro não comprova estabilidade de longo prazo. Ferramentas, drivers e jogos externos podem impor restrições que precisam ser verificadas no computador atendido.
 
-O logo enviado pelo usuário permanece como arquivo original preservado. O acabamento visual é a etapa final, após a conferência funcional.
+O logo enviado pelo usuário permanece preservado em `Assets/goat-logo.png`. A versão aprimorada para exibição fica em `Assets/goat-logo-enhanced.png`; o desenho é exibido ao lado da marca no painel preto e vermelho.

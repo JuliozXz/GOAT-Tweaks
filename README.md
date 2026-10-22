@@ -4,7 +4,7 @@ Plataforma local de diagnóstico e atendimento para Windows. O **GOAT Intelligen
 
 ## GOAT Intelligence e Service Mode
 
-1. Abra **GOAT Intelligence** ou **GOAT Service Mode** e registre o problema, o jogo e as condições do teste.
+1. Abra **GOAT Intelligence** ou **GOAT Service Mode** e registre o problema, o jogo e as condições do teste. CS2 e Fortnite têm referências oficiais datadas; outros jogos permitem contexto manual. Os requisitos quantitativos são uma conferência parcial, sem previsão de FPS.
 2. Selecione **FPS Máximo**, **Competitivo**, **Equilibrado**, **Diagnóstico** ou **Personalizado**. O perfil inicial é Diagnóstico, que bloqueia aplicação e restauração de configurações.
 3. Execute a coleta delimitada. O diagnóstico separa observações confirmadas de hipóteses e informa quando precisa de um teste direcionado.
 4. Revise o plano. Cada recomendação mostra evidência, proposta, benefício esperado, risco, confiança, compatibilidade, reinício e restauração. Nenhum ajuste é selecionado por padrão.

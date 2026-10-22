@@ -38,6 +38,7 @@ public static class IntelligenceLabels
 
 public sealed record GameContext
 {
+    public string GameReferenceId { get; init; } = "";
     public string Game { get; init; } = "";
     public string ProcessName { get; init; } = "";
     public string GameVersion { get; init; } = "";
@@ -53,7 +54,7 @@ public sealed record GameContext
     public string CustomObjectives { get; init; } = "";
     public string ConditionsKey => IntelligenceLabels.Hash(JsonSerializer.Serialize(new
     {
-        Game, ProcessName, GameVersion, Scenario, Resolution, GraphicsPreset, RefreshRate, FpsLimit, Synchronization, ShaderWarmupCompleted
+        GameReferenceId, Game, ProcessName, GameVersion, Scenario, Resolution, GraphicsPreset, RefreshRate, FpsLimit, Synchronization, ShaderWarmupCompleted
     }));
     public bool HasComparableConditions => ConditionsConfirmed && ShaderWarmupCompleted &&
         new[] { Game, ProcessName, GameVersion, Scenario, Resolution, GraphicsPreset, RefreshRate, FpsLimit, Synchronization }.All(s => !string.IsNullOrWhiteSpace(s));

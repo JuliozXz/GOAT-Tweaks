@@ -6,6 +6,7 @@ public static class RecommendationEngine
     public static List<Finding> Diagnose(DiagnosticSnapshot snapshot, GameContext context)
     {
         var findings = new List<Finding>();
+        findings.AddRange(GameReferences.Diagnose(snapshot.Machine,context));
         var samples = snapshot.Samples;
         void Add(string id, string title, EvidenceKind kind, string evidence, string next) => findings.Add(new(id, title, kind, evidence, next));
         if (!snapshot.Machine.Supported)

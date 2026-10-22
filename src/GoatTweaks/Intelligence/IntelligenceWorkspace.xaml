@@ -44,6 +44,8 @@
        <TextBlock Text="Objetivos personalizados (perfil Personalizado)" Style="{StaticResource FieldLabel}" Margin="0,12,0,5"/><TextBox x:Name="ObjectivesBox" TextChanged="Context_Changed"/>
       </StackPanel></Border>
       <Border Style="{StaticResource CompactCard}"><StackPanel><TextBlock Text="Jogo e condições do teste" FontSize="17" FontWeight="SemiBold"/><TextBlock Text="Preencha para comparar antes e depois. Sem essas condições, a análise de ganhos permanece inconclusiva." Style="{StaticResource Body}" Margin="0,6,0,15"/>
+       <TextBlock Text="Referência do jogo (opcional)" Style="{StaticResource FieldLabel}"/><ComboBox x:Name="GameReferenceBox" SelectionChanged="GameReference_Changed" Margin="0,0,0,10"/>
+       <TextBlock x:Name="GameReferenceSummary" Style="{StaticResource Body}" Margin="0,0,0,15"/>
        <UniformGrid Columns="2">
         <StackPanel Margin="0,0,12,12"><TextBlock Text="Nome do jogo / objetivo" Style="{StaticResource FieldLabel}"/><TextBox x:Name="GameBox" TextChanged="Context_Changed"/></StackPanel>
         <StackPanel Margin="0,0,0,12"><TextBlock Text="Executável do jogo (ex.: cs2.exe)" Style="{StaticResource FieldLabel}"/><TextBox x:Name="ProcessBox" TextChanged="Context_Changed"/></StackPanel>
@@ -77,7 +79,7 @@
     <Grid Margin="0,5,0,0"><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
      <TextBlock x:Name="PlanStatus" Text="Faça o diagnóstico inicial. Nenhum ajuste vem autorizado por padrão." Style="{StaticResource Body}" Margin="0,0,9,12"/>
      <ListBox x:Name="RecommendationsList" Grid.Row="1" ItemContainerStyle="{StaticResource PlainRow}"><ListBox.ItemTemplate><DataTemplate><Border Style="{StaticResource CompactCard}"><StackPanel>
-      <CheckBox IsChecked="{Binding Selected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding CanAuthorize}" Checked="PlanSelection_Changed" Unchecked="PlanSelection_Changed"><TextBlock Text="{Binding Title}" FontSize="15" FontWeight="SemiBold" TextWrapping="Wrap"/></CheckBox>
+      <DockPanel><CheckBox DockPanel.Dock="Left" IsChecked="{Binding Selected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding CanAuthorize}" Checked="PlanSelection_Changed" Unchecked="PlanSelection_Changed" Margin="0,0,5,0" ToolTip="Somente ajustes gerenciados elegíveis podem ser selecionados para autorização."/><TextBlock Text="{Binding Title}" FontSize="15" FontWeight="SemiBold" TextWrapping="Wrap"/></DockPanel>
       <TextBlock Text="{Binding Classification}" Foreground="{StaticResource AccentBrush}" FontSize="11" Margin="0,9,0,5" TextWrapping="Wrap"/><TextBlock Text="{Binding Level}" Foreground="{StaticResource MutedBrush}" FontSize="10"/>
       <TextBlock Text="{Binding Evidence}" Style="{StaticResource Body}" Margin="0,9,0,8"/>
       <Expander Header="Evidência, proposta, risco e restauração" Foreground="{StaticResource TextBrush}" FontSize="12"><TextBlock Text="{Binding Details}" Style="{StaticResource Body}" Margin="0,12,0,0"/></Expander>
@@ -126,7 +128,7 @@
     <Grid Margin="0,5,9,0"><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
      <TextBlock Text="Histórico local · backups específicos, plano, medições e resultados. Retomar nunca reaplica mudanças sem autorização." Style="{StaticResource Body}" Margin="0,0,0,14"/>
      <ListBox x:Name="SessionsList" Grid.Row="1" DisplayMemberPath="DisplayName"/>
-     <WrapPanel Grid.Row="2" Margin="0,12,0,0"><Button Content="Atualizar histórico" Click="RefreshSessions_Click" Margin="0,0,8,8"/><Button Content="Retomar atendimento selecionado" Click="Resume_Click" Margin="0,0,8,8"/><Button Content="Salvar atendimento atual" Click="Save_Click" Margin="0,0,8,8"/></WrapPanel>
+     <WrapPanel Grid.Row="2" Margin="0,12,0,0"><Button Content="Atualizar histórico" Click="RefreshSessions_Click" Margin="0,0,8,8"/><Button x:Name="ResumeSessionButton" Content="Retomar atendimento selecionado" Click="Resume_Click" Margin="0,0,8,8"/><Button Content="Salvar atendimento atual" Click="Save_Click" Margin="0,0,8,8"/></WrapPanel>
     </Grid>
    </TabItem>
    <TabItem Header="Conhecimento">

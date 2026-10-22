@@ -60,6 +60,32 @@ public sealed class IntelligenceTests
         var s=Snapshot() with{Processes=[new(1,"fixture",90,4000),new(2,"System",20,50),new(3,"GOATTweaks",15,50)]};
         Assert.DoesNotContain(RecommendationEngine.Diagnose(s,Context()),f=>f.Id.StartsWith("process.",StringComparison.Ordinal));
     }
+    [Fact] public void SelectedGameChecksPublishedMinimumsWithoutInventingPerformance()
+    {
+        var game=Context() with{GameReferenceId="cs2",Game="Counter-Strike 2",ProcessName="cs2.exe"};
+        var s=Snapshot() with{Machine=Machine() with{InstalledRamGb=4,LogicalProcessors=2}};
+        var findings=RecommendationEngine.Diagnose(s,game);
+        Assert.Equal(EvidenceKind.Confirmed,findings.Single(f=>f.Id=="game.minimum-ram").Kind);
+        Assert.Equal(EvidenceKind.Confirmed,findings.Single(f=>f.Id=="game.minimum-threads").Kind);
+        Assert.Contains("Fonte:",findings.Single(f=>f.Id=="game.requirements").Evidence);
+    }
+    [Fact] public void GameReferenceCannotBeAppliedToAnotherGameByNameAlone()
+    {
+        var context=Context() with{GameReferenceId="cs2",Game="Other game",ProcessName="cs2.exe"};
+        Assert.Null(GameReferences.Resolve(context));Assert.Empty(GameReferences.Diagnose(Machine(),context));
+    }
+    [Fact] public void MeetingNumericMinimumsDoesNotAssertFullGameCompatibility()
+    {
+        var game=Context() with{GameReferenceId="cs2",Game="Counter-Strike 2",ProcessName="cs2.exe"};
+        var findings=GameReferences.Diagnose(Machine() with{LogicalProcessors=8},game).ToArray();
+        Assert.Equal(EvidenceKind.Information,Assert.Single(findings).Kind);
+        Assert.Contains("parciais",findings[0].NextTest);
+    }
+    [Fact] public void UnknownRamAndThreadsAreNotTreatedAsZeroForGameRequirements()
+    {
+        var game=Context() with{GameReferenceId="cs2",Game="Counter-Strike 2",ProcessName="cs2.exe"};
+        Assert.DoesNotContain(GameReferences.Diagnose(Machine() with{InstalledRamGb=null,LogicalProcessors=0},game),f=>f.Kind==EvidenceKind.Confirmed);
+    }
     [Fact] public async Task DurableBackupExistsBeforeTheFirstWrite()
     {
         var s=Session();var journal=new MemoryJournal();var gateway=new FakeSettings(s.Before!);

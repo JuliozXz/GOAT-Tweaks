@@ -144,6 +144,21 @@ try{
     Tab 'Conhecimento';Capture '09-base-de-conhecimento'
     Navigate 'GOAT Service Mode';Capture '10-service-mode'
     Navigate 'Limpeza';Capture '11-catalogo-original-preservado'
+    $null=[GoatHudDesktop]::SetWindowPos($App.MainWindowHandle,[IntPtr]::new(-1),12,12,1100,800,0x40)
+    Start-Sleep -Milliseconds 800
+    Navigate 'GOAT Intelligence';Tab 'Monitor';Capture '12-monitor-janela-compacta'
+    Tab 'Identificação';Capture '13-identificacao-janela-compacta'
+    if(-not(Find 'DiagnoseButton').Current.IsEnabled){throw 'O diagnóstico não permaneceu acessível na janela compacta.'}
+    Tab 'Atendimentos'
+    $Saved=(Find 'SessionsList').FindAll([System.Windows.Automation.TreeScope]::Descendants,
+        [System.Windows.Automation.PropertyCondition]::new([System.Windows.Automation.AutomationElement]::ControlTypeProperty,[System.Windows.Automation.ControlType]::ListItem))
+    if($Saved.Count -lt 1){throw 'O histórico não mostrou o atendimento salvo.'}
+    $Saved[0].GetCurrentPattern([System.Windows.Automation.SelectionItemPattern]::Pattern).Select()
+    Invoke 'ResumeSessionButton'
+    Start-Sleep -Seconds 2
+    if((Find 'ExecuteButton').Current.IsEnabled){throw 'A retomada reautorizou uma execução automaticamente.'}
+    Capture '14-atendimento-retomado'
+    $Report.resumed=$true
     $Report.sessionId=$session.Id
     $session|ConvertTo-Json -Depth 30|Set-Content (Join-Path $Output 'atendimento-da-interface.json') -Encoding UTF8
     $Report.complete=$true

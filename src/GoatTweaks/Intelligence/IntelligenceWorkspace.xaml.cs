@@ -38,8 +38,10 @@ public partial class IntelligenceWorkspace : UserControl
         InitializeComponent();
         ProfileBox.ItemsSource=Enum.GetValues<OptimizationProfile>().Select(p=>new ProfileChoice(p,p.Label())).ToArray();
         ProfileBox.SelectedItem=((ProfileChoice[])ProfileBox.ItemsSource).Single(p=>p.Value==OptimizationProfile.Diagnostic);
+        GameReferenceBox.ItemsSource=GameReferences.All;GameReferenceBox.SelectedIndex=0;
         RecommendationsList.ItemsSource=_recommendations;
         _ready=true;
+        UpdateGameReference();
         Context_Changed(this,new RoutedEventArgs());
         RefreshKnowledge();
         RefreshTools();
@@ -54,6 +56,7 @@ public partial class IntelligenceWorkspace : UserControl
     public void StopCollection() { if(!IsMutating) _operation?.Cancel(); }
     private GameContext ReadContext()=>new()
     {
+        GameReferenceId=(GameReferenceBox.SelectedItem as GameReference)?.Id??"",
         Game=GameBox.Text.Trim(), ProcessName=ProcessBox.Text.Trim(), GameVersion=VersionBox.Text.Trim(), Scenario=ScenarioBox.Text.Trim(),
         Resolution=ResolutionBox.Text.Trim(),GraphicsPreset=GraphicsBox.Text.Trim(),RefreshRate=RefreshBox.Text.Trim(),FpsLimit=LimitBox.Text.Trim(),
         Synchronization=SyncBox.Text.Trim(),ShaderWarmupCompleted=ShadersCheck.IsChecked==true,ConditionsConfirmed=ConditionsCheck.IsChecked==true,
@@ -81,6 +84,27 @@ public partial class IntelligenceWorkspace : UserControl
             _=>"Os objetivos informam a análise; você escolhe cada ajuste relevante no plano. Não há seleção automática de todos os tweaks."
         };
         ObjectivesBox.IsEnabled=SelectedProfile==OptimizationProfile.Custom;
+    }
+    private void GameReference_Changed(object sender,SelectionChangedEventArgs e)
+    {
+        if(!_ready || _filling) return;
+        var game=GameReferenceBox.SelectedItem as GameReference;
+        _filling=true;
+        try
+        {
+            if(game is {Id.Length:>0}){GameBox.Text=game.Name;ProcessBox.Text=game.Process;}
+            ShadersCheck.IsChecked=ConditionsCheck.IsChecked=false;
+        }
+        finally{_filling=false;}
+        UpdateGameReference();Context_Changed(this,new RoutedEventArgs());
+    }
+    private void UpdateGameReference()
+    {
+        var game=GameReferenceBox.SelectedItem as GameReference;
+        GameBox.IsReadOnly=ProcessBox.IsReadOnly=game is {Id.Length:>0};
+        GameReferenceSummary.Text=game is {Id.Length:>0}
+            ?game.Requirements+"\n"+game.TestGuide+"\nFonte: "+game.Source+" · revisão "+game.Reviewed+". Requisitos não são previsão de FPS."
+            :"Outro jogo permite informar nome e executável livremente. Confira requisitos na fonte oficial; nenhum arquivo do jogo é alterado.";
     }
     private async Task WorkAsync(Func<CancellationToken,Task> work,bool mutating=false)
     {
@@ -382,9 +406,11 @@ public partial class IntelligenceWorkspace : UserControl
             ResolutionBox.Text=c.Resolution;GraphicsBox.Text=c.GraphicsPreset;RefreshBox.Text=c.RefreshRate;LimitBox.Text=c.FpsLimit;SyncBox.Text=c.Synchronization;
             SymptomBox.Text=c.Symptom;ObjectivesBox.Text=c.CustomObjectives;ShadersCheck.IsChecked=c.ShaderWarmupCompleted;ConditionsCheck.IsChecked=c.ConditionsConfirmed;
             ProfileBox.SelectedItem=((ProfileChoice[])ProfileBox.ItemsSource).Single(p=>p.Value==_session.Profile);
+            GameReferenceBox.SelectedItem=GameReferences.All.FirstOrDefault(g=>g.Id==c.GameReferenceId)??GameReferences.All[0];
         }
         finally{_filling=false;}
         UpdateProfileDescription();
+        UpdateGameReference();
     }
     private void RefreshChangeResults()
     {
