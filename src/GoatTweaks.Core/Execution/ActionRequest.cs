@@ -9,6 +9,7 @@ public sealed class ActionRequest
     public bool ConsoleWindow { get; set; }
     public bool? Enabled { get; set; }
     public bool AdvancedModeEnabled { get; set; }
+    // Kept for compatibility with requests exported by earlier versions.
     public string? Confirmation { get; set; }
     public string? WinSuxConfirmation { get; set; }
 }
@@ -25,7 +26,8 @@ public sealed record ActionLogEntry(
     string Command,
     int ExitCode,
     string Stdout,
-    string Stderr);
+    string Stderr,
+    string Event = "completed");
 
 public static class GoatPaths
 {

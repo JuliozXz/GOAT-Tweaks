@@ -1,17 +1,19 @@
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Net.NetworkInformation;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
+using GoatTweaks.Core.Assets;
 using GoatTweaks.Core.Catalog;
 using GoatTweaks.Core.Conflicts;
 using GoatTweaks.Core.Execution;
-using GoatTweaks.Runner.Logging;
 
 namespace GoatTweaks;
 
@@ -20,21 +22,42 @@ public partial class MainWindow : Window
     private readonly CatalogService _catalog = CatalogService.LoadEmbedded();
     private readonly ConflictDetector _conflicts = ConflictDetector.LoadEmbedded();
     private readonly ObservableCollection<QueuedAction> _queue = [];
+    private readonly ObservableCollection<LogRow> _logRows = [];
     private readonly Dictionary<string, ListBoxItem> _sectionItems = new(StringComparer.Ordinal);
-    private string _activeSection = CatalogSections.All[0];
     private readonly DispatcherTimer _searchDebounce = new() { Interval = TimeSpan.FromMilliseconds(220) };
+    private readonly DispatcherTimer _tailTimer = new(DispatcherPriority.Background) { Interval = TimeSpan.FromMilliseconds(800) };
+    private string _activeSection = CatalogSections.All[0];
     private bool _isApplying;
-    private bool _updatingAdvancedMode;
-    private (string Path, long Length, DateTime Written)? _logSignature;
+    private bool _closed;
+    private string? _logPath;
+    private JsonlLogTailReader _logReader = new();
+    private Task _logReadTask = Task.CompletedTask;
+    private List<QueuedAction> _runActions = [];
+    private Dictionary<string, QueuedAction> _runById = new(StringComparer.Ordinal);
+
+    public static readonly DependencyProperty CanEditQueueProperty =
+        DependencyProperty.Register(nameof(CanEditQueue), typeof(bool), typeof(MainWindow), new PropertyMetadata(true));
+
+    public bool CanEditQueue
+    {
+        get => (bool)GetValue(CanEditQueueProperty);
+        private set => SetValue(CanEditQueueProperty, value);
+    }
 
     public MainWindow()
     {
         InitializeComponent();
-        Width = Math.Max(MinWidth, Math.Min(Width, SystemParameters.WorkArea.Width - 36));
-        Height = Math.Max(MinHeight, Math.Min(Height, SystemParameters.WorkArea.Height - 36));
+        var availableWidth = Math.Max(600, SystemParameters.WorkArea.Width - 24);
+        var availableHeight = Math.Max(480, SystemParameters.WorkArea.Height - 24);
+        MinWidth = Math.Min(MinWidth, availableWidth);
+        MinHeight = Math.Min(MinHeight, availableHeight);
+        Width = Math.Min(Width, availableWidth);
+        Height = Math.Min(Height, availableHeight);
         _searchDebounce.Tick += (_, _) => { _searchDebounce.Stop(); RenderCards(); };
+        _tailTimer.Tick += async (_, _) => await RefreshLogsAsync();
         _queue.CollectionChanged += (_, _) => UpdateQueueState();
-        Closed += (_, _) => _searchDebounce.Stop();
+        Loaded += async (_, _) => await RefreshLogsAsync();
+        Closed += (_, _) => { _closed = true; _searchDebounce.Stop(); _tailTimer.Stop(); };
         foreach (var section in CatalogSections.All)
         {
             var label = section switch
@@ -42,9 +65,9 @@ public partial class MainWindow : Window
                 "Optimize" => "Otimizar",
                 "Privacy" => "Privacidade",
                 "Features" => "Recursos",
-                "Debloat (AppX)" => "Remover apps (AppX)",
+                "Debloat (AppX)" => "Remover apps",
                 "Install Apps" => "Instalar apps",
-                "Network/DNS" => "Rede/DNS",
+                "Network/DNS" => "Rede e DNS",
                 "Repair" => "Reparar",
                 "Security" => "Segurança",
                 "Power" => "Energia",
@@ -57,28 +80,31 @@ public partial class MainWindow : Window
         }
         SectionsList.Items.Add(new ListBoxItem { Content = "Registros", Padding = new Thickness(10, 9, 6, 9) });
         QueueList.ItemsSource = _queue;
+        LogsList.ItemsSource = _logRows;
+        LogsDetailList.ItemsSource = _logRows;
         SectionsList.SelectedItem = _sectionItems[_activeSection];
         RenderCards();
-        RefreshLogs();
+        UpdateQueueState();
     }
 
-    private void SectionsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
     {
-        if (SectionsList.SelectedItem is not ListBoxItem selected)
-            return;
+        if (SidebarColumn is null || QueueColumn is null || RecentActivityRow is null) return;
+        var compact = ActualWidth < 1120;
+        SidebarColumn.Width = new GridLength(compact ? 158 : 190);
+        QueueColumn.Width = new GridLength(compact ? 290 : 330);
+        var showRecent = ActualHeight >= 640;
+        RecentActivityRow.Height = new GridLength(showRecent ? ActualHeight < 760 ? 80 : 125 : 0);
+        RecentActivityHeading.Visibility = LogsList.Visibility = showRecent ? Visibility.Visible : Visibility.Collapsed;
+    }
+
+    private async void SectionsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (SectionsList.SelectedItem is not ListBoxItem selected) return;
         SectionTitle.Text = selected.Content?.ToString() ?? "GOAT Tweaks";
-        var section = _sectionItems.FirstOrDefault(pair => ReferenceEquals(pair.Value, selected)).Key;
-        if (section is not null)
-        {
-            _activeSection = section;
-            RenderCards();
-        }
-        else
-        {
-            _activeSection = "Logs";
-            RenderCards();
-            RefreshLogs();
-        }
+        _activeSection = _sectionItems.FirstOrDefault(pair => ReferenceEquals(pair.Value, selected)).Key ?? "Logs";
+        RenderCards();
+        if (_activeSection == "Logs") await RefreshLogsAsync();
     }
 
     private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -89,15 +115,13 @@ public partial class MainWindow : Window
 
     private void RenderCards()
     {
-        if (CardsList is null || SearchBox is null)
-            return;
+        if (CardsList is null || SearchBox is null) return;
         var showingLogs = _activeSection == "Logs" && SearchBox.Text.Trim().Length == 0;
         CardsList.Visibility = showingLogs ? Visibility.Collapsed : Visibility.Visible;
         LogsDetailList.Visibility = showingLogs ? Visibility.Visible : Visibility.Collapsed;
         if (showingLogs)
         {
-            CardsList.ItemsSource = null;
-            ResultsLabel.Text = "Histórico das execuções registradas neste computador";
+            ResultsLabel.Text = "Atividade deste computador · detalhes completos na pasta de registros";
             return;
         }
         var query = SearchBox.Text.Trim();
@@ -110,7 +134,7 @@ public partial class MainWindow : Window
             .Select(item => new ActionCard(item, advanced)).ToList();
         CardsList.ItemsSource = items;
         var blocked = items.Count(item => item.IsRestricted);
-        ResultsLabel.Text = $"{items.Count} ações · {blocked} bloqueadas no modo atual";
+        ResultsLabel.Text = $"{items.Count} ações · {blocked} exigem o modo avançado";
     }
 
     public sealed record ActionCard(CatalogItem Item, bool AdvancedEnabled)
@@ -118,102 +142,86 @@ public partial class MainWindow : Window
         public string Title => Item.Title;
         public string Source => Item.Source;
         public string Description => string.IsNullOrWhiteSpace(Item.Description) ? Item.Category : Item.Description;
-        public string Metadata => $"{RiskLabel(Item.Risk)} · {(Item.RequiresAdmin ? "Administrador" : "Sem elevação")} · {(CanRevert ? "Restaura o padrão da origem" : "Sem reversão automática")}";
+        public string Metadata => $"{RiskLabel(Item.Risk)} · {(Item.RequiresAdmin ? "Administrador" : "Sem elevação")}";
         public bool CanRevert => MainWindow.CanRevert(Item);
         public bool IsRestricted => ActionSafetyPolicy.RequiresAdvancedMode(Item) && !AdvancedEnabled;
         public bool CanExecute => !IsRestricted;
-        public string Restriction => ActionSafetyPolicy.RestrictionReason(Item);
+        public string Restriction => "Disponível no modo avançado. " + ActionSafetyPolicy.RestrictionReason(Item);
     }
 
     private void UpdateQueueState()
     {
-        QueueCountLabel.Text = _queue.Count.ToString();
-        ApplyButton.IsEnabled = _queue.Count > 0 && !_isApplying;
+        if (QueueCountLabel is null) return;
+        var pending = _queue.Count(action => action.State == "pending");
+        QueueCountLabel.Text = _queue.Count.ToString("00");
+        ApplyButton.IsEnabled = pending > 0 && !_isApplying;
+        ClearQueueButton.IsEnabled = _queue.Count > 0 && !_isApplying;
+        if (!_isApplying)
+        {
+            QueueHintLabel.Text = pending > 0 ? $"{pending} ações prontas para aplicar."
+                : _queue.Count > 0 ? "Execução encerrada. Confira o resultado de cada ação."
+                : "Adicione as ações que deseja aplicar.";
+            if (pending > 0) CurrentActionLabel.Text = "Pronto para executar";
+        }
     }
 
     private void AdvancedModeCheck_Changed(object sender, RoutedEventArgs e)
     {
-        if (_updatingAdvancedMode || CardsList is null)
-            return;
-        if (AdvancedModeCheck.IsChecked == true)
-        {
-            var input = new TextBox { Margin = new Thickness(0, 12, 0, 12) };
-            var body = new StackPanel { Margin = new Thickness(22) };
-            body.Children.Add(new TextBlock { Text = "Habilitar ações avançadas", FontSize = 20, FontWeight = FontWeights.SemiBold });
-            body.Children.Add(new TextBlock
-            {
-                Text = "Essas ações podem alterar a inicialização, drivers, segurança, serviços ou remover arquivos e aplicativos. Não existe garantia de reversão. Revise a ação e o backup do cliente. Digite AVANCADO para habilitar nesta sessão.",
-                TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 12, 0, 0)
-            });
-            body.Children.Add(input);
-            var ok = new Button { Content = "Habilitar nesta sessão", IsDefault = true };
-            var cancel = new Button { Content = "Cancelar", IsCancel = true, Margin = new Thickness(8, 0, 0, 0) };
-            var buttons = new StackPanel { Orientation = Orientation.Horizontal };
-            buttons.Children.Add(ok);
-            buttons.Children.Add(cancel);
-            body.Children.Add(buttons);
-            var dialog = new Window { Title = "GOAT Tweaks", Owner = this, Width = 560, SizeToContent = SizeToContent.Height, WindowStartupLocation = WindowStartupLocation.CenterOwner, Content = body, ResizeMode = ResizeMode.NoResize };
-            ok.Click += (_, _) =>
-            {
-                if (input.Text == "AVANCADO") dialog.DialogResult = true;
-                else input.Focus();
-            };
-            if (dialog.ShowDialog() != true)
-            {
-                _updatingAdvancedMode = true;
-                AdvancedModeCheck.IsChecked = false;
-                _updatingAdvancedMode = false;
-            }
-        }
+        if (_isApplying || CardsList is null) return;
         if (AdvancedModeCheck.IsChecked != true)
-            foreach (var action in _queue.Where(action => ActionSafetyPolicy.RequiresAdvancedMode(action.Item)).ToList())
+            foreach (var action in _queue.Where(action => action.State == "pending" && ActionSafetyPolicy.RequiresAdvancedMode(action.Item)).ToList())
                 _queue.Remove(action);
-        ModeLabel.Text = AdvancedModeCheck.IsChecked == true
-            ? "Modo avançado · revise cada ação antes de aplicar"
-            : "Modo cliente · ações avançadas bloqueadas";
+        ModeLabel.Text = AdvancedModeCheck.IsChecked == true ? "Modo avançado" : "Modo cliente";
         RenderCards();
     }
 
     private void RemoveQueueButton_Click(object sender, RoutedEventArgs e)
     {
-        if (!_isApplying && sender is Button { Tag: QueuedAction action })
-            _queue.Remove(action);
+        if (CanEditQueue && sender is Button { Tag: QueuedAction action }) _queue.Remove(action);
     }
 
-    private void Window_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
+    private void Window_Closing(object? sender, CancelEventArgs e)
     {
         if (!_isApplying) return;
         e.Cancel = true;
-        MessageBox.Show(this, "Aguarde a conclusão da fila para fechar o aplicativo.", "GOAT Tweaks", MessageBoxButton.OK, MessageBoxImage.Information);
+        ShowStatus("Aguarde a conclusão da fila para fechar o aplicativo.", true);
     }
 
-    private async void PreviewButton_Click(object sender, RoutedEventArgs e)
+    private void AddButton_Click(object sender, RoutedEventArgs e)
     {
-        if (sender is Button { Tag: CatalogItem item } && await ShowPreviewAsync(item, false) is { } request)
+        if (CanEditQueue && sender is Button { Tag: CatalogItem item }) QueueAction(item, false);
+    }
+
+    private void PreviewButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is Button { Tag: CatalogItem item } && ShowActionDialog(item, false) is { } request)
             AddToQueue(item, request);
     }
 
-    private async void RevertButton_Click(object sender, RoutedEventArgs e)
+    private void RevertButton_Click(object sender, RoutedEventArgs e)
     {
-        if (sender is not Button { Tag: CatalogItem item })
-            return;
-        if (item.Revert is { } id && _catalog.ById.TryGetValue(id, out var revertItem))
-        {
-            if (await ShowPreviewAsync(revertItem, false) is { } reverseRequest)
-                AddToQueue(revertItem, reverseRequest);
-        }
-        else if (await ShowPreviewAsync(item, true) is { } request)
-            AddToQueue(item, request);
+        if (!CanEditQueue || sender is not Button { Tag: CatalogItem item }) return;
+        if (item.Revert is { } id && _catalog.ById.TryGetValue(id, out var revertItem)) QueueAction(revertItem, false);
+        else QueueAction(item, true);
     }
 
-    private async Task<ActionRequest?> ShowPreviewAsync(CatalogItem item, bool revert)
+    private void QueueAction(CatalogItem item, bool revert)
     {
-        if (_isApplying) return null;
-        if (ActionSafetyPolicy.RequiresAdvancedMode(item) && AdvancedModeCheck.IsChecked != true)
-        {
-            MessageBox.Show(this, ActionSafetyPolicy.RestrictionReason(item), "Ação bloqueada", MessageBoxButton.OK, MessageBoxImage.Warning);
-            return null;
-        }
+        if (!CanEditQueue) return;
+        var request = item.Options.Count > 0 || item.FreeInputs.Count > 0
+            ? ShowActionDialog(item, revert)
+            : new ActionRequest
+            {
+                ItemId = item.Id, Revert = revert, ConsoleWindow = item.ConsoleRequired,
+                Enabled = item.Source == "RyTuneX" && item.Kind == "toggle" ? true : null,
+                AdvancedModeEnabled = AdvancedModeCheck.IsChecked == true
+            };
+        if (request is not null) AddToQueue(item, request);
+    }
+
+    private ActionRequest? ShowActionDialog(CatalogItem item, bool revert)
+    {
+        var readOnly = !CanEditQueue || ActionSafetyPolicy.RequiresAdvancedMode(item) && AdvancedModeCheck.IsChecked != true;
         var fields = new List<(string Prompt, TextBox Input)>();
         var body = new StackPanel { Margin = new Thickness(18) };
         body.Children.Add(new TextBlock { Text = item.Title, FontSize = 20, FontWeight = FontWeights.SemiBold, TextWrapping = TextWrapping.Wrap });
@@ -327,31 +335,22 @@ public partial class MainWindow : Window
             enabled = new CheckBox { Content = "Ativar", IsChecked = true, Margin = new Thickness(0, 8, 0, 0) };
             body.Children.Add(enabled);
         }
-        TextBox? confirmation = null;
-        if (ActionSafetyPolicy.RequiresConfirmation(item))
-        {
-            body.Children.Add(new TextBlock { Text = "Digite CONFIRMAR para continuar.", Margin = new Thickness(0, 10, 0, 2), Foreground = (Brush)FindResource("WarningBrush") });
-            confirmation = new TextBox();
-            body.Children.Add(confirmation);
-        }
-        TextBox? winSuxConfirmation = null;
         if (item.Source == "WinSux")
-        {
             body.Children.Add(new TextBlock
             {
-                Text = "O fluxo reinicia em Modo de Segurança, desativa Defender/UAC/VBS, remove a maioria dos apps UWP e não possui reversão automática. Digite WINSUX.",
-                Margin = new Thickness(0, 10, 0, 2), TextWrapping = TextWrapping.Wrap, Foreground = (Brush)FindResource("WarningBrush")
+                Text = "Este fluxo reinicia o Windows em Modo de Segurança, altera Defender/UAC/VBS, remove aplicativos e não possui reversão automática.",
+                Margin = new Thickness(0, 10, 0, 0), TextWrapping = TextWrapping.Wrap,
+                Foreground = (Brush)FindResource("WarningBrush")
             });
-            winSuxConfirmation = new TextBox();
-            body.Children.Add(winSuxConfirmation);
-        }
+        var validationMessage = new TextBlock { TextWrapping = TextWrapping.Wrap, Foreground = (Brush)FindResource("WarningBrush"), Margin = new Thickness(0, 10, 0, 0) };
+        body.Children.Add(validationMessage);
         var buttons = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right, Margin = new Thickness(0, 14, 0, 0) };
-        var ok = new Button { Content = "Adicionar à fila", IsDefault = true, Padding = new Thickness(10, 5, 10, 5) };
-        var cancel = new Button { Content = "Cancelar", IsCancel = true, Padding = new Thickness(10, 5, 10, 5), Margin = new Thickness(7, 0, 0, 0) };
+        var ok = new Button { Content = "Adicionar à fila", IsEnabled = !readOnly, IsDefault = !readOnly, Padding = new Thickness(10, 5, 10, 5) };
+        var cancel = new Button { Content = "Fechar", IsCancel = true, Padding = new Thickness(10, 5, 10, 5), Margin = new Thickness(7, 0, 0, 0) };
         buttons.Children.Add(ok);
         buttons.Children.Add(cancel);
         body.Children.Add(buttons);
-        var window = new Window { Title = "Prévia da ação", Owner = this, Width = 620, Height = 650, MinHeight = 440, WindowStartupLocation = WindowStartupLocation.CenterOwner, Content = new ScrollViewer { Content = body, VerticalScrollBarVisibility = ScrollBarVisibility.Auto } };
+        var window = new Window { Title = "Detalhes da ação", Owner = this, Width = Math.Min(650, SystemParameters.WorkArea.Width - 32), Height = Math.Min(700, SystemParameters.WorkArea.Height - 32), WindowStartupLocation = WindowStartupLocation.CenterOwner, Content = new ScrollViewer { Content = body, VerticalScrollBarVisibility = ScrollBarVisibility.Auto } };
         ActionRequest? request = null;
         ok.Click += (_, _) =>
         {
@@ -362,10 +361,6 @@ public partial class MainWindow : Window
                     InputValidator.ValidateFreeInput(field.Prompt, field.Input.Text);
                     return field.Input.Text;
                 }).ToList();
-                if (confirmation is not null && confirmation.Text != "CONFIRMAR")
-                    throw new ArgumentException("Confirmação digitada incorretamente.");
-                if (winSuxConfirmation is not null && winSuxConfirmation.Text != "WINSUX")
-                    throw new ArgumentException("Confirmação WINSUX digitada incorretamente.");
                 request = new ActionRequest
                 {
                     ItemId = item.Id,
@@ -374,15 +369,13 @@ public partial class MainWindow : Window
                     Revert = revert,
                     ConsoleWindow = item.ConsoleRequired || console?.IsChecked == true,
                     Enabled = enabled?.IsChecked,
-                    AdvancedModeEnabled = AdvancedModeCheck.IsChecked == true,
-                    Confirmation = confirmation?.Text,
-                    WinSuxConfirmation = winSuxConfirmation?.Text
+                    AdvancedModeEnabled = AdvancedModeCheck.IsChecked == true
                 };
                 window.DialogResult = true;
             }
             catch (Exception exception)
             {
-                MessageBox.Show(window, exception.Message, "Entrada inválida", MessageBoxButton.OK, MessageBoxImage.Warning);
+                validationMessage.Text = exception.Message;
             }
         };
         return window.ShowDialog() == true ? request : null;
@@ -390,216 +383,222 @@ public partial class MainWindow : Window
 
     private async void ApplyButton_Click(object sender, RoutedEventArgs e)
     {
-        DispatcherTimer? tailTimer = null;
-        var executionStarted = false;
+        if (_isApplying) return;
+        var actions = _queue.Where(action => action.State == "pending").ToList();
+        if (actions.Count == 0) return;
         try
         {
-            if (_queue.Count == 0)
-                return;
-            _isApplying = true;
-            LibraryPanel.IsEnabled = false;
-            SectionsList.IsEnabled = false;
-            SearchBox.IsEnabled = false;
-            QueueList.IsEnabled = false;
-            ClearQueueButton.IsEnabled = false;
-            ExecutionProgress.Visibility = Visibility.Visible;
-            StatusLabel.Text = $"Aplicando {_queue.Count} ações. Aguarde a conclusão.";
-            ApplyButton.IsEnabled = false;
-            foreach (var action in _queue) ActionSafetyPolicy.Validate(action.Item, action.Request);
-            _logPath = GoatPaths.NewLogPath();
-            var ids = _queue.Select(action => action.Request.ItemId).ToList();
-            var exclusive = _conflicts.FindExclusiveViolation(ids);
-            if (exclusive is not null)
+            foreach (var action in actions) ActionSafetyPolicy.Validate(action.Item, action.Request);
+            var ids = actions.Select(action => action.Item.Id).ToList();
+            if (_conflicts.FindExclusiveViolation(ids) is { } exclusive)
             {
-                MessageBox.Show(this, $"“{exclusive.Group.Setting}” exige que {string.Join(", ", exclusive.SelectedItems)} seja executado sozinho.\n{exclusive.Group.Note}",
-                    "Conflito exclusivo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                ShowStatus($"{exclusive.Group.Setting}: esta ação precisa ser executada sozinha.", true);
                 return;
             }
-            var userChoices = _conflicts.FindUserChoiceConflicts(ids);
-            if (userChoices.Count > 0)
+            if (_conflicts.FindUserChoiceConflicts(ids).Count > 0)
             {
-                var kept = ResolveUserChoices(userChoices);
-                if (kept is null)
-                    return;
-                foreach (var violation in userChoices)
-                {
-                    var chosen = kept[violation.Group.Id];
-                    var dropped = violation.SelectedItems.Where(id => id != chosen).ToArray();
-                    foreach (var id in dropped)
-                        for (var index = _queue.Count - 1; index >= 0; index--)
-                            if (_queue[index].Request.ItemId == id)
-                                _queue.RemoveAt(index);
-                    await new JsonlLogWriter(_logPath ??= GoatPaths.NewLogPath()).AppendAsync(new ActionLogEntry(
-                        DateTimeOffset.Now, $"conflict-resolution:{violation.Group.Id}", "GOAT Tweaks",
-                        $"setting={violation.Group.Setting}; kept={chosen}; dropped={string.Join(",", dropped)}",
-                        0, "", violation.Group.Note));
-                }
+                ShowStatus("Há escolhas conflitantes. Remova uma delas antes de aplicar.", true);
+                return;
             }
+        }
+        catch (Exception exception) { ShowStatus(exception.Message, true); return; }
 
-            _logPath ??= GoatPaths.NewLogPath();
-            var runStarted = DateTimeOffset.Now;
-            executionStarted = true;
-            tailTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(500) };
-            tailTimer.Tick += (_, _) => RefreshLogs();
-            tailTimer.Start();
-            if (_queue.Any(action => action.Item.RequiresAdmin))
-                await RunAdminBatchAsync();
-            foreach (var action in _queue.Where(action => !action.Item.RequiresAdmin).ToList())
+        _isApplying = true;
+        CanEditQueue = false;
+        _runActions = actions;
+        _runById = actions.ToDictionary(action => action.Item.Id, StringComparer.Ordinal);
+        _logPath = GoatPaths.NewLogPath();
+        _logReader = new JsonlLogTailReader();
+        _logRows.Clear();
+        ExecutionProgress.Maximum = actions.Count;
+        ExecutionProgress.Value = 0;
+        ApplyButton.Content = "Executando...";
+        CurrentActionLabel.Text = "Preparando a fila";
+        RunSummaryLabel.Text = "Acompanhe o resultado abaixo";
+        ShowStatus("Fila em execução. Você pode continuar navegando pela biblioteca.");
+        UpdateQueueState();
+        _tailTimer.Start();
+
+        try
+        {
+            await System.Windows.Threading.Dispatcher.Yield(DispatcherPriority.Background);
+            var admins = actions.Where(action => action.Item.RequiresAdmin).ToList();
+            var authorized = admins.Count == 0 || await RunAdminBatchAsync(admins);
+            var regular = actions.Where(action => !action.Item.RequiresAdmin).ToList();
+            if (!authorized)
             {
-                try { await RunSingleAsync(action, elevated: false); }
-                catch (Exception exception)
-                {
+                foreach (var action in regular)
                     await new JsonlLogWriter(_logPath).AppendAsync(new ActionLogEntry(DateTimeOffset.Now,
-                        action.Item.Id, action.Item.Source, "Falha ao iniciar a ação", 1, "", exception.Message));
+                        action.Item.Id, action.Item.Source, "Fila cancelada", 1223, "", "A autorização do Windows foi cancelada."));
+            }
+            else if (regular.Count > 0)
+            {
+                CurrentActionLabel.Text = "Preparando os arquivos das ações";
+                var assets = Environment.GetEnvironmentVariable("GOATTWEAKS_ASSET_ROOT")
+                    ?? Path.Combine(GoatPaths.LocalRoot, "assets", typeof(App).Assembly.GetName().Version!.ToString());
+                await Task.Run(() => EmbeddedAssetStore.MaterializeThirdParty(assets));
+                foreach (var action in regular)
+                {
+                    try { await RunSingleAsync(action); }
+                    catch (Exception exception)
+                    {
+                        await new JsonlLogWriter(_logPath).AppendAsync(new ActionLogEntry(DateTimeOffset.Now,
+                            action.Item.Id, action.Item.Source, "Falha ao iniciar a ação", 1, "", exception.Message));
+                    }
                 }
             }
-
-            var entries = await new JsonlLogWriter(_logPath).ReadAllAsync();
-            var runIds = _queue.Select(action => action.Request.ItemId).ToHashSet(StringComparer.Ordinal);
-            var results = entries.Where(entry => runIds.Contains(entry.Id) && entry.Timestamp >= runStarted).ToList();
-            var okCount = results.Count(entry => entry.ExitCode == 0);
-            var canceledCount = results.Count(entry => entry.ExitCode == 1223);
-            var failedCount = results.Count(entry => entry.ExitCode != 0 && entry.ExitCode != 1223);
-            _queue.Clear();
-            MessageBox.Show(this, $"{okCount} ok, {failedCount} falharam, {canceledCount} canceladas",
-                "Resumo da execução", MessageBoxButton.OK, MessageBoxImage.Information);
+            var entries = await Task.Run(() => new JsonlLogWriter(_logPath).ReadAllAsync());
+            foreach (var action in actions)
+            {
+                // The log is unique to this run, including actions that correct the Windows clock.
+                var result = entries.LastOrDefault(row => row.Id == action.Item.Id &&
+                    row.Event != "started" && row.Event != "detail");
+                if (result is not null) SetActionResult(action, result.ExitCode);
+                else
+                {
+                    action.SetState("failed", "Sem resultado · consulte os registros");
+                    await new JsonlLogWriter(_logPath).AppendAsync(new ActionLogEntry(DateTimeOffset.Now,
+                        action.Item.Id, action.Item.Source, "Ação sem resultado", 1, "",
+                        "O executor terminou antes de registrar a conclusão desta ação."));
+                }
+            }
         }
         catch (Exception exception)
         {
-            MessageBox.Show(this, exception.Message, "Erro ao aplicar ações", MessageBoxButton.OK, MessageBoxImage.Error);
+            foreach (var action in actions.Where(action => action.State is "pending" or "running"))
+                action.SetState("failed", "Interrompida · consulte os registros");
+            ShowStatus($"Não foi possível concluir a fila: {exception.Message}", true);
+            try
+            {
+                await new JsonlLogWriter(_logPath).AppendAsync(new ActionLogEntry(DateTimeOffset.Now,
+                    "batch:error", "GOAT Tweaks", "Falha na execução da fila", 1, "", exception.ToString()));
+            }
+            catch (IOException) { }
+            catch (UnauthorizedAccessException) { }
         }
         finally
         {
-            tailTimer?.Stop();
-            if (executionStarted)
-                _queue.Clear();
+            _tailTimer.Stop();
+            await _logReadTask;
+            await RefreshLogsAsync();
             _isApplying = false;
-            LibraryPanel.IsEnabled = true;
-            SectionsList.IsEnabled = true;
-            SearchBox.IsEnabled = true;
-            QueueList.IsEnabled = true;
-            ClearQueueButton.IsEnabled = true;
-            ExecutionProgress.Visibility = Visibility.Collapsed;
-            StatusLabel.Text = executionStarted ? "Execução encerrada · consulte os registros" : "Pronto · fila aguardando revisão";
+            CanEditQueue = true;
+            ApplyButton.Content = "Aplicar fila";
+            var ok = actions.Count(action => action.State == "success");
+            var failed = actions.Count(action => action.State == "failed");
+            var canceled = actions.Count(action => action.State == "canceled");
+            RunSummaryLabel.Text = $"{ok} concluídas · {failed} falharam · {canceled} canceladas";
+            CurrentActionLabel.Text = failed > 0 ? "Fila encerrada com falhas" : canceled > 0 ? "Fila cancelada" : "Fila concluída";
+            UpdateRunProgress();
             UpdateQueueState();
-            RefreshLogs();
+            ShowStatus(RunSummaryLabel.Text, failed > 0);
         }
     }
 
-    private string? _logPath;
-
-    private Dictionary<string, string>? ResolveUserChoices(IReadOnlyList<ConflictViolation> violations)
+    private async Task<bool> RunAdminBatchAsync(IReadOnlyList<QueuedAction> actions)
     {
-        var body = new StackPanel { Margin = new Thickness(16) };
-        var selects = new Dictionary<string, ComboBox>(StringComparer.Ordinal);
-        foreach (var violation in violations)
-        {
-            body.Children.Add(new TextBlock { Text = $"{violation.Group.Setting}\n{violation.Group.Note}", TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 8, 0, 4) });
-            if (violation.Group.Values.Count > 0)
-                body.Children.Add(new TextBlock { Text = string.Join(" · ", violation.Group.Values), TextWrapping = TextWrapping.Wrap });
-            var combo = new ComboBox { Margin = new Thickness(0, 0, 0, 8) };
-            foreach (var id in violation.SelectedItems)
-                combo.Items.Add(new ComboBoxItem
-                {
-                    Content = _catalog.ById.TryGetValue(id, out var item) ? $"{item.Title} ({item.Source})" : id,
-                    Tag = id
-                });
-            combo.SelectedIndex = 0;
-            body.Children.Add(combo);
-            selects[violation.Group.Id] = combo;
-        }
-        var buttons = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right };
-        var ok = new Button { Content = "Manter seleção", IsDefault = true, Padding = new Thickness(10, 5, 10, 5) };
-        var cancel = new Button { Content = "Cancelar", IsCancel = true, Margin = new Thickness(6, 0, 0, 0), Padding = new Thickness(10, 5, 10, 5) };
-        buttons.Children.Add(ok);
-        buttons.Children.Add(cancel);
-        body.Children.Add(buttons);
-        var window = new Window { Title = "Resolver escolhas conflitantes", Owner = this, Width = 600, Height = 520, WindowStartupLocation = WindowStartupLocation.CenterOwner, Content = new ScrollViewer { Content = body } };
-        Dictionary<string, string>? result = null;
-        ok.Click += (_, _) =>
-        {
-            result = selects.ToDictionary(pair => pair.Key,
-                pair => (string)((ComboBoxItem)pair.Value.SelectedItem).Tag, StringComparer.Ordinal);
-            window.DialogResult = true;
-        };
-        return window.ShowDialog() == true ? result : null;
-    }
-
-    private async Task RunAdminBatchAsync()
-    {
-        _logPath ??= GoatPaths.NewLogPath();
         var path = Path.Combine(Path.GetTempPath(), $"goat-batch-{Guid.NewGuid():N}.json");
-        var bytes = JsonSerializer.SerializeToUtf8Bytes(new ActionBatch
-        {
-            Actions = _queue.Where(action => action.Item.RequiresAdmin).Select(action => action.Request).ToList()
-        });
+        var bytes = JsonSerializer.SerializeToUtf8Bytes(new ActionBatch { Actions = actions.Select(action => action.Request).ToList() });
         await File.WriteAllBytesAsync(path, bytes);
         var hash = Convert.ToHexString(SHA256.HashData(bytes));
-        var started = DateTimeOffset.Now;
         try
         {
+            CurrentActionLabel.Text = "Aguardando autorização do Windows";
             var info = new ProcessStartInfo(Environment.ProcessPath!)
             {
-                UseShellExecute = true,
-                Verb = "runas",
+                UseShellExecute = true, Verb = "runas",
                 Arguments = $"--runner \"{path}\" \"{_logPath}\" --sha256 {hash}"
             };
-            using var process = Process.Start(info) ?? throw new InvalidOperationException("Não foi possível abrir o Runner elevado.");
+            using var process = await Task.Run(() => Process.Start(info))
+                ?? throw new InvalidOperationException("Não foi possível abrir o executor.");
+            CurrentActionLabel.Text = "Preparando as ações administrativas";
             await process.WaitForExitAsync();
             if (process.ExitCode != 0)
             {
-                var writer = new JsonlLogWriter(_logPath);
-                var rows = await writer.ReadAllAsync();
-                foreach (var action in _queue.Where(action => action.Item.RequiresAdmin))
-                    if (!rows.Any(row => row.Id == action.Item.Id && row.Timestamp >= started))
-                        await writer.AppendAsync(new ActionLogEntry(DateTimeOffset.Now, action.Item.Id,
-                            action.Item.Source, "Ação não concluída", process.ExitCode, "",
-                            "O executor terminou sem concluir esta ação. Consulte os registros."));
+                var writer = new JsonlLogWriter(_logPath!);
+                var rows = await Task.Run(() => writer.ReadAllAsync());
+                foreach (var action in actions)
+                    if (!rows.Any(row => row.Id == action.Item.Id &&
+                        row.Event != "started" && row.Event != "detail"))
+                        await writer.AppendAsync(new ActionLogEntry(DateTimeOffset.Now, action.Item.Id, action.Item.Source,
+                            "Ação não concluída", process.ExitCode, "", "O executor terminou sem concluir esta ação."));
             }
+            return true;
         }
-        catch (System.ComponentModel.Win32Exception exception) when (exception.NativeErrorCode == 1223)
+        catch (Win32Exception exception) when (exception.NativeErrorCode == 1223)
         {
-            var writer = new JsonlLogWriter(_logPath!);
-            foreach (var action in _queue.Where(action => action.Item.RequiresAdmin))
-                await writer.AppendAsync(new ActionLogEntry(DateTimeOffset.Now, action.Item.Id, action.Item.Source,
-                    "UAC cancelado", 1223, "", "UAC cancelado"));
+            foreach (var action in actions)
+                await new JsonlLogWriter(_logPath!).AppendAsync(new ActionLogEntry(DateTimeOffset.Now,
+                    action.Item.Id, action.Item.Source, "Autorização cancelada", 1223, "", "UAC cancelado"));
+            return false;
         }
-        finally
-        {
-            File.Delete(path);
-        }
+        finally { File.Delete(path); }
     }
 
-    private async Task RunSingleAsync(QueuedAction action, bool elevated)
+    private async Task RunSingleAsync(QueuedAction action)
     {
-        _logPath ??= GoatPaths.NewLogPath();
-        var requestPath = Path.Combine(Path.GetTempPath(), $"goat-action-{Guid.NewGuid():N}.json");
+        var path = Path.Combine(Path.GetTempPath(), $"goat-action-{Guid.NewGuid():N}.json");
         var bytes = JsonSerializer.SerializeToUtf8Bytes(action.Request);
-        await File.WriteAllBytesAsync(requestPath, bytes);
+        await File.WriteAllBytesAsync(path, bytes);
         var hash = Convert.ToHexString(SHA256.HashData(bytes));
         try
         {
             var info = new ProcessStartInfo(Environment.ProcessPath!)
             {
-                UseShellExecute = elevated,
-                Verb = elevated ? "runas" : "",
-                Arguments = $"--action \"{requestPath}\" \"{_logPath}\" --sha256 {hash}"
+                UseShellExecute = false, CreateNoWindow = true,
+                Arguments = $"--action \"{path}\" \"{_logPath}\" --sha256 {hash}"
             };
-            using var process = Process.Start(info) ?? throw new InvalidOperationException("Não foi possível iniciar o Runner.");
+            using var process = await Task.Run(() => Process.Start(info))
+                ?? throw new InvalidOperationException("Não foi possível iniciar a ação.");
             await process.WaitForExitAsync();
         }
-        finally
-        {
-            File.Delete(requestPath);
-        }
+        finally { File.Delete(path); }
     }
 
     private void AddToQueue(CatalogItem item, ActionRequest request)
     {
-        if (_isApplying) return;
-        foreach (var previous in _queue.Where(action => action.Item.Id == item.Id).ToList())
+        if (!CanEditQueue) return;
+        try { ActionSafetyPolicy.Validate(item, request); }
+        catch (Exception exception) { ShowStatus(exception.Message, true); return; }
+        var ids = _queue.Where(action => action.State == "pending" && action.Item.Id != item.Id)
+            .Select(action => action.Item.Id).Append(item.Id).ToList();
+        if (_conflicts.FindExclusiveViolation(ids) is { } exclusive)
+        {
+            ShowStatus($"{exclusive.Group.Setting}: adicione esta ação a uma fila vazia para executá-la sozinha.", true);
+            return;
+        }
+        var conflicts = _conflicts.FindUserChoiceConflicts(ids);
+        var replaced = conflicts.SelectMany(conflict => conflict.SelectedItems)
+            .Where(id => id != item.Id).ToHashSet(StringComparer.Ordinal);
+        foreach (var previous in _queue.Where(action => action.Item.Id == item.Id ||
+                     action.State == "pending" && replaced.Contains(action.Item.Id)).ToList())
             _queue.Remove(previous);
         _queue.Add(new QueuedAction(item, request));
+        ShowStatus(replaced.Count > 0
+            ? $"Adicionada: {item.Title}. A escolha conflitante anterior foi substituída."
+            : $"Adicionada à fila: {item.Title}.");
+    }
+
+    private static void SetActionResult(QueuedAction action, int code) =>
+        action.SetState(code == 0 ? "success" : code == 1223 ? "canceled" : "failed",
+            code == 0 ? "Concluída" : code == 1223 ? "Cancelada" : $"Falhou · código {code}");
+
+    private void UpdateRunProgress()
+    {
+        if (_runActions.Count == 0) return;
+        var done = _runActions.Count(action => action.State is "success" or "failed" or "canceled");
+        ExecutionProgress.Value = done;
+        if (_isApplying)
+        {
+            QueueHintLabel.Text = $"{done} de {_runActions.Count} ações finalizadas";
+            RunSummaryLabel.Text = $"{_runActions.Count - done} restantes";
+        }
+    }
+
+    private void ShowStatus(string text, bool error = false)
+    {
+        StatusLabel.Text = text;
+        StatusLabel.Foreground = (Brush)FindResource(error ? "WarningBrush" : "MutedBrush");
     }
 
     private static bool CanRevert(CatalogItem item)
@@ -648,7 +647,17 @@ public partial class MainWindow : Window
         return $"{item.SourceFile} · {item.Kind}";
     }
 
-    private void ClearQueueButton_Click(object sender, RoutedEventArgs e) { if (!_isApplying) _queue.Clear(); }
+    private void ClearQueueButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (!CanEditQueue) return;
+        _queue.Clear();
+        _runActions = [];
+        _runById.Clear();
+        ExecutionProgress.Value = 0;
+        CurrentActionLabel.Text = "Pronto para executar";
+        RunSummaryLabel.Text = "Fila vazia";
+        ShowStatus("Fila limpa.");
+    }
 
     private void OpenLogsFolderButton_Click(object sender, RoutedEventArgs e)
     {
@@ -657,50 +666,79 @@ public partial class MainWindow : Window
             Directory.CreateDirectory(GoatPaths.Logs);
             Process.Start(new ProcessStartInfo("explorer.exe", $"\"{GoatPaths.Logs}\"") { UseShellExecute = true });
         }
-        catch (Exception exception)
-        {
-            MessageBox.Show(this, exception.Message, "Não foi possível abrir os registros", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
+        catch (Exception exception) { ShowStatus($"Não foi possível abrir os registros: {exception.Message}", true); }
     }
 
-    private void RefreshLogs()
+    private Task RefreshLogsAsync()
     {
-        if (LogsList is null) return;
+        if (_closed) return Task.CompletedTask;
+        if (!_logReadTask.IsCompleted) return _logReadTask;
+        return _logReadTask = ReadNewLogsAsync();
+    }
+
+    private async Task ReadNewLogsAsync()
+    {
         try
         {
-            var path = _logPath;
-            if (path is null && Directory.Exists(GoatPaths.Logs))
-                path = Directory.GetFiles(GoatPaths.Logs, "*.jsonl")
-                    .OrderByDescending(File.GetLastWriteTimeUtc).FirstOrDefault();
-            if (path is null || !File.Exists(path)) return;
-            var file = new FileInfo(path);
-            var signature = (path, file.Length, file.LastWriteTimeUtc);
-            if (_logSignature == signature) return;
-            _logSignature = signature;
-            var lines = new List<string>();
-            foreach (var line in File.ReadLines(path).TakeLast(60))
+            var path = _logPath ?? await Task.Run(() => Directory.Exists(GoatPaths.Logs)
+                ? Directory.EnumerateFiles(GoatPaths.Logs, "*.jsonl").OrderByDescending(File.GetLastWriteTimeUtc).FirstOrDefault()
+                : null);
+            if (path is null) return;
+            var reader = _logReader;
+            var rows = await Task.Run(() => reader.ReadNewAsync(path));
+            if (_closed || _logPath is not null && !string.Equals(path, _logPath, StringComparison.Ordinal)) return;
+            foreach (var row in rows)
             {
-                try
+                if (_isApplying && row.Id is not null &&
+                    _runById.TryGetValue(row.Id, out var action))
                 {
-                    using var document = JsonDocument.Parse(line);
-                    var row = document.RootElement;
-                    var id = row.TryGetProperty("id", out var idValue) ? idValue.ToString() : "";
-                    var code = row.TryGetProperty("exitCode", out var exitValue) ? exitValue.ToString() : "";
-                    var text = row.TryGetProperty("stderr", out var errValue) ? errValue.ToString() : "";
-                    if (string.IsNullOrWhiteSpace(text) && row.TryGetProperty("stdout", out var outputValue)) text = outputValue.ToString();
-                    lines.Add($"{id} · código {code} · {text}");
+                    if (row.Event == "started" && action.State == "pending")
+                    {
+                        action.SetState("running", "Em execução");
+                        CurrentActionLabel.Text = action.Item.Title;
+                    }
+                    else if (row.Event != "detail" && row.Event != "started" && row.ExitCode is { } code)
+                        SetActionResult(action, code);
                 }
-                catch (JsonException) { }
             }
-            LogsList.ItemsSource = lines;
-            LogsDetailList.ItemsSource = lines;
+            foreach (var row in rows.TakeLast(80))
+            {
+                var title = row.Id is not null && _catalog.ById.TryGetValue(row.Id, out var item) ? item.Title : row.Id ?? "GOAT Tweaks";
+                var detail = string.IsNullOrWhiteSpace(row.Stderr) ? row.Stdout ?? "" : row.Stderr;
+                var state = row.Event == "started" ? "Em execução" : row.Event == "detail" || row.ExitCode is null
+                    ? "Informação" : row.ExitCode == 0 ? "Concluída" : row.ExitCode == 1223 ? "Cancelada" : $"Falhou · código {row.ExitCode}";
+                var compact = detail.Replace('\r', ' ').Replace('\n', ' ').Trim();
+                if (compact.Length > 200) compact = compact[..200] + "…";
+                _logRows.Insert(0, new LogRow(title, compact.Length == 0 ? state : $"{state} · {compact}",
+                    detail, row.Timestamp.ToLocalTime().ToString("HH:mm:ss")));
+                if (_logRows.Count > 80) _logRows.RemoveAt(_logRows.Count - 1);
+            }
+            UpdateRunProgress();
         }
-        catch (IOException) { _logSignature = null; }
-        catch (UnauthorizedAccessException) { _logSignature = null; }
+        catch (IOException) { }
+        catch (UnauthorizedAccessException) { }
     }
 
-    public sealed record QueuedAction(CatalogItem Item, ActionRequest Request)
+    public sealed record LogRow(string Title, string Summary, string Detail, string Time);
+
+    public sealed class QueuedAction(CatalogItem item, ActionRequest request) : INotifyPropertyChanged
     {
-        public override string ToString() => $"{Item.Title} ({Item.Source})";
+        public CatalogItem Item { get; } = item;
+        public ActionRequest Request { get; } = request;
+        public string State { get; private set; } = "pending";
+        public string Status { get; private set; } = "Na fila";
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        public void SetState(string state, string status)
+        {
+            if (State == state && Status == status) return;
+            State = state;
+            Status = status;
+            Notify(nameof(State));
+            Notify(nameof(Status));
+        }
+
+        private void Notify([CallerMemberName] string? name = null) =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 }

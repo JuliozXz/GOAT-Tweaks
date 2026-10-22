@@ -23,13 +23,11 @@ internal sealed class ActionExecutor(CatalogService catalog, JsonlLogWriter log,
                 1, "", "Esta ação requer privilégios de administrador.");
         if (!CatalogIntegrity.Verify(item, root))
             throw new InvalidDataException($"SHA-256 mismatch for {item.SourceFile}");
-        if (item.Risk.Equals("high", StringComparison.OrdinalIgnoreCase) &&
-            !string.Equals(request.Confirmation, "CONFIRMAR", StringComparison.Ordinal))
-            throw new InvalidOperationException("High-risk actions require typed confirmation CONFIRMAR.");
-
         var command = Describe(item, request);
         Environment.SetEnvironmentVariable("GOATTWEAKS_ACTION_LOG", log.Path);
         Environment.SetEnvironmentVariable("GOATTWEAKS_ACTION_ID", item.Id);
+        await log.AppendAsync(new ActionLogEntry(DateTimeOffset.Now, item.Id, item.Source,
+            command, 0, "", "", "started"));
 
         var (exitCode, stdout, stderr) = item.Source switch
         {
@@ -103,10 +101,6 @@ internal sealed class ActionExecutor(CatalogService catalog, JsonlLogWriter log,
     private async Task<(int ExitCode, string Stdout, string Stderr)> RunWinSuxAsync(
         CatalogItem item, ActionRequest request, string baseDirectory)
     {
-        if (!string.Equals(request.WinSuxConfirmation, "WINSUX", StringComparison.Ordinal))
-            throw new InvalidOperationException("WinSux requires typed confirmation WINSUX.");
-        if (!string.Equals(request.Confirmation, "CONFIRMAR", StringComparison.Ordinal))
-            throw new InvalidOperationException("High-risk actions require typed confirmation CONFIRMAR.");
         var scriptPath = CatalogIntegrity.ResolveSourcePath(item, baseDirectory)
             ?? throw new InvalidDataException("WinSux script path is invalid.");
         var process = await StartProcessAsync("powershell.exe",

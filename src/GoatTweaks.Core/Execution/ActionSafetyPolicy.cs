@@ -17,8 +17,6 @@ public static class ActionSafetyPolicy
         item.Flags.Any(AdvancedFlags.Contains) ||
         item.Kind.Equals("appx", StringComparison.OrdinalIgnoreCase);
 
-    public static bool RequiresConfirmation(CatalogItem item) => RequiresAdvancedMode(item);
-
     public static string RestrictionReason(CatalogItem item) =>
         item.Source.Equals("WinSux", StringComparison.OrdinalIgnoreCase)
             ? "Fluxo destrutivo: reinicializa o Windows, altera a segurança e não tem reversão automática."
@@ -29,8 +27,5 @@ public static class ActionSafetyPolicy
         if (RequiresAdvancedMode(item) && !request.AdvancedModeEnabled)
             throw new InvalidOperationException(
                 "Ação bloqueada no modo cliente. Habilite o modo avançado e revise a prévia.");
-        if (RequiresConfirmation(item) &&
-            !string.Equals(request.Confirmation, "CONFIRMAR", StringComparison.Ordinal))
-            throw new InvalidOperationException("Esta ação exige a confirmação digitada CONFIRMAR.");
     }
 }

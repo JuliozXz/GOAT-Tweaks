@@ -26,7 +26,7 @@ public partial class App : System.Windows.Application
             if (!OperatingSystem.IsWindowsVersionAtLeast(10, 0, 19045) || !Environment.Is64BitProcess)
                 throw new PlatformNotSupportedException("Requer Windows 10 22H2 ou Windows 11 de 64 bits.");
             var version = typeof(App).Assembly.GetName().Version?.ToString() ?? "1.0.0";
-            var assets = EmbeddedAssetStore.MaterializeThirdParty(Path.Combine(GoatPaths.LocalRoot, "assets", version));
+            var assets = Path.Combine(GoatPaths.LocalRoot, "assets", version);
             Environment.SetEnvironmentVariable("GOATTWEAKS_ASSET_ROOT", assets);
             ShutdownMode = ShutdownMode.OnMainWindowClose;
             var window = new MainWindow();

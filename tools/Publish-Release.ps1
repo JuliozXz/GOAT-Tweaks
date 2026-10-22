@@ -45,9 +45,20 @@ if ($Unexpected.Count) { throw 'A publicação ainda contém dependências exter
 Copy-Item -LiteralPath $Executable -Destination (Join-Path $OutputDirectory 'GOATTweaks.exe') -Force
 $Hash = (Get-FileHash -LiteralPath $Executable -Algorithm SHA256).Hash.ToLowerInvariant()
 [IO.File]::WriteAllText((Join-Path $OutputDirectory 'GOATTweaks.exe.sha256'), "$Hash`n", [Text.Encoding]::ASCII)
+$PackagePath = Join-Path $OutputDirectory 'GOATTweaks-win-x64.zip'
+if (Test-Path -LiteralPath $PackagePath) { Remove-Item -LiteralPath $PackagePath -Force }
+$Archive = [IO.Compression.ZipFile]::Open($PackagePath, [IO.Compression.ZipArchiveMode]::Create)
+try {
+    [IO.Compression.ZipFileExtensions]::CreateEntryFromFile($Archive, $Executable, 'GOATTweaks.exe', [IO.Compression.CompressionLevel]::Optimal) | Out-Null
+}
+finally { $Archive.Dispose() }
+$PackageHash = (Get-FileHash -LiteralPath $PackagePath -Algorithm SHA256).Hash.ToLowerInvariant()
+[IO.File]::WriteAllText((Join-Path $OutputDirectory 'GOATTweaks-win-x64.zip.sha256'), "$PackageHash`n", [Text.Encoding]::ASCII)
 $Launcher = [IO.File]::ReadAllText((Join-Path $Root 'launcher/goat.ps1'))
 $Launcher = $Launcher.Replace('__GOAT_REPO__', $Repository).Replace('__GOAT_RELEASE__', $Version)
+$Launcher = $Launcher.Replace('__GOAT_EXE_SHA256__', $Hash).Replace('__GOAT_PACKAGE_SHA256__', $PackageHash)
 # Keep the web launcher ASCII without a BOM for Windows PowerShell 5.1 HTTP decoding.
 if ($Launcher -match '[^\x00-\x7F]') { throw 'O inicializador deve conter apenas caracteres ASCII para uso via HTTP.' }
+if ($Launcher.Contains('__GOAT_')) { throw 'O inicializador possui dados de publicacao pendentes.' }
 [IO.File]::WriteAllText((Join-Path $OutputDirectory 'goat.ps1'), $Launcher, [Text.Encoding]::ASCII)
 Write-Host "Release preparada em $OutputDirectory"

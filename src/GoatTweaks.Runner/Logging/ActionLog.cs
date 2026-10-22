@@ -33,6 +33,7 @@ public static class ActionLog
             id = Environment.GetEnvironmentVariable("GOATTWEAKS_ACTION_ID"),
             source = "RyTuneX",
             command = $"LogHelper.{level} [{caller}]",
+            @event = "detail",
             exitCode = (int?)null,
             stdout = "",
             stderr = $"{message} ({file})"
