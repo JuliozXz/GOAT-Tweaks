@@ -47,5 +47,7 @@ $Hash = (Get-FileHash -LiteralPath $Executable -Algorithm SHA256).Hash.ToLowerIn
 [IO.File]::WriteAllText((Join-Path $OutputDirectory 'GOATTweaks.exe.sha256'), "$Hash`n", [Text.Encoding]::ASCII)
 $Launcher = [IO.File]::ReadAllText((Join-Path $Root 'launcher/goat.ps1'))
 $Launcher = $Launcher.Replace('__GOAT_REPO__', $Repository).Replace('__GOAT_RELEASE__', $Version)
-[IO.File]::WriteAllText((Join-Path $OutputDirectory 'goat.ps1'), $Launcher, [Text.UTF8Encoding]::new($true))
+# Keep the web launcher ASCII without a BOM for Windows PowerShell 5.1 HTTP decoding.
+if ($Launcher -match '[^\x00-\x7F]') { throw 'O inicializador deve conter apenas caracteres ASCII para uso via HTTP.' }
+[IO.File]::WriteAllText((Join-Path $OutputDirectory 'goat.ps1'), $Launcher, [Text.Encoding]::ASCII)
 Write-Host "Release preparada em $OutputDirectory"

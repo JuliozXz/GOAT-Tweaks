@@ -1,3 +1,5 @@
+v1.0.1 corrige a abertura pelo comando de uma linha no Windows PowerShell 5.1. O inicializador agora é publicado em ASCII sem a marca BOM, evitando o erro de análise que ocorria antes de abrir o aplicativo.
+
 GOAT Tweaks reúne 619 ações dos quatro projetos em uma interface com prévia, fila de execução e registros.
 
 Esta revisão acrescenta tema escuro com destaque âmbar, lista virtualizada, busca com intervalo curto, remoção individual da fila e bloqueios de execução concorrente. Ações sensíveis iniciam bloqueadas e exigem habilitação explícita do modo avançado e confirmação por ação. O executor também confere os conflitos e a integridade das solicitações.

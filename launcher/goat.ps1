@@ -10,7 +10,7 @@
     $WindowsBuild = [int](Get-ItemPropertyValue -LiteralPath 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion' -Name CurrentBuildNumber)
     if ($WindowsBuild -lt 19045) { throw 'Requer Windows 10 22H2 ou Windows 11.' }
     if ($Repo -notmatch '^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$' -or $ReleaseTag -notmatch '^v\d+\.\d+\.\d+$') {
-        throw 'Esta cópia do inicializador ainda não foi configurada para uma release.'
+        throw 'Esta copia do inicializador ainda nao foi configurada para uma release.'
     }
 
     $PreviousProtocol = [Net.ServicePointManager]::SecurityProtocol
@@ -27,7 +27,7 @@
         Write-Host "Obtendo GOAT Tweaks $ReleaseTag..."
         Invoke-WebRequest -UseBasicParsing -Uri "$BaseUrl/GOATTweaks.exe.sha256" -OutFile $ChecksumDownload
         $ExpectedHash = (Get-Content -LiteralPath $ChecksumDownload -Raw).Trim()
-        if ($ExpectedHash -notmatch '^[0-9a-fA-F]{64}$') { throw 'O arquivo SHA-256 publicado está inválido.' }
+        if ($ExpectedHash -notmatch '^[0-9a-fA-F]{64}$') { throw 'O arquivo SHA-256 publicado esta invalido.' }
         $DownloadRequired = $true
         if (Test-Path -LiteralPath $Executable -PathType Leaf) {
             $CurrentHash = (Get-FileHash -LiteralPath $Executable -Algorithm SHA256).Hash
@@ -38,7 +38,7 @@
             Invoke-WebRequest -UseBasicParsing -Uri "$BaseUrl/GOATTweaks.exe" -OutFile $ExecutableDownload
             $DownloadedHash = (Get-FileHash -LiteralPath $ExecutableDownload -Algorithm SHA256).Hash
             if (-not $DownloadedHash.Equals($ExpectedHash, [StringComparison]::OrdinalIgnoreCase)) {
-                throw 'O download não corresponde ao SHA-256 publicado. Nada foi aberto.'
+                throw 'O download nao corresponde ao SHA-256 publicado. Nada foi aberto.'
             }
             Move-Item -LiteralPath $ExecutableDownload -Destination $Executable -Force
         }
