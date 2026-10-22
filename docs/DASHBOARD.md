@@ -63,4 +63,4 @@ A leitura incremental dos registros, o isolamento dos executores, os conflitos, 
 
 ## Validação
 
-Esta atualização foi preparada sem executar testes ou ações de Windows, conforme a orientação do responsável. Compilação e empacotamento verificam o código e o XAML; os arquivos originais são conferidos pelo manifesto SHA-256. A aparência e o funcionamento em uma máquina Windows real ainda precisam de conferência. Essa limitação não permite garantir ausência de falhas em todos os computadores.
+Esta atualização foi preparada sem uma nova suíte de testes ou execução de ajustes. Compilação e empacotamento verificam o código e o XAML; os arquivos originais são conferidos pelo manifesto SHA-256. A abertura real foi confirmada em Windows x64 e Windows 11 ARM64 com emulação x64: painel respondendo, hardware local identificado e nenhuma ação aplicada. O workflow registra uma captura da interface e confere a sintaxe do inicializador no Windows PowerShell 5.1. Essa conferência não valida todos os ajustes em todos os computadores.

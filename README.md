@@ -65,11 +65,13 @@ O script compila o aplicativo e gera `dist/GOATTweaks.exe`, seu SHA-256, `dist/G
 
 Antes de empacotar, a publicação lê os assemblies compilados sem executar o aplicativo. Ela exige o índice de serviços no assembly principal, compara os recursos incorporados com os JSON de origem e confere a cobertura das ações. Um recurso ausente, deslocado para um assembly de idioma ou divergente impede a publicação.
 
+Antes de disponibilizar os downloads, o workflow analisa os recursos e o pacote com Microsoft Defender, confere a sintaxe do inicializador no Windows PowerShell 5.1 e abre somente o painel em um Windows isolado. Uma falha nessas etapas impede a publicação. Os registros e uma captura da interface ficam nos artefatos da execução.
+
 O workflow **Publicar GOAT Tweaks** em GitHub Actions faz a mesma compilação e publica os cinco arquivos em uma release. A publicação inicia ao enviar uma alteração de versão em `release.json` para `main`. Também é possível executá-lo manualmente com a versão desejada ou enviar uma tag no formato `v1.0.0`. A release só deixa de ser rascunho depois que todos os arquivos são anexados. Versões já publicadas não são sobrescritas.
 
 ## Estado de validação
 
-Esta revisão foi preparada sem executar uma nova suíte de testes nem ajustes no Windows, conforme a solicitação do responsável. Foram feitas compilação, preparação do pacote e conferência de integridade dos recursos. A aparência e o funcionamento completo desta interface em uma máquina Windows real ainda precisam de conferência. O plano de validação manual está em `docs/VM-TEST-PLAN.md`.
+Esta revisão não executou uma nova suíte de testes nem aplicou ajustes no Windows. Foram conferidos a compilação, o pacote, a integridade dos recursos e a abertura real do painel em Windows x64 e Windows 11 ARM64 com emulação x64. A conferência de abertura não valida todos os ajustes nas máquinas dos clientes. A procedência dos recursos e os limites da análise estão em [docs/SECURITY-REVIEW.md](docs/SECURITY-REVIEW.md). O plano de validação manual está em `docs/VM-TEST-PLAN.md`.
 
 ## Fontes e licença
 
