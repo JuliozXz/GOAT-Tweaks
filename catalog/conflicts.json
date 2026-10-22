@@ -1,0 +1,3268 @@
+{
+ "groups": [
+  {
+   "id": "reg:$($regpath.replace('hklm\\', 'hklm\\'))\\visibility",
+   "setting": "$($regpath.replace('hklm\\', 'hklm\\'))\\visibility",
+   "items": [
+    "ultimate:6 Windows/20 Edge & WebView.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/20 Edge & WebView.ps1=1",
+    "winsux:pipeline=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:$(($diskpath -replace 'microsoft.powershell.core\\',''))\\cacheispowerprotected",
+   "setting": "$(($diskpath -replace 'microsoft.powershell.core\\',''))\\cacheispowerprotected",
+   "items": [
+    "ultimate:6 Windows/28 Write Cache Buffer Flushing.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/28 Write Cache Buffer Flushing.ps1=1",
+    "winsux:pipeline=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:$regpath\\*eee",
+   "setting": "$regpath\\*eee",
+   "items": [
+    "ultimate:6 Windows/26 Network Adapter Power Savings & Wake.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/26 Network Adapter Power Savings & Wake.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:$regpath\\*modernstandbywolmagicpacket",
+   "setting": "$regpath\\*modernstandbywolmagicpacket",
+   "items": [
+    "ultimate:6 Windows/26 Network Adapter Power Savings & Wake.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/26 Network Adapter Power Savings & Wake.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:$regpath\\*wakeonmagicpacket",
+   "setting": "$regpath\\*wakeonmagicpacket",
+   "items": [
+    "ultimate:6 Windows/26 Network Adapter Power Savings & Wake.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/26 Network Adapter Power Savings & Wake.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:$regpath\\*wakeonpattern",
+   "setting": "$regpath\\*wakeonpattern",
+   "items": [
+    "ultimate:6 Windows/26 Network Adapter Power Savings & Wake.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/26 Network Adapter Power Savings & Wake.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:$regpath\\advancedeee",
+   "setting": "$regpath\\advancedeee",
+   "items": [
+    "ultimate:6 Windows/26 Network Adapter Power Savings & Wake.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/26 Network Adapter Power Savings & Wake.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:$regpath\\eeelinkadvertisement",
+   "setting": "$regpath\\eeelinkadvertisement",
+   "items": [
+    "ultimate:6 Windows/26 Network Adapter Power Savings & Wake.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/26 Network Adapter Power Savings & Wake.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:$regpath\\enablegreenethernet",
+   "setting": "$regpath\\enablegreenethernet",
+   "items": [
+    "ultimate:6 Windows/26 Network Adapter Power Savings & Wake.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/26 Network Adapter Power Savings & Wake.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:$regpath\\enhancedpowermanagementenabled",
+   "setting": "$regpath\\enhancedpowermanagementenabled",
+   "items": [
+    "ultimate:6 Windows/25 Device Manager Power Savings & Wake.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/25 Device Manager Power Savings & Wake.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:$regpath\\gigalite",
+   "setting": "$regpath\\gigalite",
+   "items": [
+    "ultimate:6 Windows/26 Network Adapter Power Savings & Wake.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/26 Network Adapter Power Savings & Wake.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:$regpath\\idleinworkingstate",
+   "setting": "$regpath\\idleinworkingstate",
+   "items": [
+    "ultimate:6 Windows/25 Device Manager Power Savings & Wake.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/25 Device Manager Power Savings & Wake.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:$regpath\\pnpcapabilities",
+   "setting": "$regpath\\pnpcapabilities",
+   "items": [
+    "ultimate:6 Windows/26 Network Adapter Power Savings & Wake.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/26 Network Adapter Power Savings & Wake.ps1=24",
+    "winsux:pipeline=24"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:$regpath\\powersavingmode",
+   "setting": "$regpath\\powersavingmode",
+   "items": [
+    "ultimate:6 Windows/26 Network Adapter Power Savings & Wake.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/26 Network Adapter Power Savings & Wake.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:$regpath\\s5wakeonlan",
+   "setting": "$regpath\\s5wakeonlan",
+   "items": [
+    "ultimate:6 Windows/26 Network Adapter Power Savings & Wake.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/26 Network Adapter Power Savings & Wake.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:$regpath\\selectivesuspendenabled",
+   "setting": "$regpath\\selectivesuspendenabled",
+   "items": [
+    "ultimate:6 Windows/25 Device Manager Power Savings & Wake.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/25 Device Manager Power Savings & Wake.ps1=00",
+    "winsux:pipeline=00"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:$regpath\\selectivesuspendon",
+   "setting": "$regpath\\selectivesuspendon",
+   "items": [
+    "ultimate:6 Windows/25 Device Manager Power Savings & Wake.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/25 Device Manager Power Savings & Wake.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:$regpath\\sipsenabled",
+   "setting": "$regpath\\sipsenabled",
+   "items": [
+    "ultimate:6 Windows/26 Network Adapter Power Savings & Wake.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/26 Network Adapter Power Savings & Wake.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:$regpath\\ulpmode",
+   "setting": "$regpath\\ulpmode",
+   "items": [
+    "ultimate:6 Windows/26 Network Adapter Power Savings & Wake.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/26 Network Adapter Power Savings & Wake.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:$regpath\\waitwakeenabled",
+   "setting": "$regpath\\waitwakeenabled",
+   "items": [
+    "ultimate:6 Windows/25 Device Manager Power Savings & Wake.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/25 Device Manager Power Savings & Wake.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:$regpath\\wakeonlink",
+   "setting": "$regpath\\wakeonlink",
+   "items": [
+    "ultimate:6 Windows/26 Network Adapter Power Savings & Wake.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/26 Network Adapter Power Savings & Wake.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\control panel\\accessibility\\keyboard response\\flags",
+   "setting": "hkcu\\control panel\\accessibility\\keyboard response\\flags",
+   "items": [
+    "rytunex:StickyKeys",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:StickyKeys=122",
+    "winsux:pipeline=2"
+   ],
+   "decision": "user-choice",
+   "note": "Sources write different values; GOAT Tweaks will not queue them together, the user picks one"
+  },
+  {
+   "id": "reg:hkcu\\control panel\\accessibility\\stickykeys\\flags",
+   "setting": "hkcu\\control panel\\accessibility\\stickykeys\\flags",
+   "items": [
+    "rytunex:StickyKeys",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:StickyKeys=506",
+    "winsux:pipeline=2"
+   ],
+   "decision": "user-choice",
+   "note": "Sources write different values; GOAT Tweaks will not queue them together, the user picks one"
+  },
+  {
+   "id": "reg:hkcu\\control panel\\accessibility\\togglekeys\\flags",
+   "setting": "hkcu\\control panel\\accessibility\\togglekeys\\flags",
+   "items": [
+    "rytunex:StickyKeys",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:StickyKeys=58",
+    "winsux:pipeline=34"
+   ],
+   "decision": "user-choice",
+   "note": "Sources write different values; GOAT Tweaks will not queue them together, the user picks one"
+  },
+  {
+   "id": "reg:hkcu\\control panel\\desktop\\dragfullwindows",
+   "setting": "hkcu\\control panel\\desktop\\dragfullwindows",
+   "items": [
+    "winsux:pipeline",
+    "winutil:tweak:WPFTweaksDisplay"
+   ],
+   "values": [
+    "winsux:pipeline=0",
+    "winutil:tweak:WPFTweaksDisplay=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\control panel\\desktop\\enableperprocesssystemdpi",
+   "setting": "hkcu\\control panel\\desktop\\enableperprocesssystemdpi",
+   "items": [
+    "ultimate:7 Hardware/1 Scaling Higher No Accel.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:7 Hardware/1 Scaling Higher No Accel.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\control panel\\desktop\\logpixels",
+   "setting": "hkcu\\control panel\\desktop\\logpixels",
+   "items": [
+    "ultimate:7 Hardware/1 Scaling Higher No Accel.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:7 Hardware/1 Scaling Higher No Accel.ps1=96",
+    "winsux:pipeline=96"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\control panel\\desktop\\menushowdelay",
+   "setting": "hkcu\\control panel\\desktop\\menushowdelay",
+   "items": [
+    "rytunex:MenuShowDelay",
+    "winsux:pipeline",
+    "winutil:tweak:WPFTweaksDisplay"
+   ],
+   "values": [
+    "rytunex:MenuShowDelay=0",
+    "winsux:pipeline=0",
+    "winutil:tweak:WPFTweaksDisplay=200"
+   ],
+   "decision": "user-choice",
+   "note": "Sources write different values; GOAT Tweaks will not queue them together, the user picks one"
+  },
+  {
+   "id": "reg:hkcu\\control panel\\desktop\\wallpaper",
+   "setting": "hkcu\\control panel\\desktop\\wallpaper",
+   "items": [
+    "ultimate:6 Windows/6 Signout Lockscreen Wallpaper Black.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/6 Signout Lockscreen Wallpaper Black.ps1=c:\\windows\\black.jpg",
+    "winsux:pipeline=",
+    "winsux:pipeline=c:\\windows\\black.jpg"
+   ],
+   "decision": "user-choice",
+   "note": "Sources write different values; GOAT Tweaks will not queue them together, the user picks one"
+  },
+  {
+   "id": "reg:hkcu\\control panel\\desktop\\win8dpiscaling",
+   "setting": "hkcu\\control panel\\desktop\\win8dpiscaling",
+   "items": [
+    "ultimate:7 Hardware/1 Scaling Higher No Accel.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:7 Hardware/1 Scaling Higher No Accel.ps1=1",
+    "winsux:pipeline=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\control panel\\desktop\\windowmetrics\\minanimate",
+   "setting": "hkcu\\control panel\\desktop\\windowmetrics\\minanimate",
+   "items": [
+    "winsux:pipeline",
+    "winutil:tweak:WPFTweaksDisplay"
+   ],
+   "values": [
+    "winsux:pipeline=0",
+    "winutil:tweak:WPFTweaksDisplay=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\control panel\\keyboard\\keyboarddelay",
+   "setting": "hkcu\\control panel\\keyboard\\keyboarddelay",
+   "items": [
+    "rytunex:KeyboardLatency",
+    "winutil:tweak:WPFTweaksDisplay"
+   ],
+   "values": [
+    "rytunex:KeyboardLatency=0",
+    "winutil:tweak:WPFTweaksDisplay=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\control panel\\mouse\\mousesensitivity",
+   "setting": "hkcu\\control panel\\mouse\\mousesensitivity",
+   "items": [
+    "ultimate:7 Hardware/1 Scaling Higher No Accel.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:7 Hardware/1 Scaling Higher No Accel.ps1=10",
+    "winsux:pipeline=10"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\control panel\\mouse\\mousespeed",
+   "setting": "hkcu\\control panel\\mouse\\mousespeed",
+   "items": [
+    "rytunex:MouseAcceleration",
+    "ultimate:7 Hardware/1 Scaling Higher No Accel.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:MouseAcceleration=0",
+    "ultimate:7 Hardware/1 Scaling Higher No Accel.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\control panel\\mouse\\mousethreshold1",
+   "setting": "hkcu\\control panel\\mouse\\mousethreshold1",
+   "items": [
+    "rytunex:MouseAcceleration",
+    "ultimate:7 Hardware/1 Scaling Higher No Accel.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:MouseAcceleration=0",
+    "ultimate:7 Hardware/1 Scaling Higher No Accel.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\control panel\\mouse\\mousethreshold2",
+   "setting": "hkcu\\control panel\\mouse\\mousethreshold2",
+   "items": [
+    "rytunex:MouseAcceleration",
+    "ultimate:7 Hardware/1 Scaling Higher No Accel.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:MouseAcceleration=0",
+    "ultimate:7 Hardware/1 Scaling Higher No Accel.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\control panel\\mouse\\rawmousethrottleenabled",
+   "setting": "hkcu\\control panel\\mouse\\rawmousethrottleenabled",
+   "items": [
+    "ultimate:7 Hardware/2 Background Polling Rate Cap.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:7 Hardware/2 Background Polling Rate Cap.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\control panel\\mouse\\smoothmousexcurve",
+   "setting": "hkcu\\control panel\\mouse\\smoothmousexcurve",
+   "items": [
+    "ultimate:7 Hardware/1 Scaling Higher No Accel.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:7 Hardware/1 Scaling Higher No Accel.ps1=0000000000000000c0cc0c00000000008099190000000000406626000000000000333300000000000",
+    "winsux:pipeline=hex:\\"
+   ],
+   "decision": "user-choice",
+   "note": "Sources write different values; GOAT Tweaks will not queue them together, the user picks one"
+  },
+  {
+   "id": "reg:hkcu\\control panel\\mouse\\smoothmouseycurve",
+   "setting": "hkcu\\control panel\\mouse\\smoothmouseycurve",
+   "items": [
+    "ultimate:7 Hardware/1 Scaling Higher No Accel.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:7 Hardware/1 Scaling Higher No Accel.ps1=0000000000000000000038000000000000007000000000000000a800000000000000e00000000000",
+    "winsux:pipeline=hex:\\"
+   ],
+   "decision": "user-choice",
+   "note": "Sources write different values; GOAT Tweaks will not queue them together, the user picks one"
+  },
+  {
+   "id": "reg:hkcu\\software\\7-zip\\options\\cascadedmenu",
+   "setting": "hkcu\\software\\7-zip\\options\\cascadedmenu",
+   "items": [
+    "ultimate:4 Installers/1 Installers.ps1",
+    "ultimate:5 Graphics/1 Driver Clean.ps1",
+    "ultimate:5 Graphics/11 DirectX.ps1",
+    "ultimate:5 Graphics/3 Driver Updated Install & Settings.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:4 Installers/1 Installers.ps1=0",
+    "ultimate:5 Graphics/1 Driver Clean.ps1=0",
+    "ultimate:5 Graphics/11 DirectX.ps1=0",
+    "ultimate:5 Graphics/3 Driver Updated Install & Settings.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\7-zip\\options\\contextmenu",
+   "setting": "hkcu\\software\\7-zip\\options\\contextmenu",
+   "items": [
+    "ultimate:4 Installers/1 Installers.ps1",
+    "ultimate:5 Graphics/1 Driver Clean.ps1",
+    "ultimate:5 Graphics/11 DirectX.ps1",
+    "ultimate:5 Graphics/3 Driver Updated Install & Settings.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:4 Installers/1 Installers.ps1=259",
+    "ultimate:5 Graphics/1 Driver Clean.ps1=259",
+    "ultimate:5 Graphics/11 DirectX.ps1=259",
+    "ultimate:5 Graphics/3 Driver Updated Install & Settings.ps1=259",
+    "winsux:pipeline=259"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\classes\\clsid\\{e88865ea-0e1c-4e20-9aa6-edcd0212c87c}\\system.ispinnedtonamespacetree",
+   "setting": "hkcu\\software\\classes\\clsid\\{e88865ea-0e1c-4e20-9aa6-edcd0212c87c}\\system.ispinnedtonamespacetree",
+   "items": [
+    "winsux:pipeline",
+    "winutil:tweak:WPFTweaksRemoveHomeAndGallery"
+   ],
+   "values": [
+    "winsux:pipeline=0",
+    "winutil:tweak:WPFTweaksRemoveHomeAndGallery=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\directx\\usergpupreferences\\directxuserglobalsettings",
+   "setting": "hkcu\\software\\microsoft\\directx\\usergpupreferences\\directxuserglobalsettings",
+   "items": [
+    "ultimate:5 Graphics/7 Intel Settings.ps1",
+    "ultimate:8 Advanced/11 Mpo.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:5 Graphics/7 Intel Settings.ps1=swapeffectupgradeenable=1;vrroptimizeenable=0;",
+    "ultimate:8 Advanced/11 Mpo.ps1=vrroptimizeenable=0;swapeffectupgradeenable=1;",
+    "winsux:pipeline=swapeffectupgradeenable=1;vrroptimizeenable=0;"
+   ],
+   "decision": "user-choice",
+   "note": "Sources write different values; GOAT Tweaks will not queue them together, the user picks one"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\gamebar\\autogamemodeenabled",
+   "setting": "hkcu\\software\\microsoft\\gamebar\\autogamemodeenabled",
+   "items": [
+    "rytunex:GamingMode",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:GamingMode=1",
+    "winsux:pipeline=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\gamebar\\usenexusforgamebarenabled",
+   "setting": "hkcu\\software\\microsoft\\gamebar\\usenexusforgamebarenabled",
+   "items": [
+    "rytunex:GameBar",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:GameBar=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\input\\settings\\insightsenabled",
+   "setting": "hkcu\\software\\microsoft\\input\\settings\\insightsenabled",
+   "items": [
+    "rytunex:SpellingAndTypingFeatures",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:SpellingAndTypingFeatures=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\inputpersonalization\\restrictimplicitinkcollection",
+   "setting": "hkcu\\software\\microsoft\\inputpersonalization\\restrictimplicitinkcollection",
+   "items": [
+    "winsux:pipeline",
+    "winutil:tweak:WPFTweaksTelemetry"
+   ],
+   "values": [
+    "winsux:pipeline=1",
+    "winutil:tweak:WPFTweaksTelemetry=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\inputpersonalization\\restrictimplicittextcollection",
+   "setting": "hkcu\\software\\microsoft\\inputpersonalization\\restrictimplicittextcollection",
+   "items": [
+    "winsux:pipeline",
+    "winutil:tweak:WPFTweaksTelemetry"
+   ],
+   "values": [
+    "winsux:pipeline=1",
+    "winutil:tweak:WPFTweaksTelemetry=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\inputpersonalization\\traineddatastore\\harvestcontacts",
+   "setting": "hkcu\\software\\microsoft\\inputpersonalization\\traineddatastore\\harvestcontacts",
+   "items": [
+    "winsux:pipeline",
+    "winutil:tweak:WPFTweaksTelemetry"
+   ],
+   "values": [
+    "winsux:pipeline=0",
+    "winutil:tweak:WPFTweaksTelemetry=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\personalization\\settings\\acceptedprivacypolicy",
+   "setting": "hkcu\\software\\microsoft\\personalization\\settings\\acceptedprivacypolicy",
+   "items": [
+    "winsux:pipeline",
+    "winutil:tweak:WPFTweaksTelemetry"
+   ],
+   "values": [
+    "winsux:pipeline=0",
+    "winutil:tweak:WPFTweaksTelemetry=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\siuf\\rules\\numberofsiufinperiod",
+   "setting": "hkcu\\software\\microsoft\\siuf\\rules\\numberofsiufinperiod",
+   "items": [
+    "rytunex:TelemetryServices",
+    "winsux:pipeline",
+    "winutil:tweak:WPFTweaksTelemetry"
+   ],
+   "values": [
+    "rytunex:TelemetryServices=0",
+    "winsux:pipeline=0",
+    "winutil:tweak:WPFTweaksTelemetry=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\siuf\\rules\\periodinnanoseconds",
+   "setting": "hkcu\\software\\microsoft\\siuf\\rules\\periodinnanoseconds",
+   "items": [
+    "winsux:pipeline",
+    "winutil:tweak:WPFTweaksTelemetry"
+   ],
+   "values": [
+    "winsux:pipeline=-",
+    "winutil:tweak:WPFTweaksTelemetry=<removeentry>"
+   ],
+   "decision": "user-choice",
+   "note": "Sources write different values; GOAT Tweaks will not queue them together, the user picks one"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\speech_onecore\\settings\\onlinespeechprivacy\\hasaccepted",
+   "setting": "hkcu\\software\\microsoft\\speech_onecore\\settings\\onlinespeechprivacy\\hasaccepted",
+   "items": [
+    "rytunex:OnlineSpeechPrivacy",
+    "winutil:tweak:WPFTweaksTelemetry"
+   ],
+   "values": [
+    "rytunex:OnlineSpeechPrivacy=0",
+    "winutil:tweak:WPFTweaksTelemetry=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\tablettip\\1.7\\enabledoubletapspace",
+   "setting": "hkcu\\software\\microsoft\\tablettip\\1.7\\enabledoubletapspace",
+   "items": [
+    "rytunex:SpellingAndTypingFeatures",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:SpellingAndTypingFeatures=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows defender security center\\account protection\\disabledynamiclocknotifications",
+   "setting": "hkcu\\software\\microsoft\\windows defender security center\\account protection\\disabledynamiclocknotifications",
+   "items": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1",
+    "ultimate:8 Advanced/1 Defender.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1=1",
+    "ultimate:8 Advanced/1 Defender.ps1=1",
+    "winsux:pipeline=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows defender security center\\account protection\\disablenotifications",
+   "setting": "hkcu\\software\\microsoft\\windows defender security center\\account protection\\disablenotifications",
+   "items": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1",
+    "ultimate:8 Advanced/1 Defender.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1=1",
+    "ultimate:8 Advanced/1 Defender.ps1=1",
+    "winsux:pipeline=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows defender security center\\account protection\\disablewindowshellonotifications",
+   "setting": "hkcu\\software\\microsoft\\windows defender security center\\account protection\\disablewindowshellonotifications",
+   "items": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1",
+    "ultimate:8 Advanced/1 Defender.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1=1",
+    "ultimate:8 Advanced/1 Defender.ps1=1",
+    "winsux:pipeline=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\advertisinginfo\\enabled",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\advertisinginfo\\enabled",
+   "items": [
+    "rytunex:AdvertisingID",
+    "winutil:tweak:WPFTweaksTelemetry"
+   ],
+   "values": [
+    "rytunex:AdvertisingID=0",
+    "winutil:tweak:WPFTweaksTelemetry=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\apphost\\enablewebcontentevaluation",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\apphost\\enablewebcontentevaluation",
+   "items": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1",
+    "ultimate:8 Advanced/1 Defender.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1=0",
+    "ultimate:8 Advanced/1 Defender.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\backgroundaccessapplications\\globaluserdisabled",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\backgroundaccessapplications\\globaluserdisabled",
+   "items": [
+    "rytunex:BackgroundApps",
+    "ultimate:3 Setup/9 Background Apps.ps1",
+    "winsux:pipeline",
+    "winutil:tweak:WPFTweaksDisableBGapps"
+   ],
+   "values": [
+    "rytunex:BackgroundApps=1",
+    "ultimate:3 Setup/9 Background Apps.ps1=1",
+    "winsux:pipeline=1",
+    "winutil:tweak:WPFTweaksDisableBGapps=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\contentdeliverymanager\\contentdeliveryallowed",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\contentdeliverymanager\\contentdeliveryallowed",
+   "items": [
+    "rytunex:StoreUpdates",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:StoreUpdates=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\contentdeliverymanager\\featuremanagementenabled",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\contentdeliverymanager\\featuremanagementenabled",
+   "items": [
+    "rytunex:StoreUpdates",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:StoreUpdates=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\contentdeliverymanager\\oempreinstalledappsenabled",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\contentdeliverymanager\\oempreinstalledappsenabled",
+   "items": [
+    "rytunex:StoreUpdates",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:StoreUpdates=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\contentdeliverymanager\\preinstalledappsenabled",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\contentdeliverymanager\\preinstalledappsenabled",
+   "items": [
+    "rytunex:StoreUpdates",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:StoreUpdates=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\contentdeliverymanager\\preinstalledappseverenabled",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\contentdeliverymanager\\preinstalledappseverenabled",
+   "items": [
+    "rytunex:StoreUpdates",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:StoreUpdates=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\contentdeliverymanager\\rotatinglockscreenenabled",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\contentdeliverymanager\\rotatinglockscreenenabled",
+   "items": [
+    "rytunex:SpotlightFeatures",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:SpotlightFeatures=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\contentdeliverymanager\\rotatinglockscreenoverlayenabled",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\contentdeliverymanager\\rotatinglockscreenoverlayenabled",
+   "items": [
+    "rytunex:SpotlightFeatures",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:SpotlightFeatures=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\contentdeliverymanager\\silentinstalledappsenabled",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\contentdeliverymanager\\silentinstalledappsenabled",
+   "items": [
+    "rytunex:StoreUpdates",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:StoreUpdates=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\contentdeliverymanager\\subscribedcontent-314563enabled",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\contentdeliverymanager\\subscribedcontent-314563enabled",
+   "items": [
+    "rytunex:StoreUpdates",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:StoreUpdates=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\contentdeliverymanager\\subscribedcontentenabled",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\contentdeliverymanager\\subscribedcontentenabled",
+   "items": [
+    "rytunex:StoreUpdates",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:StoreUpdates=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\explorer\\showfrequent",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\explorer\\showfrequent",
+   "items": [
+    "rytunex:QuickAccessHistory",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:QuickAccessHistory=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\explorer\\advanced\\enablesnapassistflyout",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\explorer\\advanced\\enablesnapassistflyout",
+   "items": [
+    "rytunex:SnapAssist",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:SnapAssist=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\explorer\\advanced\\enablesnapbar",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\explorer\\advanced\\enablesnapbar",
+   "items": [
+    "rytunex:SnapAssist",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:SnapAssist=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\explorer\\advanced\\hidefileext",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\explorer\\advanced\\hidefileext",
+   "items": [
+    "rytunex:FileExtensionsAndHiddenFiles",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:FileExtensionsAndHiddenFiles=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\explorer\\advanced\\launchto",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\explorer\\advanced\\launchto",
+   "items": [
+    "rytunex:QuickAccessHistory",
+    "winsux:pipeline",
+    "winutil:tweak:WPFTweaksRemoveHomeAndGallery"
+   ],
+   "values": [
+    "rytunex:QuickAccessHistory=1",
+    "winsux:pipeline=1",
+    "winutil:tweak:WPFTweaksRemoveHomeAndGallery=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\explorer\\advanced\\listviewalphaselect",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\explorer\\advanced\\listviewalphaselect",
+   "items": [
+    "winsux:pipeline",
+    "winutil:tweak:WPFTweaksDisplay"
+   ],
+   "values": [
+    "winsux:pipeline=0",
+    "winutil:tweak:WPFTweaksDisplay=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\explorer\\advanced\\listviewshadow",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\explorer\\advanced\\listviewshadow",
+   "items": [
+    "winsux:pipeline",
+    "winutil:tweak:WPFTweaksDisplay"
+   ],
+   "values": [
+    "winsux:pipeline=0",
+    "winutil:tweak:WPFTweaksDisplay=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\explorer\\advanced\\showcopilotbutton",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\explorer\\advanced\\showcopilotbutton",
+   "items": [
+    "rytunex:CoPilotAI",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:CoPilotAI=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\explorer\\advanced\\showsyncprovidernotifications",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\explorer\\advanced\\showsyncprovidernotifications",
+   "items": [
+    "rytunex:QuickAccessHistory",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:QuickAccessHistory=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\explorer\\advanced\\start_trackprogs",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\explorer\\advanced\\start_trackprogs",
+   "items": [
+    "rytunex:AppLaunchTracking",
+    "winutil:tweak:WPFTweaksTelemetry"
+   ],
+   "values": [
+    "rytunex:AppLaunchTracking=0",
+    "winutil:tweak:WPFTweaksTelemetry=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\explorer\\advanced\\taskbaral",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\explorer\\advanced\\taskbaral",
+   "items": [
+    "rytunex:TaskbarToLeft",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:TaskbarToLeft=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\explorer\\advanced\\taskbaranimations",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\explorer\\advanced\\taskbaranimations",
+   "items": [
+    "winsux:pipeline",
+    "winutil:tweak:WPFTweaksDisplay"
+   ],
+   "values": [
+    "winsux:pipeline=0",
+    "winutil:tweak:WPFTweaksDisplay=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\explorer\\advanced\\taskbarmn",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\explorer\\advanced\\taskbarmn",
+   "items": [
+    "rytunex:Chat",
+    "winsux:pipeline",
+    "winutil:tweak:WPFTweaksDisplay"
+   ],
+   "values": [
+    "rytunex:Chat=0",
+    "winsux:pipeline=0",
+    "winutil:tweak:WPFTweaksDisplay=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\explorer\\advanced\\taskbardevelopersettings\\taskbarendtask",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\explorer\\advanced\\taskbardevelopersettings\\taskbarendtask",
+   "items": [
+    "rytunex:EndTask",
+    "winsux:pipeline",
+    "winutil:tweak:WPFTweaksEndTaskOnTaskbar"
+   ],
+   "values": [
+    "rytunex:EndTask=1",
+    "winsux:pipeline=1",
+    "winutil:tweak:WPFTweaksEndTaskOnTaskbar=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\explorer\\visualeffects\\visualfxsetting",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\explorer\\visualeffects\\visualfxsetting",
+   "items": [
+    "winsux:pipeline",
+    "winutil:tweak:WPFTweaksDisplay"
+   ],
+   "values": [
+    "winsux:pipeline=3",
+    "winutil:tweak:WPFTweaksDisplay=3"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\gamedvr\\appcaptureenabled",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\gamedvr\\appcaptureenabled",
+   "items": [
+    "rytunex:GameBar",
+    "rytunex:WindowsAI",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:GameBar=0",
+    "rytunex:WindowsAI=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\gamedvr\\audiocaptureenabled",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\gamedvr\\audiocaptureenabled",
+   "items": [
+    "rytunex:GameBar",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:GameBar=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\gamedvr\\cursorcaptureenabled",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\gamedvr\\cursorcaptureenabled",
+   "items": [
+    "rytunex:GameBar",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:GameBar=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\policies\\explorer\\hidescameetnow",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\policies\\explorer\\hidescameetnow",
+   "items": [
+    "rytunex:QuickAccessHistory",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:QuickAccessHistory=1",
+    "winsux:pipeline=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\privacy\\tailoredexperienceswithdiagnosticdataenabled",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\privacy\\tailoredexperienceswithdiagnosticdataenabled",
+   "items": [
+    "rytunex:TailoredExperiences",
+    "winsux:pipeline",
+    "winutil:tweak:WPFTweaksTelemetry"
+   ],
+   "values": [
+    "rytunex:TailoredExperiences=0",
+    "winsux:pipeline=0",
+    "winutil:tweak:WPFTweaksTelemetry=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\pushnotifications\\toastenabled",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\pushnotifications\\toastenabled",
+   "items": [
+    "winsux:pipeline",
+    "winutil:tweak:WPFTweaksDisableNotifications"
+   ],
+   "values": [
+    "winsux:pipeline=0",
+    "winutil:tweak:WPFTweaksDisableNotifications=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\search\\backgroundappglobaltoggle",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\search\\backgroundappglobaltoggle",
+   "items": [
+    "rytunex:BackgroundApps",
+    "ultimate:3 Setup/9 Background Apps.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:BackgroundApps=0",
+    "ultimate:3 Setup/9 Background Apps.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\search\\searchboxtaskbarmode",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\search\\searchboxtaskbarmode",
+   "items": [
+    "ultimate:8 Advanced/18 Start Search Shell Mobsync.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:8 Advanced/18 Start Search Shell Mobsync.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\searchsettings\\isdevicesearchhistoryenabled",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\searchsettings\\isdevicesearchhistoryenabled",
+   "items": [
+    "rytunex:Cortana",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:Cortana=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\searchsettings\\safesearchmode",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\searchsettings\\safesearchmode",
+   "items": [
+    "rytunex:SafeSearchMode",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:SafeSearchMode=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\smartactionplatform\\smartclipboard\\disabled",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\smartactionplatform\\smartclipboard\\disabled",
+   "items": [
+    "rytunex:SuggestedActions",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:SuggestedActions=1",
+    "winsux:pipeline=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\start\\allappsviewmode",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\start\\allappsviewmode",
+   "items": [
+    "ultimate:6 Windows/1 Start Menu Taskbar.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/1 Start Menu Taskbar.ps1=2",
+    "winsux:pipeline=2"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\themes\\personalize\\appsuselighttheme",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\themes\\personalize\\appsuselighttheme",
+   "items": [
+    "rytunex:WindowsDarkMode",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:WindowsDarkMode=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\themes\\personalize\\enabletransparency",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\themes\\personalize\\enabletransparency",
+   "items": [
+    "rytunex:WindowsTransparency",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:WindowsTransparency=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\currentversion\\themes\\personalize\\systemuseslighttheme",
+   "setting": "hkcu\\software\\microsoft\\windows\\currentversion\\themes\\personalize\\systemuseslighttheme",
+   "items": [
+    "rytunex:WindowsDarkMode",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:WindowsDarkMode=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\microsoft\\windows\\dwm\\enableaeropeek",
+   "setting": "hkcu\\software\\microsoft\\windows\\dwm\\enableaeropeek",
+   "items": [
+    "winsux:pipeline",
+    "winutil:tweak:WPFTweaksDisplay"
+   ],
+   "values": [
+    "winsux:pipeline=0",
+    "winutil:tweak:WPFTweaksDisplay=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\policies\\microsoft\\windows\\explorer\\disablenotificationcenter",
+   "setting": "hkcu\\software\\policies\\microsoft\\windows\\explorer\\disablenotificationcenter",
+   "items": [
+    "rytunex:NotificationCenter",
+    "winutil:tweak:WPFTweaksDisableNotifications"
+   ],
+   "values": [
+    "rytunex:NotificationCenter=1",
+    "winutil:tweak:WPFTweaksDisableNotifications=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\policies\\microsoft\\windows\\explorer\\disablesearchboxsuggestions",
+   "setting": "hkcu\\software\\policies\\microsoft\\windows\\explorer\\disablesearchboxsuggestions",
+   "items": [
+    "rytunex:WebSearchResults",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:WebSearchResults=1",
+    "winsux:pipeline=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\software\\policies\\microsoft\\windows\\windowscopilot\\turnoffwindowscopilot",
+   "setting": "hkcu\\software\\policies\\microsoft\\windows\\windowscopilot\\turnoffwindowscopilot",
+   "items": [
+    "rytunex:CoPilotAI",
+    "ultimate:6 Windows/9 Copilot.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:CoPilotAI=1",
+    "ultimate:6 Windows/9 Copilot.ps1=1",
+    "winsux:pipeline=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\system\\gameconfigstore\\gamedvr_dxgihonorfsewindowscompatible",
+   "setting": "hkcu\\system\\gameconfigstore\\gamedvr_dxgihonorfsewindowscompatible",
+   "items": [
+    "rytunex:FullscreenOptimizations",
+    "ultimate:8 Advanced/12 Hardware Legacy Flip.ps1"
+   ],
+   "values": [
+    "rytunex:FullscreenOptimizations=0",
+    "ultimate:8 Advanced/12 Hardware Legacy Flip.ps1=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\system\\gameconfigstore\\gamedvr_enabled",
+   "setting": "hkcu\\system\\gameconfigstore\\gamedvr_enabled",
+   "items": [
+    "rytunex:GameBar",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:GameBar=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\system\\gameconfigstore\\gamedvr_fsebehaviormode",
+   "setting": "hkcu\\system\\gameconfigstore\\gamedvr_fsebehaviormode",
+   "items": [
+    "rytunex:FullscreenOptimizations",
+    "ultimate:8 Advanced/12 Hardware Legacy Flip.ps1"
+   ],
+   "values": [
+    "rytunex:FullscreenOptimizations=0",
+    "ultimate:8 Advanced/12 Hardware Legacy Flip.ps1=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hkcu\\system\\gameconfigstore\\gamedvr_honoruserfsebehaviormode",
+   "setting": "hkcu\\system\\gameconfigstore\\gamedvr_honoruserfsebehaviormode",
+   "items": [
+    "rytunex:FullscreenOptimizations",
+    "ultimate:8 Advanced/12 Hardware Legacy Flip.ps1"
+   ],
+   "values": [
+    "rytunex:FullscreenOptimizations=0",
+    "ultimate:8 Advanced/12 Hardware Legacy Flip.ps1=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\policymanager\\current\\device\\education\\iseducationenvironment",
+   "setting": "hklm\\software\\microsoft\\policymanager\\current\\device\\education\\iseducationenvironment",
+   "items": [
+    "rytunex:RecommendedSectionStartMenu",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:RecommendedSectionStartMenu=1",
+    "winsux:pipeline=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\policymanager\\current\\device\\start\\hiderecommendedsection",
+   "setting": "hklm\\software\\microsoft\\policymanager\\current\\device\\start\\hiderecommendedsection",
+   "items": [
+    "rytunex:RecommendedSectionStartMenu",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:RecommendedSectionStartMenu=1",
+    "winsux:pipeline=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\policymanager\\default\\newsandinterests\\allownewsandinterests\\value",
+   "setting": "hklm\\software\\microsoft\\policymanager\\default\\newsandinterests\\allownewsandinterests\\value",
+   "items": [
+    "ultimate:6 Windows/8 Widgets.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/8 Widgets.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\windows defender\\puaprotection",
+   "setting": "hklm\\software\\microsoft\\windows defender\\puaprotection",
+   "items": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1",
+    "ultimate:8 Advanced/1 Defender.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1=0",
+    "ultimate:8 Advanced/1 Defender.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\windows defender\\smartlockermode",
+   "setting": "hklm\\software\\microsoft\\windows defender\\smartlockermode",
+   "items": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1",
+    "ultimate:8 Advanced/1 Defender.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1=0",
+    "ultimate:8 Advanced/1 Defender.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\windows defender\\verifiedandreputabletrustmodeenabled",
+   "setting": "hklm\\software\\microsoft\\windows defender\\verifiedandreputabletrustmodeenabled",
+   "items": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1",
+    "ultimate:8 Advanced/1 Defender.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1=0",
+    "ultimate:8 Advanced/1 Defender.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\windows defender security center\\notifications\\disableenhancednotifications",
+   "setting": "hklm\\software\\microsoft\\windows defender security center\\notifications\\disableenhancednotifications",
+   "items": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1",
+    "ultimate:8 Advanced/1 Defender.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1=1",
+    "ultimate:8 Advanced/1 Defender.ps1=1",
+    "winsux:pipeline=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\windows defender security center\\virus and threat protection\\filesblockednotificationdisabled",
+   "setting": "hklm\\software\\microsoft\\windows defender security center\\virus and threat protection\\filesblockednotificationdisabled",
+   "items": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1",
+    "ultimate:8 Advanced/1 Defender.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1=1",
+    "ultimate:8 Advanced/1 Defender.ps1=1",
+    "winsux:pipeline=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\windows defender security center\\virus and threat protection\\noactionnotificationdisabled",
+   "setting": "hklm\\software\\microsoft\\windows defender security center\\virus and threat protection\\noactionnotificationdisabled",
+   "items": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1",
+    "ultimate:8 Advanced/1 Defender.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1=1",
+    "ultimate:8 Advanced/1 Defender.ps1=1",
+    "winsux:pipeline=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\windows defender security center\\virus and threat protection\\summarynotificationdisabled",
+   "setting": "hklm\\software\\microsoft\\windows defender security center\\virus and threat protection\\summarynotificationdisabled",
+   "items": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1",
+    "ultimate:8 Advanced/1 Defender.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1=1",
+    "ultimate:8 Advanced/1 Defender.ps1=1",
+    "winsux:pipeline=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\windows defender\\features\\tamperprotection",
+   "setting": "hklm\\software\\microsoft\\windows defender\\features\\tamperprotection",
+   "items": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1",
+    "ultimate:8 Advanced/1 Defender.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1=4",
+    "ultimate:8 Advanced/1 Defender.ps1=4",
+    "winsux:pipeline=4"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\windows defender\\real-time protection\\disableasyncscanonopen",
+   "setting": "hklm\\software\\microsoft\\windows defender\\real-time protection\\disableasyncscanonopen",
+   "items": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1",
+    "ultimate:8 Advanced/1 Defender.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1=1",
+    "ultimate:8 Advanced/1 Defender.ps1=1",
+    "winsux:pipeline=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\windows defender\\real-time protection\\disablerealtimemonitoring",
+   "setting": "hklm\\software\\microsoft\\windows defender\\real-time protection\\disablerealtimemonitoring",
+   "items": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1",
+    "ultimate:8 Advanced/1 Defender.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1=0",
+    "ultimate:8 Advanced/1 Defender.ps1=1",
+    "winsux:pipeline=0"
+   ],
+   "decision": "user-choice",
+   "note": "Sources write different values; GOAT Tweaks will not queue them together, the user picks one"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\windows defender\\spynet\\spynetreporting",
+   "setting": "hklm\\software\\microsoft\\windows defender\\spynet\\spynetreporting",
+   "items": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1",
+    "ultimate:8 Advanced/1 Defender.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1=0",
+    "ultimate:8 Advanced/1 Defender.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\windows defender\\spynet\\submitsamplesconsent",
+   "setting": "hklm\\software\\microsoft\\windows defender\\spynet\\submitsamplesconsent",
+   "items": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1",
+    "ultimate:8 Advanced/1 Defender.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1=0",
+    "ultimate:8 Advanced/1 Defender.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\windows defender\\windows defender exploit guard\\controlled folder access\\enablecontrolledfolderaccess",
+   "setting": "hklm\\software\\microsoft\\windows defender\\windows defender exploit guard\\controlled folder access\\enablecontrolledfolderaccess",
+   "items": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1",
+    "ultimate:8 Advanced/1 Defender.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1=0",
+    "ultimate:8 Advanced/1 Defender.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\windows nt\\currentversion\\passwordless\\device\\devicepasswordlessbuildversion",
+   "setting": "hklm\\software\\microsoft\\windows nt\\currentversion\\passwordless\\device\\devicepasswordlessbuildversion",
+   "items": [
+    "ultimate:1 Check/1 Bios Check.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:1 Check/1 Bios Check.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\windows nt\\currentversion\\systemrestore\\systemrestorepointcreationfrequency",
+   "setting": "hklm\\software\\microsoft\\windows nt\\currentversion\\systemrestore\\systemrestorepointcreationfrequency",
+   "items": [
+    "ultimate:6 Windows/34 Autoruns Startup Tasks & Apps Check.ps1",
+    "ultimate:6 Windows/36 Restore Point.ps1",
+    "winsux:pipeline",
+    "winutil:tweak:WPFTweaksRestorePoint"
+   ],
+   "values": [
+    "ultimate:6 Windows/34 Autoruns Startup Tasks & Apps Check.ps1=0",
+    "ultimate:6 Windows/36 Restore Point.ps1=0",
+    "winsux:pipeline=0",
+    "winutil:tweak:WPFTweaksRestorePoint=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\windows\\currentversion\\capabilityaccessmanager\\consentstore\\location\\value",
+   "setting": "hklm\\software\\microsoft\\windows\\currentversion\\capabilityaccessmanager\\consentstore\\location\\value",
+   "items": [
+    "winsux:pipeline",
+    "winutil:tweak:WPFTweaksLocation"
+   ],
+   "values": [
+    "winsux:pipeline=deny",
+    "winutil:tweak:WPFTweaksLocation=deny"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\windows\\currentversion\\device metadata\\preventdevicemetadatafromnetwork",
+   "setting": "hklm\\software\\microsoft\\windows\\currentversion\\device metadata\\preventdevicemetadatafromnetwork",
+   "items": [
+    "rytunex:Drivers",
+    "rytunex:TelemetryServices",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:Drivers=1",
+    "rytunex:TelemetryServices=1",
+    "winsux:pipeline=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\windows\\currentversion\\driversearching\\searchorderconfig",
+   "setting": "hklm\\software\\microsoft\\windows\\currentversion\\driversearching\\searchorderconfig",
+   "items": [
+    "rytunex:Drivers",
+    "ultimate:5 Graphics/1 Driver Clean.ps1",
+    "winsux:pipeline",
+    "winutil:tweak:WPFTweaksRazerBlock"
+   ],
+   "values": [
+    "rytunex:Drivers=0",
+    "ultimate:5 Graphics/1 Driver Clean.ps1=0",
+    "winsux:pipeline=0",
+    "winutil:tweak:WPFTweaksRazerBlock=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\windows\\currentversion\\explorer\\nopreviousversionspage",
+   "setting": "hklm\\software\\microsoft\\windows\\currentversion\\explorer\\nopreviousversionspage",
+   "items": [
+    "ultimate:6 Windows/4 Context Menu.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/4 Context Menu.ps1=1",
+    "winsux:pipeline=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\windows\\currentversion\\explorer\\smartscreenenabled",
+   "setting": "hklm\\software\\microsoft\\windows\\currentversion\\explorer\\smartscreenenabled",
+   "items": [
+    "rytunex:SmartScreen",
+    "ultimate:6 Windows/33 Defender Optimize.ps1",
+    "ultimate:8 Advanced/1 Defender.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:SmartScreen=off",
+    "ultimate:6 Windows/33 Defender Optimize.ps1=off",
+    "ultimate:8 Advanced/1 Defender.ps1=off",
+    "winsux:pipeline=off"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\windows\\currentversion\\explorer\\flyoutmenusettings\\showlockoption",
+   "setting": "hklm\\software\\microsoft\\windows\\currentversion\\explorer\\flyoutmenusettings\\showlockoption",
+   "items": [
+    "ultimate:6 Windows/29 Power Plan.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/29 Power Plan.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\windows\\currentversion\\explorer\\flyoutmenusettings\\showsleepoption",
+   "setting": "hklm\\software\\microsoft\\windows\\currentversion\\explorer\\flyoutmenusettings\\showsleepoption",
+   "items": [
+    "ultimate:6 Windows/29 Power Plan.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/29 Power Plan.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\windows\\currentversion\\personalizationcsp\\lockscreenimagepath",
+   "setting": "hklm\\software\\microsoft\\windows\\currentversion\\personalizationcsp\\lockscreenimagepath",
+   "items": [
+    "ultimate:6 Windows/6 Signout Lockscreen Wallpaper Black.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/6 Signout Lockscreen Wallpaper Black.ps1=c:\\windows\\black.jpg",
+    "winsux:pipeline=c:\\windows\\black.jpg"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\windows\\currentversion\\personalizationcsp\\lockscreenimagestatus",
+   "setting": "hklm\\software\\microsoft\\windows\\currentversion\\personalizationcsp\\lockscreenimagestatus",
+   "items": [
+    "ultimate:6 Windows/6 Signout Lockscreen Wallpaper Black.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/6 Signout Lockscreen Wallpaper Black.ps1=1",
+    "winsux:pipeline=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\windows\\currentversion\\policies\\datacollection\\allowtelemetry",
+   "setting": "hklm\\software\\microsoft\\windows\\currentversion\\policies\\datacollection\\allowtelemetry",
+   "items": [
+    "rytunex:TelemetryServices",
+    "winutil:tweak:WPFTweaksTelemetry"
+   ],
+   "values": [
+    "rytunex:TelemetryServices=0",
+    "winutil:tweak:WPFTweaksTelemetry=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\windows\\currentversion\\policies\\explorer\\nocustomizethisfolder",
+   "setting": "hklm\\software\\microsoft\\windows\\currentversion\\policies\\explorer\\nocustomizethisfolder",
+   "items": [
+    "ultimate:6 Windows/4 Context Menu.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/4 Context Menu.ps1=1",
+    "winsux:pipeline=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\windows\\currentversion\\policies\\explorer\\settingspagevisibility",
+   "setting": "hklm\\software\\microsoft\\windows\\currentversion\\policies\\explorer\\settingspagevisibility",
+   "items": [
+    "winsux:pipeline",
+    "winutil:tweak:WPFTweaksWindowsAI"
+   ],
+   "values": [
+    "winsux:pipeline=hide:home;",
+    "winutil:tweak:WPFTweaksWindowsAI=hide:aicomponents"
+   ],
+   "decision": "user-choice",
+   "note": "Sources write different values; GOAT Tweaks will not queue them together, the user picks one"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\windows\\currentversion\\policies\\paint\\disableimagecreator",
+   "setting": "hklm\\software\\microsoft\\windows\\currentversion\\policies\\paint\\disableimagecreator",
+   "items": [
+    "rytunex:WindowsAI",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:WindowsAI=1",
+    "winsux:pipeline=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\windows\\currentversion\\policies\\system\\disableautomaticrestartsignon",
+   "setting": "hklm\\software\\microsoft\\windows\\currentversion\\policies\\system\\disableautomaticrestartsignon",
+   "items": [
+    "rytunex:AutomaticRestartSignOn",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:AutomaticRestartSignOn=1",
+    "winsux:pipeline=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\windows\\currentversion\\policies\\system\\enablelua",
+   "setting": "hklm\\software\\microsoft\\windows\\currentversion\\policies\\system\\enablelua",
+   "items": [
+    "ultimate:6 Windows/31 UAC.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/31 UAC.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\windows\\currentversion\\shell extensions\\blocked\\{09a47860-11b0-4da5-afa5-26d86198a780}",
+   "setting": "hklm\\software\\microsoft\\windows\\currentversion\\shell extensions\\blocked\\{09a47860-11b0-4da5-afa5-26d86198a780}",
+   "items": [
+    "ultimate:6 Windows/4 Context Menu.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/4 Context Menu.ps1=",
+    "winsux:pipeline="
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\windows\\currentversion\\shell extensions\\blocked\\{9f156763-7844-4dc4-b2b1-901f640f5155}",
+   "setting": "hklm\\software\\microsoft\\windows\\currentversion\\shell extensions\\blocked\\{9f156763-7844-4dc4-b2b1-901f640f5155}",
+   "items": [
+    "ultimate:6 Windows/4 Context Menu.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/4 Context Menu.ps1=",
+    "winsux:pipeline="
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\windows\\currentversion\\shell extensions\\blocked\\{f81e9010-6ea4-11ce-a7ff-00aa003ca9f6}",
+   "setting": "hklm\\software\\microsoft\\windows\\currentversion\\shell extensions\\blocked\\{f81e9010-6ea4-11ce-a7ff-00aa003ca9f6}",
+   "items": [
+    "ultimate:6 Windows/4 Context Menu.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/4 Context Menu.ps1=",
+    "winsux:pipeline="
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\windows\\currentversion\\windowsstore\\windowsupdate\\autodownload",
+   "setting": "hklm\\software\\microsoft\\windows\\currentversion\\windowsstore\\windowsupdate\\autodownload",
+   "items": [
+    "ultimate:3 Setup/11 Store Settings.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:3 Setup/11 Store Settings.ps1=2",
+    "winsux:pipeline=2"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\windows\\currentversion\\wtds\\components\\capturethreatwindow",
+   "setting": "hklm\\software\\microsoft\\windows\\currentversion\\wtds\\components\\capturethreatwindow",
+   "items": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1",
+    "ultimate:8 Advanced/1 Defender.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1=0",
+    "ultimate:8 Advanced/1 Defender.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\windows\\currentversion\\wtds\\components\\notifymalicious",
+   "setting": "hklm\\software\\microsoft\\windows\\currentversion\\wtds\\components\\notifymalicious",
+   "items": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1",
+    "ultimate:8 Advanced/1 Defender.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1=0",
+    "ultimate:8 Advanced/1 Defender.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\windows\\currentversion\\wtds\\components\\notifypasswordreuse",
+   "setting": "hklm\\software\\microsoft\\windows\\currentversion\\wtds\\components\\notifypasswordreuse",
+   "items": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1",
+    "ultimate:8 Advanced/1 Defender.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1=0",
+    "ultimate:8 Advanced/1 Defender.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\windows\\currentversion\\wtds\\components\\notifyunsafeapp",
+   "setting": "hklm\\software\\microsoft\\windows\\currentversion\\wtds\\components\\notifyunsafeapp",
+   "items": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1",
+    "ultimate:8 Advanced/1 Defender.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1=0",
+    "ultimate:8 Advanced/1 Defender.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\windows\\currentversion\\wtds\\components\\serviceenabled",
+   "setting": "hklm\\software\\microsoft\\windows\\currentversion\\wtds\\components\\serviceenabled",
+   "items": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1",
+    "ultimate:8 Advanced/1 Defender.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1=0",
+    "ultimate:8 Advanced/1 Defender.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\windows\\dwm\\overlaytestmode",
+   "setting": "hklm\\software\\microsoft\\windows\\dwm\\overlaytestmode",
+   "items": [
+    "rytunex:GameBar",
+    "winutil:tweak:WPFMultiplaneOverlay"
+   ],
+   "values": [
+    "rytunex:GameBar=5",
+    "winutil:tweak:WPFMultiplaneOverlay="
+   ],
+   "decision": "user-choice",
+   "note": "Sources write different values; GOAT Tweaks will not queue them together, the user picks one"
+  },
+  {
+   "id": "reg:hklm\\software\\microsoft\\windowsruntime\\activatableclassid\\windows.gaming.gamebar.presenceserver.internal.presencewriter\\activationtype",
+   "setting": "hklm\\software\\microsoft\\windowsruntime\\activatableclassid\\windows.gaming.gamebar.presenceserver.internal.presencewriter\\activationtype",
+   "items": [
+    "ultimate:6 Windows/19 Gamebar.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/19 Gamebar.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\policies\\microsoft\\dsh\\allownewsandinterests",
+   "setting": "hklm\\software\\policies\\microsoft\\dsh\\allownewsandinterests",
+   "items": [
+    "rytunex:NewsAndInterests",
+    "rytunex:Widgets",
+    "ultimate:6 Windows/8 Widgets.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:NewsAndInterests=0",
+    "rytunex:Widgets=0",
+    "ultimate:6 Windows/8 Widgets.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\policies\\microsoft\\edge\\backgroundmodeenabled",
+   "setting": "hklm\\software\\policies\\microsoft\\edge\\backgroundmodeenabled",
+   "items": [
+    "rytunex:EdgeTelemetry",
+    "ultimate:3 Setup/10 Edge Settings.ps1"
+   ],
+   "values": [
+    "rytunex:EdgeTelemetry=0",
+    "ultimate:3 Setup/10 Edge Settings.ps1=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\policies\\microsoft\\edge\\personalizationreportingenabled",
+   "setting": "hklm\\software\\policies\\microsoft\\edge\\personalizationreportingenabled",
+   "items": [
+    "rytunex:EdgeTelemetry",
+    "winutil:tweak:WPFTweaksEdgeDebloat"
+   ],
+   "values": [
+    "rytunex:EdgeTelemetry=0",
+    "winutil:tweak:WPFTweaksEdgeDebloat=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\policies\\microsoft\\edge\\startupboostenabled",
+   "setting": "hklm\\software\\policies\\microsoft\\edge\\startupboostenabled",
+   "items": [
+    "rytunex:EdgeTelemetry",
+    "ultimate:3 Setup/10 Edge Settings.ps1"
+   ],
+   "values": [
+    "rytunex:EdgeTelemetry=0",
+    "ultimate:3 Setup/10 Edge Settings.ps1=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\policies\\microsoft\\edge\\userfeedbackallowed",
+   "setting": "hklm\\software\\policies\\microsoft\\edge\\userfeedbackallowed",
+   "items": [
+    "rytunex:EdgeTelemetry",
+    "winutil:tweak:WPFTweaksEdgeDebloat"
+   ],
+   "values": [
+    "rytunex:EdgeTelemetry=0",
+    "winutil:tweak:WPFTweaksEdgeDebloat=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\policies\\microsoft\\edge\\webwidgetallowed",
+   "setting": "hklm\\software\\policies\\microsoft\\edge\\webwidgetallowed",
+   "items": [
+    "rytunex:EdgeDiscoverBar",
+    "winutil:tweak:WPFTweaksEdgeDebloat"
+   ],
+   "values": [
+    "rytunex:EdgeDiscoverBar=0",
+    "winutil:tweak:WPFTweaksEdgeDebloat=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\policies\\microsoft\\windows\\appprivacy\\letappsruninbackground",
+   "setting": "hklm\\software\\policies\\microsoft\\windows\\appprivacy\\letappsruninbackground",
+   "items": [
+    "rytunex:BackgroundApps",
+    "ultimate:3 Setup/9 Background Apps.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:BackgroundApps=0",
+    "ultimate:3 Setup/9 Background Apps.ps1=2",
+    "winsux:pipeline=2"
+   ],
+   "decision": "user-choice",
+   "note": "Sources write different values; GOAT Tweaks will not queue them together, the user picks one"
+  },
+  {
+   "id": "reg:hklm\\software\\policies\\microsoft\\windows\\cloudcontent\\disablewindowsconsumerfeatures",
+   "setting": "hklm\\software\\policies\\microsoft\\windows\\cloudcontent\\disablewindowsconsumerfeatures",
+   "items": [
+    "rytunex:StoreUpdates",
+    "winutil:tweak:WPFTweaksConsumerFeatures"
+   ],
+   "values": [
+    "rytunex:StoreUpdates=1",
+    "winutil:tweak:WPFTweaksConsumerFeatures=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\policies\\microsoft\\windows\\datacollection\\allowtelemetry",
+   "setting": "hklm\\software\\policies\\microsoft\\windows\\datacollection\\allowtelemetry",
+   "items": [
+    "rytunex:TelemetryServices",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:TelemetryServices=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\policies\\microsoft\\windows\\device metadata\\preventdevicemetadatafromnetwork",
+   "setting": "hklm\\software\\policies\\microsoft\\windows\\device metadata\\preventdevicemetadatafromnetwork",
+   "items": [
+    "ultimate:2 Refresh/5 Updates Drivers Block.ps1",
+    "winsux:pipeline",
+    "winutil:tweak:WPFTweaksPreventDeviceMetadataFromNetwork"
+   ],
+   "values": [
+    "ultimate:2 Refresh/5 Updates Drivers Block.ps1=1",
+    "winsux:pipeline=1",
+    "winutil:tweak:WPFTweaksPreventDeviceMetadataFromNetwork=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\policies\\microsoft\\windows\\deviceinstall\\settings\\disablesendgenericdrivernotfoundtower",
+   "setting": "hklm\\software\\policies\\microsoft\\windows\\deviceinstall\\settings\\disablesendgenericdrivernotfoundtower",
+   "items": [
+    "ultimate:2 Refresh/5 Updates Drivers Block.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:2 Refresh/5 Updates Drivers Block.ps1=1",
+    "winsux:pipeline=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\policies\\microsoft\\windows\\deviceinstall\\settings\\disablesendrequestadditionalsoftwaretower",
+   "setting": "hklm\\software\\policies\\microsoft\\windows\\deviceinstall\\settings\\disablesendrequestadditionalsoftwaretower",
+   "items": [
+    "ultimate:2 Refresh/5 Updates Drivers Block.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:2 Refresh/5 Updates Drivers Block.ps1=1",
+    "winsux:pipeline=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\policies\\microsoft\\windows\\driversearching\\searchorderconfig",
+   "setting": "hklm\\software\\policies\\microsoft\\windows\\driversearching\\searchorderconfig",
+   "items": [
+    "ultimate:2 Refresh/5 Updates Drivers Block.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:2 Refresh/5 Updates Drivers Block.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\policies\\microsoft\\windows\\explorer\\hiderecommendedsection",
+   "setting": "hklm\\software\\policies\\microsoft\\windows\\explorer\\hiderecommendedsection",
+   "items": [
+    "rytunex:RecommendedSectionStartMenu",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:RecommendedSectionStartMenu=1",
+    "winsux:pipeline=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\policies\\microsoft\\windows\\settingsync\\disableapplicationsettingsync",
+   "setting": "hklm\\software\\policies\\microsoft\\windows\\settingsync\\disableapplicationsettingsync",
+   "items": [
+    "rytunex:SettingSync",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:SettingSync=2",
+    "winsux:pipeline=2"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\policies\\microsoft\\windows\\settingsync\\disableapplicationsettingsyncuseroverride",
+   "setting": "hklm\\software\\policies\\microsoft\\windows\\settingsync\\disableapplicationsettingsyncuseroverride",
+   "items": [
+    "rytunex:SettingSync",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:SettingSync=1",
+    "winsux:pipeline=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\policies\\microsoft\\windows\\settingsync\\disablecredentialssettingsync",
+   "setting": "hklm\\software\\policies\\microsoft\\windows\\settingsync\\disablecredentialssettingsync",
+   "items": [
+    "rytunex:SettingSync",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:SettingSync=2",
+    "winsux:pipeline=2"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\policies\\microsoft\\windows\\settingsync\\disablecredentialssettingsyncuseroverride",
+   "setting": "hklm\\software\\policies\\microsoft\\windows\\settingsync\\disablecredentialssettingsyncuseroverride",
+   "items": [
+    "rytunex:SettingSync",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:SettingSync=1",
+    "winsux:pipeline=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\policies\\microsoft\\windows\\system\\disableacrylicbackgroundonlogon",
+   "setting": "hklm\\software\\policies\\microsoft\\windows\\system\\disableacrylicbackgroundonlogon",
+   "items": [
+    "ultimate:6 Windows/6 Signout Lockscreen Wallpaper Black.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/6 Signout Lockscreen Wallpaper Black.ps1=1",
+    "winsux:pipeline=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\policies\\microsoft\\windows\\system\\enableactivityfeed",
+   "setting": "hklm\\software\\policies\\microsoft\\windows\\system\\enableactivityfeed",
+   "items": [
+    "rytunex:TimelineHistory",
+    "winutil:tweak:WPFTweaksActivity"
+   ],
+   "values": [
+    "rytunex:TimelineHistory=0",
+    "winutil:tweak:WPFTweaksActivity=1"
+   ],
+   "decision": "user-choice",
+   "note": "Sources write different values; GOAT Tweaks will not queue them together, the user picks one"
+  },
+  {
+   "id": "reg:hklm\\software\\policies\\microsoft\\windows\\system\\publishuseractivities",
+   "setting": "hklm\\software\\policies\\microsoft\\windows\\system\\publishuseractivities",
+   "items": [
+    "rytunex:TimelineHistory",
+    "winsux:pipeline",
+    "winutil:tweak:WPFTweaksActivity",
+    "winutil:tweak:WPFTweaksTelemetry"
+   ],
+   "values": [
+    "rytunex:TimelineHistory=0",
+    "winsux:pipeline=0",
+    "winutil:tweak:WPFTweaksActivity=0",
+    "winutil:tweak:WPFTweaksTelemetry=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\policies\\microsoft\\windows\\system\\uploaduseractivities",
+   "setting": "hklm\\software\\policies\\microsoft\\windows\\system\\uploaduseractivities",
+   "items": [
+    "rytunex:TimelineHistory",
+    "winutil:tweak:WPFTweaksActivity"
+   ],
+   "values": [
+    "rytunex:TimelineHistory=0",
+    "winutil:tweak:WPFTweaksActivity=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\policies\\microsoft\\windows\\windows error reporting\\disabled",
+   "setting": "hklm\\software\\policies\\microsoft\\windows\\windows error reporting\\disabled",
+   "items": [
+    "rytunex:ErrorReporting",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:ErrorReporting=1",
+    "winsux:pipeline=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\policies\\microsoft\\windows\\windows feeds\\enablefeeds",
+   "setting": "hklm\\software\\policies\\microsoft\\windows\\windows feeds\\enablefeeds",
+   "items": [
+    "rytunex:NewsAndInterests",
+    "rytunex:Widgets",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:NewsAndInterests=0",
+    "rytunex:Widgets=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\policies\\microsoft\\windows\\windowsai\\allowrecallenablement",
+   "setting": "hklm\\software\\policies\\microsoft\\windows\\windowsai\\allowrecallenablement",
+   "items": [
+    "rytunex:WindowsRecall",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:WindowsRecall=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\policies\\microsoft\\windows\\windowsai\\disableaidataanalysis",
+   "setting": "hklm\\software\\policies\\microsoft\\windows\\windowsai\\disableaidataanalysis",
+   "items": [
+    "rytunex:WindowsRecall",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:WindowsRecall=1",
+    "winsux:pipeline=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\policies\\microsoft\\windows\\windowscopilot\\turnoffwindowscopilot",
+   "setting": "hklm\\software\\policies\\microsoft\\windows\\windowscopilot\\turnoffwindowscopilot",
+   "items": [
+    "rytunex:CoPilotAI",
+    "ultimate:6 Windows/9 Copilot.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:CoPilotAI=1",
+    "ultimate:6 Windows/9 Copilot.ps1=1",
+    "winsux:pipeline=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\policies\\microsoft\\windows\\windowsupdate\\allowtemporaryenterprisefeaturecontrol",
+   "setting": "hklm\\software\\policies\\microsoft\\windows\\windowsupdate\\allowtemporaryenterprisefeaturecontrol",
+   "items": [
+    "ultimate:2 Refresh/5 Updates Drivers Block.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:2 Refresh/5 Updates Drivers Block.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\policies\\microsoft\\windows\\windowsupdate\\excludewudriversinqualityupdate",
+   "setting": "hklm\\software\\policies\\microsoft\\windows\\windowsupdate\\excludewudriversinqualityupdate",
+   "items": [
+    "rytunex:Drivers",
+    "ultimate:2 Refresh/5 Updates Drivers Block.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:Drivers=1",
+    "ultimate:2 Refresh/5 Updates Drivers Block.ps1=1",
+    "winsux:pipeline=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\policies\\microsoft\\windows\\windowsupdate\\setallowoptionalcontent",
+   "setting": "hklm\\software\\policies\\microsoft\\windows\\windowsupdate\\setallowoptionalcontent",
+   "items": [
+    "ultimate:2 Refresh/5 Updates Drivers Block.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:2 Refresh/5 Updates Drivers Block.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\policies\\microsoft\\windows\\windowsupdate\\au\\enablefeaturedsoftware",
+   "setting": "hklm\\software\\policies\\microsoft\\windows\\windowsupdate\\au\\enablefeaturedsoftware",
+   "items": [
+    "ultimate:2 Refresh/5 Updates Drivers Block.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:2 Refresh/5 Updates Drivers Block.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\policies\\microsoft\\windows\\windowsupdate\\au\\includerecommendedupdates",
+   "setting": "hklm\\software\\policies\\microsoft\\windows\\windowsupdate\\au\\includerecommendedupdates",
+   "items": [
+    "ultimate:2 Refresh/5 Updates Drivers Block.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:2 Refresh/5 Updates Drivers Block.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\software\\policies\\windowsnotepad\\disableaifeatures",
+   "setting": "hklm\\software\\policies\\windowsnotepad\\disableaifeatures",
+   "items": [
+    "rytunex:WindowsAI",
+    "winsux:pipeline",
+    "winutil:tweak:WPFTweaksWindowsAI"
+   ],
+   "values": [
+    "rytunex:WindowsAI=1",
+    "winsux:pipeline=1",
+    "winutil:tweak:WPFTweaksWindowsAI=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\system\\currentcontrolset\\control\\appid\\configuration\\smartlocker\\enabled",
+   "setting": "hklm\\system\\currentcontrolset\\control\\appid\\configuration\\smartlocker\\enabled",
+   "items": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1",
+    "ultimate:8 Advanced/1 Defender.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1=0000000000000000",
+    "ultimate:8 Advanced/1 Defender.ps1=0000000000000000",
+    "winsux:pipeline=0000000000000000"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\system\\currentcontrolset\\control\\appid\\configuration\\smartlocker\\start_pending",
+   "setting": "hklm\\system\\currentcontrolset\\control\\appid\\configuration\\smartlocker\\start_pending",
+   "items": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1",
+    "ultimate:8 Advanced/1 Defender.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1=0",
+    "ultimate:8 Advanced/1 Defender.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\system\\currentcontrolset\\control\\ci\\config\\vulnerabledriverblocklistenable",
+   "setting": "hklm\\system\\currentcontrolset\\control\\ci\\config\\vulnerabledriverblocklistenable",
+   "items": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1",
+    "ultimate:8 Advanced/1 Defender.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1=0",
+    "ultimate:8 Advanced/1 Defender.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\system\\currentcontrolset\\control\\ci\\policy\\verifiedandreputablepolicystate",
+   "setting": "hklm\\system\\currentcontrolset\\control\\ci\\policy\\verifiedandreputablepolicystate",
+   "items": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1",
+    "ultimate:8 Advanced/1 Defender.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1=0",
+    "ultimate:8 Advanced/1 Defender.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\system\\currentcontrolset\\control\\deviceguard\\scenarios\\hypervisorenforcedcodeintegrity\\enabled",
+   "setting": "hklm\\system\\currentcontrolset\\control\\deviceguard\\scenarios\\hypervisorenforcedcodeintegrity\\enabled",
+   "items": [
+    "rytunex:VBS",
+    "ultimate:6 Windows/33 Defender Optimize.ps1",
+    "ultimate:8 Advanced/1 Defender.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:VBS=0",
+    "ultimate:6 Windows/33 Defender Optimize.ps1=0",
+    "ultimate:8 Advanced/1 Defender.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\system\\currentcontrolset\\control\\graphicsdrivers\\hwschmode",
+   "setting": "hklm\\system\\currentcontrolset\\control\\graphicsdrivers\\hwschmode",
+   "items": [
+    "rytunex:GamingMode",
+    "rytunex:SystemProfile",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:GamingMode=2",
+    "rytunex:SystemProfile=2",
+    "winsux:pipeline=2"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\system\\currentcontrolset\\control\\lsa\\runasppl",
+   "setting": "hklm\\system\\currentcontrolset\\control\\lsa\\runasppl",
+   "items": [
+    "rytunex:VBS",
+    "ultimate:6 Windows/33 Defender Optimize.ps1",
+    "ultimate:8 Advanced/1 Defender.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:VBS=0",
+    "ultimate:6 Windows/33 Defender Optimize.ps1=0",
+    "ultimate:8 Advanced/1 Defender.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\system\\currentcontrolset\\control\\power\\hibernateenabled",
+   "setting": "hklm\\system\\currentcontrolset\\control\\power\\hibernateenabled",
+   "items": [
+    "ultimate:6 Windows/29 Power Plan.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/29 Power Plan.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\system\\currentcontrolset\\control\\power\\hibernateenableddefault",
+   "setting": "hklm\\system\\currentcontrolset\\control\\power\\hibernateenableddefault",
+   "items": [
+    "ultimate:6 Windows/29 Power Plan.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/29 Power Plan.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\system\\currentcontrolset\\control\\power\\powersettings\\2a737441-1930-4402-8d77-b2bebba308a3\\0853a681-27c8-4100-a2fd-82013e970683\\attributes",
+   "setting": "hklm\\system\\currentcontrolset\\control\\power\\powersettings\\2a737441-1930-4402-8d77-b2bebba308a3\\0853a681-27c8-4100-a2fd-82013e970683\\attributes",
+   "items": [
+    "ultimate:6 Windows/29 Power Plan.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/29 Power Plan.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\system\\currentcontrolset\\control\\power\\powersettings\\2a737441-1930-4402-8d77-b2bebba308a3\\d4e98f31-5ffe-4ce1-be31-1b38b384c009\\attributes",
+   "setting": "hklm\\system\\currentcontrolset\\control\\power\\powersettings\\2a737441-1930-4402-8d77-b2bebba308a3\\d4e98f31-5ffe-4ce1-be31-1b38b384c009\\attributes",
+   "items": [
+    "ultimate:6 Windows/29 Power Plan.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/29 Power Plan.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\system\\currentcontrolset\\control\\power\\powersettings\\54533251-82be-4824-96c1-47b60b740d00\\0cc5b647-c1df-4637-891a-dec35c318583\\attributes",
+   "setting": "hklm\\system\\currentcontrolset\\control\\power\\powersettings\\54533251-82be-4824-96c1-47b60b740d00\\0cc5b647-c1df-4637-891a-dec35c318583\\attributes",
+   "items": [
+    "ultimate:6 Windows/29 Power Plan.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/29 Power Plan.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\system\\currentcontrolset\\control\\power\\powersettings\\54533251-82be-4824-96c1-47b60b740d00\\ea062031-0e34-4ff1-9b6d-eb1059334028\\attributes",
+   "setting": "hklm\\system\\currentcontrolset\\control\\power\\powersettings\\54533251-82be-4824-96c1-47b60b740d00\\ea062031-0e34-4ff1-9b6d-eb1059334028\\attributes",
+   "items": [
+    "ultimate:6 Windows/29 Power Plan.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/29 Power Plan.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\system\\currentcontrolset\\control\\power\\powerthrottling\\powerthrottlingoff",
+   "setting": "hklm\\system\\currentcontrolset\\control\\power\\powerthrottling\\powerthrottlingoff",
+   "items": [
+    "rytunex:PowerThrottling",
+    "ultimate:6 Windows/29 Power Plan.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:PowerThrottling=1",
+    "ultimate:6 Windows/29 Power Plan.ps1=1",
+    "winsux:pipeline=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\system\\currentcontrolset\\control\\prioritycontrol\\win32priorityseparation",
+   "setting": "hklm\\system\\currentcontrolset\\control\\prioritycontrol\\win32priorityseparation",
+   "items": [
+    "rytunex:PrioritizeForegroundApplications",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:PrioritizeForegroundApplications=42",
+    "winsux:pipeline=38"
+   ],
+   "decision": "user-choice",
+   "note": "Sources write different values; GOAT Tweaks will not queue them together, the user picks one"
+  },
+  {
+   "id": "reg:hklm\\system\\currentcontrolset\\control\\remote assistance\\fallowtogethelp",
+   "setting": "hklm\\system\\currentcontrolset\\control\\remote assistance\\fallowtogethelp",
+   "items": [
+    "rytunex:RemoteAssistance",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:RemoteAssistance=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\system\\currentcontrolset\\control\\session manager\\disablewpbtexecution",
+   "setting": "hklm\\system\\currentcontrolset\\control\\session manager\\disablewpbtexecution",
+   "items": [
+    "rytunex:WPBT",
+    "winsux:pipeline",
+    "winutil:tweak:WPFTweaksWPBT"
+   ],
+   "values": [
+    "rytunex:WPBT=1",
+    "winsux:pipeline=1",
+    "winutil:tweak:WPFTweaksWPBT=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\system\\currentcontrolset\\control\\session manager\\kernel\\globaltimerresolutionrequests",
+   "setting": "hklm\\system\\currentcontrolset\\control\\session manager\\kernel\\globaltimerresolutionrequests",
+   "items": [
+    "rytunex:GlobalTimerResolution",
+    "ultimate:6 Windows/30 Timer Resolution.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "rytunex:GlobalTimerResolution=1",
+    "ultimate:6 Windows/30 Timer Resolution.ps1=1",
+    "winsux:pipeline=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\system\\currentcontrolset\\control\\session manager\\kernel\\mitigationoptions",
+   "setting": "hklm\\system\\currentcontrolset\\control\\session manager\\kernel\\mitigationoptions",
+   "items": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1",
+    "ultimate:8 Advanced/1 Defender.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1=222222000002000000020000000000000000000000000000",
+    "ultimate:8 Advanced/1 Defender.ps1=222222000001000000000000000000000000000000000000",
+    "winsux:pipeline=222222000002000000020000000000000000000000000000"
+   ],
+   "decision": "user-choice",
+   "note": "Sources write different values; GOAT Tweaks will not queue them together, the user picks one"
+  },
+  {
+   "id": "reg:hklm\\system\\currentcontrolset\\control\\session manager\\memory management\\prefetchparameters\\enableprefetcher",
+   "setting": "hklm\\system\\currentcontrolset\\control\\session manager\\memory management\\prefetchparameters\\enableprefetcher",
+   "items": [
+    "rytunex:Prefetch",
+    "ultimate:8 Advanced/6 MMAgent Features.ps1"
+   ],
+   "values": [
+    "rytunex:Prefetch=0",
+    "ultimate:8 Advanced/6 MMAgent Features.ps1=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\system\\currentcontrolset\\control\\session manager\\power\\hiberbootenabled",
+   "setting": "hklm\\system\\currentcontrolset\\control\\session manager\\power\\hiberbootenabled",
+   "items": [
+    "ultimate:6 Windows/29 Power Plan.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/29 Power Plan.ps1=0",
+    "winsux:pipeline=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\system\\currentcontrolset\\services\\cdpusersvc\\start",
+   "setting": "hklm\\system\\currentcontrolset\\services\\cdpusersvc\\start",
+   "items": [
+    "ultimate:6 Windows/22 Control Panel Settings.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/22 Control Panel Settings.ps1=4",
+    "winsux:pipeline=4"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\system\\currentcontrolset\\services\\sharedaccess\\epoch\\epoch",
+   "setting": "hklm\\system\\currentcontrolset\\services\\sharedaccess\\epoch\\epoch",
+   "items": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1",
+    "ultimate:8 Advanced/1 Defender.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1=1231",
+    "ultimate:8 Advanced/1 Defender.ps1=1231",
+    "winsux:pipeline=1231"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\system\\currentcontrolset\\services\\sharedaccess\\parameters\\firewallpolicy\\domainprofile\\disablenotifications",
+   "setting": "hklm\\system\\currentcontrolset\\services\\sharedaccess\\parameters\\firewallpolicy\\domainprofile\\disablenotifications",
+   "items": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1",
+    "ultimate:8 Advanced/1 Defender.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1=1",
+    "ultimate:8 Advanced/1 Defender.ps1=1",
+    "winsux:pipeline=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\system\\currentcontrolset\\services\\sharedaccess\\parameters\\firewallpolicy\\publicprofile\\disablenotifications",
+   "setting": "hklm\\system\\currentcontrolset\\services\\sharedaccess\\parameters\\firewallpolicy\\publicprofile\\disablenotifications",
+   "items": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1",
+    "ultimate:8 Advanced/1 Defender.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1=1",
+    "ultimate:8 Advanced/1 Defender.ps1=1",
+    "winsux:pipeline=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\system\\currentcontrolset\\services\\sharedaccess\\parameters\\firewallpolicy\\standardprofile\\disablenotifications",
+   "setting": "hklm\\system\\currentcontrolset\\services\\sharedaccess\\parameters\\firewallpolicy\\standardprofile\\disablenotifications",
+   "items": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1",
+    "ultimate:8 Advanced/1 Defender.ps1",
+    "winsux:pipeline"
+   ],
+   "values": [
+    "ultimate:6 Windows/33 Defender Optimize.ps1=1",
+    "ultimate:8 Advanced/1 Defender.ps1=1",
+    "winsux:pipeline=1"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\system\\currentcontrolset\\services\\wsearch\\start",
+   "setting": "hklm\\system\\currentcontrolset\\services\\wsearch\\start",
+   "items": [
+    "rytunex:Search",
+    "ultimate:8 Advanced/18 Start Search Shell Mobsync.ps1"
+   ],
+   "values": [
+    "rytunex:Search=4",
+    "ultimate:8 Advanced/18 Start Search Shell Mobsync.ps1=4"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "reg:hklm\\system\\maps\\autoupdateenabled",
+   "setting": "hklm\\system\\maps\\autoupdateenabled",
+   "items": [
+    "winsux:pipeline",
+    "winutil:tweak:WPFTweaksLocation"
+   ],
+   "values": [
+    "winsux:pipeline=0",
+    "winutil:tweak:WPFTweaksLocation=0"
+   ],
+   "decision": "duplicate",
+   "note": "Same value written by several sources"
+  },
+  {
+   "id": "manual:winsux:pipeline",
+   "setting": "winsux:pipeline",
+   "items": [
+    "winsux:pipeline"
+   ],
+   "values": [],
+   "decision": "exclusive",
+   "note": "WinSux reboots into Safe Mode and chains stepone/steptwo via RunOnce; nothing else may share its batch"
+  },
+  {
+   "id": "manual:Timer resolution",
+   "setting": "Timer resolution",
+   "items": [
+    "rytunex:GlobalTimerResolution",
+    "ultimate:6 Windows/30 Timer Resolution.ps1"
+   ],
+   "values": [],
+   "decision": "user-choice",
+   "note": "Both change the system timer resolution mechanism (registry request vs installed service)"
+  },
+  {
+   "id": "manual:Game Bar / Game DVR",
+   "setting": "Game Bar / Game DVR",
+   "items": [
+    "rytunex:GameBar",
+    "ultimate:6 Windows/19 Gamebar.ps1"
+   ],
+   "values": [],
+   "decision": "user-choice",
+   "note": "Different key sets; Ultimate also uses TrustedInstaller"
+  },
+  {
+   "id": "manual:Windows Update policy",
+   "setting": "Windows Update policy",
+   "items": [
+    "rytunex:WindowsUpdates",
+    "ultimate:3 Setup/12 Updates Pause.ps1",
+    "ultimate:2 Refresh/5 Updates Drivers Block.ps1",
+    "winutil:feature:WPFFixesUpdate"
+   ],
+   "values": [],
+   "decision": "user-choice",
+   "note": "Incompatible update policies (security-only/manual/disabled vs pause vs driver block vs full reset)"
+  },
+  {
+   "id": "manual:Widgets",
+   "setting": "Widgets",
+   "items": [
+    "rytunex:Widgets",
+    "winutil:tweak:WPFTweaksWidget",
+    "ultimate:6 Windows/8 Widgets.ps1"
+   ],
+   "values": [],
+   "decision": "user-choice",
+   "note": "Disable via policy vs package removal"
+  },
+  {
+   "id": "manual:Microsoft Edge",
+   "setting": "Microsoft Edge",
+   "items": [
+    "winutil:tweak:WPFTweaksRemoveEdge",
+    "winutil:tweak:WPFTweaksEdgeDebloat",
+    "ultimate:6 Windows/20 Edge & WebView.ps1",
+    "ultimate:3 Setup/10 Edge Settings.ps1"
+   ],
+   "values": [],
+   "decision": "user-choice",
+   "note": "Removing Edge makes Edge settings/debloat pointless; run one approach"
+  },
+  {
+   "id": "manual:Windows Defender",
+   "setting": "Windows Defender",
+   "items": [
+    "ultimate:8 Advanced/1 Defender.ps1",
+    "ultimate:6 Windows/33 Defender Optimize.ps1"
+   ],
+   "values": [],
+   "decision": "user-choice",
+   "note": "Off vs optimize write different MitigationOptions/real-time values"
+  },
+  {
+   "id": "manual:Hibernation",
+   "setting": "Hibernation",
+   "items": [
+    "rytunex:Hibernation",
+    "winutil:tweak:WPFTweaksHiber",
+    "ultimate:6 Windows/29 Power Plan.ps1"
+   ],
+   "values": [],
+   "decision": "duplicate",
+   "note": "All disable hibernation (Power Plan does much more)"
+  },
+  {
+   "id": "manual:Copilot",
+   "setting": "Copilot",
+   "items": [
+    "rytunex:CoPilotAI",
+    "ultimate:6 Windows/9 Copilot.ps1",
+    "winutil:appx:WPFAppxMicrosoft_Copilot"
+   ],
+   "values": [],
+   "decision": "duplicate",
+   "note": "Disable vs remove package"
+  },
+  {
+   "id": "manual:IPv6",
+   "setting": "IPv6",
+   "items": [
+    "winutil:tweak:WPFTweaksDisableIPv6",
+    "ultimate:6 Windows/27 Network IPv4 Only.ps1"
+   ],
+   "values": [],
+   "decision": "duplicate",
+   "note": "Both turn IPv6 off by different mechanisms"
+  },
+  {
+   "id": "manual:Telemetry",
+   "setting": "Telemetry",
+   "items": [
+    "rytunex:TelemetryServices",
+    "winutil:tweak:WPFTweaksTelemetry"
+   ],
+   "values": [],
+   "decision": "duplicate",
+   "note": "Overlapping telemetry services/keys"
+  }
+ ]
+}

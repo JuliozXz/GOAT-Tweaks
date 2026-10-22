@@ -1,0 +1,113 @@
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using RyTuneX.Activation;
+using RyTuneX.Contracts.Services;
+using RyTuneX.Views;
+
+namespace RyTuneX.Services;
+
+public class ActivationService : IActivationService
+{
+    private readonly ActivationHandler<LaunchActivatedEventArgs> _defaultHandler;
+    private readonly IEnumerable<IActivationHandler> _activationHandlers;
+    private readonly IThemeSelectorService _themeSelectorService;
+    private readonly IAccentColorService _accentColorService;
+    private UIElement? _shell = null;
+    private bool _initializedShell = false;
+
+    public ActivationService(ActivationHandler<LaunchActivatedEventArgs> defaultHandler, IEnumerable<IActivationHandler> activationHandlers, IThemeSelectorService themeSelectorService, IAccentColorService accentColorService)
+    {
+        _defaultHandler = defaultHandler;
+        _activationHandlers = activationHandlers;
+        _themeSelectorService = themeSelectorService;
+        _accentColorService = accentColorService;
+    }
+
+    public async Task ActivateAsync(object activationArgs)
+    {
+        _ = LogHelper.Log("ActivateAsync started");
+        await InitializeAsync();
+
+        if (App.MainWindow.Content == null)
+        {
+            App.MainWindow.Content = new Frame();
+        }
+
+        if (App.MainWindow.Content is FrameworkElement rootFe)
+        {
+            rootFe.RequestedTheme = _themeSelectorService.Theme;
+        }
+
+        // Show the window with its Mica backdrop immediately
+        App.MainWindow.Activate();
+
+        // Defer the rest of the UI initialization to show the Mica window immediately without a black box
+        if (!App.MainWindow.DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, async () =>
+        {
+            await RunDeferredActivationAsync(activationArgs);
+        }))
+        {
+            await RunDeferredActivationAsync(activationArgs);
+        }
+    }
+
+    private async Task RunDeferredActivationAsync(object activationArgs)
+    {
+        try
+        {
+            await EnsureShellAsync();
+            await HandleActivationAsync(activationArgs);
+            await StartupAsync();
+            _ = LogHelper.Log("ActivateAsync completed successfully");
+        }
+        catch (Exception ex)
+        {
+            _ = LogHelper.LogException(ex, "Deferred activation failed");
+        }
+    }
+
+    private async Task EnsureShellAsync()
+    {
+        if (_initializedShell)
+        {
+            return;
+        }
+
+        _shell = App.GetService<ShellPage>();
+        if (_shell is FrameworkElement fe)
+        {
+            fe.RequestedTheme = _themeSelectorService.Theme;
+        }
+        App.MainWindow.Content = _shell;
+        _initializedShell = true;
+        _ = LogHelper.Log("Shell initialized");
+        await Task.CompletedTask;
+    }
+
+    private async Task HandleActivationAsync(object activationArgs)
+    {
+        var activationHandler = _activationHandlers.FirstOrDefault(h => h.CanHandle(activationArgs));
+        if (activationHandler != null)
+        {
+            _ = LogHelper.Log($"Using activation handler: {activationHandler.GetType().Name}");
+            await activationHandler.HandleAsync(activationArgs);
+        }
+        if (_defaultHandler.CanHandle(activationArgs))
+        {
+            await _defaultHandler.HandleAsync(activationArgs);
+        }
+    }
+
+    private async Task InitializeAsync()
+    {
+        await _themeSelectorService.InitializeAsync().ConfigureAwait(false);
+        await _accentColorService.InitializeAsync().ConfigureAwait(false);
+        await Task.CompletedTask;
+    }
+
+    private async Task StartupAsync()
+    {
+        await _themeSelectorService.SetRequestedThemeAsync();
+        await Task.CompletedTask;
+    }
+}

@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="../../catalog/catalog.json" LogicalName="GoatTweaks.Core.catalog.json" />
+    <EmbeddedResource Include="../../catalog/conflicts.json" LogicalName="GoatTweaks.Core.conflicts.json" />
+    <EmbeddedResource Include="../../third_party/**/*">
+      <LogicalName>GoatTweaks.Core.Assets.third_party/%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Harness/winutil-harness.ps1" LogicalName="GoatTweaks.Core.Assets.Harness.winutil-harness.ps1" />
+  </ItemGroup>
+</Project>

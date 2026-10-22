@@ -1,0 +1,74 @@
+name: Publicar GOAT Tweaks
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Versão da release (por exemplo, v1.0.0)
+        required: true
+        default: v1.0.0
+        type: string
+  push:
+    branches:
+      - main
+    paths:
+      - release.json
+    tags:
+      - 'v[0-9]*'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: goat-release
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: windows-latest
+    timeout-minutes: 25
+    permissions:
+      contents: write
+    defaults:
+      run:
+        shell: pwsh
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: '1'
+      DOTNET_NOLOGO: '1'
+      RELEASE_TAG: ${{ inputs.version || (github.ref_type == 'tag' && github.ref_name) || '' }}
+    steps:
+      - name: Obter código-fonte
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Preparar .NET 10
+        uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: global.json
+      - name: Definir a versão da publicação
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $Tag = $env:RELEASE_TAG
+          if ([string]::IsNullOrWhiteSpace($Tag)) {
+            $Tag = (Get-Content -LiteralPath release.json -Raw | ConvertFrom-Json).version
+          }
+          if ($Tag -notmatch '^v\d+\.\d+\.\d+$') { throw 'Versão inválida.' }
+          "RELEASE_TAG=$Tag" >> $env:GITHUB_ENV
+      - name: Compilar e preparar os arquivos
+        run: ./tools/Publish-Release.ps1 -Repository $env:GITHUB_REPOSITORY -Version $env:RELEASE_TAG
+      - name: Publicar release completa
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          if ($env:RELEASE_TAG -notmatch '^v\d+\.\d+\.\d+$') { throw 'Versão inválida.' }
+          gh release view $env:RELEASE_TAG --repo $env:GITHUB_REPOSITORY 2>$null
+          if ($LASTEXITCODE -eq 0) { throw 'Essa release já existe. Use uma nova versão para preservar os downloads existentes.' }
+          gh release create $env:RELEASE_TAG --repo $env:GITHUB_REPOSITORY --target $env:GITHUB_SHA --title "GOAT Tweaks $env:RELEASE_TAG" --notes-file RELEASE-NOTES.md --draft
+          if ($LASTEXITCODE -ne 0) { throw 'Não foi possível criar a release.' }
+          gh release upload $env:RELEASE_TAG ./dist/GOATTweaks.exe ./dist/GOATTweaks.exe.sha256 ./dist/goat.ps1 --repo $env:GITHUB_REPOSITORY
+          if ($LASTEXITCODE -ne 0) { throw 'Os arquivos não foram publicados por completo. A release permanece como rascunho.' }
+          gh release edit $env:RELEASE_TAG --repo $env:GITHUB_REPOSITORY --draft=false --latest
+          if ($LASTEXITCODE -ne 0) { throw 'Não foi possível concluir a publicação da release.' }
+          "Comando de inicialização:" >> $env:GITHUB_STEP_SUMMARY
+          "irm https://github.com/$env:GITHUB_REPOSITORY/releases/latest/download/goat.ps1 | iex" >> $env:GITHUB_STEP_SUMMARY

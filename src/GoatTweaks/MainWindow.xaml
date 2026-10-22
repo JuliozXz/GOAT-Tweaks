@@ -1,0 +1,91 @@
+<Window x:Class="GoatTweaks.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="GOAT Tweaks" Style="{StaticResource {x:Type Window}}" Height="860" Width="1440" MinHeight="680" MinWidth="1120"
+        WindowStartupLocation="CenterScreen" Closing="Window_Closing">
+    <Grid>
+        <Grid.ColumnDefinitions><ColumnDefinition Width="218" /><ColumnDefinition Width="*" /><ColumnDefinition Width="320" /></Grid.ColumnDefinitions>
+        <Grid.RowDefinitions><RowDefinition Height="82" /><RowDefinition Height="*" /><RowDefinition Height="34" /></Grid.RowDefinitions>
+        <Border Grid.RowSpan="3" Background="#11151E" BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,1,0">
+            <DockPanel Margin="14,22,14,16">
+                <StackPanel DockPanel.Dock="Top" Margin="8,0,0,24">
+                    <Rectangle Width="28" Height="4" Fill="{StaticResource AccentBrush}" HorizontalAlignment="Left" Margin="0,0,0,12" />
+                    <TextBlock Text="GOAT Tweaks" FontSize="23" FontWeight="Bold" />
+                    <TextBlock Text="BIBLIOTECA" Foreground="{StaticResource MutedBrush}" FontSize="10" Margin="0,24,0,0" />
+                </StackPanel>
+                <TextBlock DockPanel.Dock="Bottom" Text="Abra uma prévia e escolha as ações para este computador." Foreground="{StaticResource MutedBrush}" FontSize="11" TextWrapping="Wrap" Margin="8,16,8,0" />
+                <ListBox x:Name="SectionsList" SelectionChanged="SectionsList_SelectionChanged" />
+            </DockPanel>
+        </Border>
+        <Grid Grid.Column="1" Margin="24,16,24,12">
+            <Grid.ColumnDefinitions><ColumnDefinition Width="210" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
+            <TextBlock x:Name="SectionTitle" Text="Otimizar" FontSize="25" FontWeight="SemiBold" VerticalAlignment="Center" />
+            <Grid Grid.Column="1">
+                <TextBox x:Name="SearchBox" VerticalContentAlignment="Center" ToolTip="Pesquisar em todas as seções" TextChanged="SearchBox_TextChanged" />
+                <TextBlock Text="Buscar ação ou ferramenta..." Foreground="{StaticResource MutedBrush}" Margin="12,0" VerticalAlignment="Center" IsHitTestVisible="False">
+                    <TextBlock.Style><Style TargetType="TextBlock"><Setter Property="Visibility" Value="Collapsed" /><Style.Triggers><DataTrigger Binding="{Binding Text, ElementName=SearchBox}" Value=""><Setter Property="Visibility" Value="Visible" /></DataTrigger></Style.Triggers></Style></TextBlock.Style>
+                </TextBlock>
+            </Grid>
+        </Grid>
+        <Grid x:Name="LibraryPanel" Grid.Column="1" Grid.Row="1" Margin="24,0,20,12">
+            <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="*" /></Grid.RowDefinitions>
+            <Border Background="#191D25" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" CornerRadius="8" Padding="13,11">
+                <StackPanel>
+                    <TextBlock x:Name="ModeLabel" Text="Modo cliente · ações avançadas bloqueadas" FontWeight="SemiBold" />
+                    <TextBlock Text="Abrir o painel não aplica alterações. Escolha cada ação e confira a prévia." Foreground="{StaticResource MutedBrush}" Margin="0,5,0,8" TextWrapping="Wrap" />
+                    <CheckBox x:Name="AdvancedModeCheck" Content="Habilitar ações avançadas" Checked="AdvancedModeCheck_Changed" Unchecked="AdvancedModeCheck_Changed" ToolTip="Libera ações de alto impacto somente após confirmação explícita." />
+                </StackPanel>
+            </Border>
+            <TextBlock x:Name="ResultsLabel" Grid.Row="1" Foreground="{StaticResource MutedBrush}" Margin="2,14,0,10" FontSize="12" />
+            <ListBox x:Name="CardsList" Grid.Row="2" ScrollViewer.CanContentScroll="True" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling" VirtualizingPanel.ScrollUnit="Pixel">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem"><Setter Property="HorizontalContentAlignment" Value="Stretch" /><Setter Property="Focusable" Value="False" /><Setter Property="Padding" Value="0" /><Setter Property="Template"><Setter.Value><ControlTemplate TargetType="ListBoxItem"><ContentPresenter /></ControlTemplate></Setter.Value></Setter></Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="{StaticResource PanelBrush}" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" CornerRadius="8" Padding="18,16" Margin="0,0,8,10">
+                            <StackPanel>
+                                <DockPanel Margin="0,0,0,9">
+                                    <TextBlock DockPanel.Dock="Right" Text="{Binding Source}" Foreground="{StaticResource AccentBrush}" FontSize="11" Margin="12,2,0,0" />
+                                    <TextBlock Text="{Binding Title}" FontSize="17" FontWeight="SemiBold" TextWrapping="Wrap" />
+                                </DockPanel>
+                                <TextBlock Text="{Binding Description}" Foreground="{StaticResource MutedBrush}" TextWrapping="Wrap" Margin="0,0,0,9" />
+                                <TextBlock Text="{Binding Metadata}" FontSize="11" Foreground="{StaticResource MutedBrush}" TextWrapping="Wrap" />
+                                <TextBlock Text="{Binding Restriction}" Foreground="{StaticResource WarningBrush}" TextWrapping="Wrap" FontSize="11" Margin="0,9,0,0" Visibility="{Binding IsRestricted, Converter={StaticResource BoolVisibility}}" />
+                                <WrapPanel Margin="0,13,0,0">
+                                    <Button Content="Prévia e adicionar" Tag="{Binding Item}" Click="PreviewButton_Click" IsEnabled="{Binding CanExecute}" Padding="12,7" />
+                                    <Button Content="Restaurar padrão" Tag="{Binding Item}" Click="RevertButton_Click" IsEnabled="{Binding CanExecute}" Padding="12,7" Margin="8,0,0,0" Visibility="{Binding CanRevert, Converter={StaticResource BoolVisibility}}" />
+                                </WrapPanel>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <ListBox x:Name="LogsDetailList" Grid.Row="2" Visibility="Collapsed">
+                <ListBox.ItemTemplate><DataTemplate><TextBlock Text="{Binding}" FontFamily="Consolas" FontSize="12" TextWrapping="Wrap" /></DataTemplate></ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+        <Border Grid.Column="2" Grid.RowSpan="3" Background="#11151E" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1,0,0,0">
+            <Grid Margin="18,24,18,16">
+                <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="*" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="170" /></Grid.RowDefinitions>
+                <DockPanel><TextBlock Text="Fila de ações" FontSize="20" FontWeight="SemiBold" /><TextBlock x:Name="QueueCountLabel" Text="0" Foreground="{StaticResource AccentBrush}" HorizontalAlignment="Right" VerticalAlignment="Center" /></DockPanel>
+                <TextBlock Grid.Row="1" Text="As ações serão aplicadas somente depois da sua revisão." Foreground="{StaticResource MutedBrush}" TextWrapping="Wrap" Margin="0,8,0,14" FontSize="12" />
+                <ListBox x:Name="QueueList" Grid.Row="2" Margin="-4,0,-4,12">
+                    <ListBox.ItemTemplate><DataTemplate><DockPanel>
+                        <Button DockPanel.Dock="Right" Content="×" Tag="{Binding}" Click="RemoveQueueButton_Click" Padding="7,1" Margin="6,0,0,0" ToolTip="Remover da fila" />
+                        <StackPanel><TextBlock Text="{Binding Item.Title}" TextWrapping="Wrap" FontWeight="SemiBold" /><TextBlock Text="{Binding Item.Source}" Foreground="{StaticResource MutedBrush}" FontSize="11" Margin="0,3,0,0" /></StackPanel>
+                    </DockPanel></DataTemplate></ListBox.ItemTemplate>
+                </ListBox>
+                <StackPanel Grid.Row="3">
+                    <ProgressBar x:Name="ExecutionProgress" Height="3" IsIndeterminate="True" Visibility="Collapsed" Margin="0,0,0,12" />
+                    <Button x:Name="ApplyButton" Content="Aplicar fila" Style="{StaticResource PrimaryButton}" Click="ApplyButton_Click" IsEnabled="False" />
+                    <Button x:Name="ClearQueueButton" Content="Limpar fila" Margin="0,8,0,0" Click="ClearQueueButton_Click" />
+                    <Button Content="Abrir registros" Margin="0,8,0,0" Click="OpenLogsFolderButton_Click" />
+                </StackPanel>
+                <TextBlock Grid.Row="4" Text="ÚLTIMOS REGISTROS" Foreground="{StaticResource MutedBrush}" FontSize="10" Margin="0,24,0,10" />
+                <ListBox x:Name="LogsList" Grid.Row="5"><ListBox.ItemTemplate><DataTemplate><TextBlock Text="{Binding}" FontSize="11" TextWrapping="Wrap" Foreground="{StaticResource MutedBrush}" /></DataTemplate></ListBox.ItemTemplate></ListBox>
+            </Grid>
+        </Border>
+        <TextBlock x:Name="StatusLabel" Grid.Column="1" Grid.Row="2" Margin="26,0" Foreground="{StaticResource MutedBrush}" FontSize="11" VerticalAlignment="Center" Text="Pronto · nenhuma alteração aplicada" />
+    </Grid>
+</Window>

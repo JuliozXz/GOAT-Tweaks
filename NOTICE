@@ -1,0 +1,12 @@
+GOAT Tweaks includes or runs code from the following pinned upstream projects:
+
+- RyTuneX — AGPL-3.0 — 957885f53beaacfa7322581cafdb9eba5df5726a
+- WinSux — MIT — 91adbfd63b7ed2eb5fcf0821fd53405a3cf63573
+- Ultimate — MIT — a0a33a57078434201f582b0db5107dcbb502292a
+- winutil — MIT — 2f0bdc8fca52e1ebe31a8d98216428061d3f8956
+
+The upstream license files are preserved in third_party/. RyTuneX's OneDrive and
+LocationAccess actions are intentionally not exposed because upstream provides
+no corresponding UI actions.
+
+The GOAT-authored RyTuneX LogHelper shim is logging only, no behavioural code.
