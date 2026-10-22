@@ -125,9 +125,16 @@ function Open-Tab([string]$Id, [string]$Name) {
     }
     $Control = Find-Control $Id
     if (-not $Control.Current.IsEnabled -or $Control.Current.IsOffscreen) { throw "Navegação indisponível: $Id" }
-    $Point = $Control.GetClickablePoint()
     $null = [GoatHudDesktop]::SetForegroundWindow($script:WindowHandle)
-    [GoatHudDesktop]::Click([int]$Point.X, [int]$Point.Y)
+    if ($Id -eq 'WPFAppxRemoval') {
+        # This regular Button only navigates to the AppX page. Its UIA invoke
+        # pattern works even when WPF cannot calculate a physical click point.
+        $Control.GetCurrentPattern([System.Windows.Automation.InvokePattern]::Pattern).Invoke()
+    }
+    else {
+        $Point = $Control.GetClickablePoint()
+        [GoatHudDesktop]::Click([int]$Point.X, [int]$Point.Y)
+    }
     Start-Sleep -Seconds 2
     try {
         $Tabs = Find-Control 'WPFTabNav'
