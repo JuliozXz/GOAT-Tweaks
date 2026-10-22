@@ -1,0 +1,1282 @@
+{
+  "repository": "VitorSaviolli/goat-tweaks",
+  "commit": "2e365a118239b5f8531d2c0f1f65ee77eb852c5b",
+  "files": [
+    {
+      "path": ".gitattributes",
+      "sha256": "9874f3020116b629bccd485fc9cbe7ac4607d6573daeb1fdd64c6c848c2589bf"
+    },
+    {
+      "path": ".github/workflows/release.yaml",
+      "sha256": "3e53172d18d55014008a2caf5b770d1813e7469891ec8f3ed11af1a381798803"
+    },
+    {
+      "path": ".github/workflows/tests.yaml",
+      "sha256": "d7b5109fa18c981cd075cbd3691e45a13f06d271a98f45cd2d1d390bd499eb5a"
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "39148fb4fb551b71fe2d8d8187cf36de883dedb3ed6770f3b22639f8e337cf89"
+    },
+    {
+      "path": "Compile.ps1",
+      "sha256": "ed9a6962202436e1877daf307efa67e862dc181a459add5df39f61130a91e121"
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "8486a10c4393cee1c25392769ddd3b2d6c242d6ec7928e1414efff7dfb2f07ef"
+    },
+    {
+      "path": "README.md",
+      "sha256": "0b9afcb1e334cec0ab8993157e6d00215b10ca724861968b01c96b226916d8d8"
+    },
+    {
+      "path": "THIRD-PARTY-NOTICES.md",
+      "sha256": "9164113ed330ae1e0e92277f5ba33b23cabe0eca0a09e4efe2faba4ae5be0252"
+    },
+    {
+      "path": "assets/goat-banner.png",
+      "sha256": "f919c4cc7428a653c485fc14d504b39e5bb4176716092f1249fcc76343f9affa"
+    },
+    {
+      "path": "assets/goat-logo-128.png",
+      "sha256": "322c18885d08ff266ca784bc2c12356605414db291e97f89c9a24bfe02fc796a"
+    },
+    {
+      "path": "assets/goat-logo-256.png",
+      "sha256": "b85f57299332bfdd21faef9e027d9b9009b4ac7cc0103097290f490e784a1b42"
+    },
+    {
+      "path": "assets/goat-logo-512.png",
+      "sha256": "8a1722ff89b727df8e21fd2e8159f876b65eb4ef16e6a8433d62b2162ed8a327"
+    },
+    {
+      "path": "assets/goat-logo-source.jpeg",
+      "sha256": "ebb3b7d7d9e572c3dc331f0387f02dae040daed065e19786101ed833ec304e05"
+    },
+    {
+      "path": "assets/goat-logo.ico",
+      "sha256": "d93c6d60b15331d63489234110406e74829520f581a2a797e506d8f4a2338896"
+    },
+    {
+      "path": "config/applications.json",
+      "sha256": "a31cba80c8f9b85e448dd37f31f228bb1c88c87d6dad491eb25fd3514e548b32"
+    },
+    {
+      "path": "config/appnavigation.json",
+      "sha256": "ac479c283a9c8caafa881f91bcf031ae7c9494269862d9bb8ea90f0885d350ad"
+    },
+    {
+      "path": "config/appx.json",
+      "sha256": "65bf98cf0462509c3a98dcb057df2c074808757ee800b494e727c13a1bf0072b"
+    },
+    {
+      "path": "config/dns.json",
+      "sha256": "16d3cc21e0fb98665b71c009c1dc6f450371b069ad77b06cba5a6af7720a2bcd"
+    },
+    {
+      "path": "config/feature.json",
+      "sha256": "37fcc200e434ee98a6d693eb79f08310e988ec0630db404339719727b791c376"
+    },
+    {
+      "path": "config/preset.json",
+      "sha256": "3fe9745aa029c9350e75d2bd4690cb4bf1edb25a64ca658e5d13ce984aef6f3f"
+    },
+    {
+      "path": "config/themes.json",
+      "sha256": "6cd199d214620585e5ee7a529f2c4cd8c0d68f443588117e4e6b0db13f667336"
+    },
+    {
+      "path": "config/tweaks.json",
+      "sha256": "748d4ab61bf679a3678c56502f6a05694e9b53aa0f2a807a3b7a528e1ad04aa2"
+    },
+    {
+      "path": "config/ultimate.json",
+      "sha256": "d3998b0286b5685e3659218083a366062ead1f69199a865d1ee3f58a8b0e1917"
+    },
+    {
+      "path": "functions/private/Add-SelectedAppsMenuItem.ps1",
+      "sha256": "87ab8cd21ccca28cefbb99f037df3c3ba51207c404c89574d97b77cd2e865a6a"
+    },
+    {
+      "path": "functions/private/Close-WinUtilRunspacePool.ps1",
+      "sha256": "64c5d002bc4e5e5f2d9643dec3057df43feca9f1f74bebdd34c99ca10bd75b3f"
+    },
+    {
+      "path": "functions/private/Complete-WinUtilPackageRun.ps1",
+      "sha256": "5ce80d1c897106aac1f0222871353d3b4e5bc4d45b2a2b4e0ebdf403cc6463ee"
+    },
+    {
+      "path": "functions/private/Find-AppsByNameOrDescription.ps1",
+      "sha256": "2b23e3f22682032d4524d5a27bba84a9c2567b110fb30098f3358822e6cd1354"
+    },
+    {
+      "path": "functions/private/Find-TweaksByNameOrDescription.ps1",
+      "sha256": "4751995d9109e348f0adaa711a6d3b7aab0b950845e250a1c9b789e93d668e10"
+    },
+    {
+      "path": "functions/private/Get-WinUtilAppEntryHandlers.ps1",
+      "sha256": "ea55504430b4ccf3575c607c8da10dd4225e9e07aae474d9b9e362134906df44"
+    },
+    {
+      "path": "functions/private/Get-WinUtilDNSBenchmark.ps1",
+      "sha256": "69a7531e5d27e3c6fdaefba81597620075d6bc58ed9b8549c6463fe48a2cb106"
+    },
+    {
+      "path": "functions/private/Get-WinUtilEntryToolTip.ps1",
+      "sha256": "392dd6b19ce44739e60c9b7f0cfd0dc16a8e3cee139e53ce109078c25ba2fc6f"
+    },
+    {
+      "path": "functions/private/Get-WinUtilEnvironmentReport.ps1",
+      "sha256": "2ec7ac991bb1c4cc51d18b2efe9bb7ab561a0f9c43e3bc67e8fed1c11a3a082b"
+    },
+    {
+      "path": "functions/private/Get-WinUtilEnvironmentReportLogsPath.ps1",
+      "sha256": "8af1491dac2bdd1ee23897a222038d0ea5e3d0d7836378d6a196d590f25bbf05"
+    },
+    {
+      "path": "functions/private/Get-WinUtilGoatLogo.ps1",
+      "sha256": "57e804fa83122930498765741e9189f378c88231d5684caeaf9054209b7256cf"
+    },
+    {
+      "path": "functions/private/Get-WinUtilInstalledAPPX.ps1",
+      "sha256": "cdb237b4fb85274dc7beff8b7fba981e329ba5465e9c86b7c04cc54f8be7392a"
+    },
+    {
+      "path": "functions/private/Get-WinUtilPackageLogSummary.ps1",
+      "sha256": "c1eb655dd1efd12b3b278328a1c6949c868adfff5af902d98cdffc277894387a"
+    },
+    {
+      "path": "functions/private/Get-WinUtilRecentLogs.ps1",
+      "sha256": "dbcd03dc861df0c424fedd0318ccd76d20fd2a4b3c84f5afb7dae18f19f45e53"
+    },
+    {
+      "path": "functions/private/Get-WinUtilRegistryComboState.ps1",
+      "sha256": "14a52472cc5531b716b52b894a6c3361ac19d6740c4f7135f1732c70a0c141d4"
+    },
+    {
+      "path": "functions/private/Get-WinUtilRegistryComboValue.ps1",
+      "sha256": "8098e2233bae02a19cce65cc10a672ffd8d5c1aa4013a85bdde7d2f7cbac05a3"
+    },
+    {
+      "path": "functions/private/Get-WinUtilRunspacePoolLock.ps1",
+      "sha256": "ab45369000ac8b83d8d06ec12b0285234ea0f526bc69ec42ce0a6e22b2a01d9f"
+    },
+    {
+      "path": "functions/private/Get-WinUtilSelectedPackages.ps1",
+      "sha256": "c23709cab529e4588220adced04f135c932e55f1c916a289d3b6fddd5b244a9d"
+    },
+    {
+      "path": "functions/private/Get-WinUtilToggleStatus.ps1",
+      "sha256": "a8f3368058d5eed618bd278fa61636620f1aebdbb02273adf9d1f55676bd596c"
+    },
+    {
+      "path": "functions/private/Get-WinUtilTweakDisplayName.ps1",
+      "sha256": "e1193d4756887015b56200ef040d2b7b0cd950d4dd9fa27777f8cc509fceebce"
+    },
+    {
+      "path": "functions/private/Get-WinUtilTweaksStateReport.ps1",
+      "sha256": "818079e6181d927d892e5aaed8d88cab6b8fe931cf5bb8ad98ab00f77b585e2d"
+    },
+    {
+      "path": "functions/private/Get-WinUtilVariables.ps1",
+      "sha256": "b511a01c59e8aad5c222ce0aa645003a38f2d91245664f990abcece543edbf67"
+    },
+    {
+      "path": "functions/private/Initialize-InstallAppArea.ps1",
+      "sha256": "55d2dc725c3a30f846adb6a7b49b5bc329d51bed74066cf3cc4921f7117a5471"
+    },
+    {
+      "path": "functions/private/Initialize-InstallAppEntry.ps1",
+      "sha256": "32f7c14caf67b57b18fa82d42f94c4cb0148f7f58149021118c43aa413311e6a"
+    },
+    {
+      "path": "functions/private/Initialize-InstallCategoryAppList.ps1",
+      "sha256": "984766d79797fcc3e2b970d44e3c0c1e75ae51c697e77fd021ed096dcd4a6485"
+    },
+    {
+      "path": "functions/private/Initialize-WinUtilInstallTabControls.ps1",
+      "sha256": "6982ada4ff5699b29b80f3dd919ed4842de75950a1436bc4a21838db7a6fff0e"
+    },
+    {
+      "path": "functions/private/Initialize-WinUtilRunspacePool.ps1",
+      "sha256": "8df3c70b1385b30a27e9eaa39950adf9d2f52e1ded45756170d652e90a62bd82"
+    },
+    {
+      "path": "functions/private/Initialize-WinUtilTabContent.ps1",
+      "sha256": "19d5f948f5be829969c02fa92dbf16e4d22ced6c10aaf27476fe0bc70457ae8a"
+    },
+    {
+      "path": "functions/private/Initialize-WinUtilTaskbarOverlayAssets.ps1",
+      "sha256": "85d95a463ac3de11e31a2c39ea61cea03b0caec4cecc3e5f6d57bd36bd747450"
+    },
+    {
+      "path": "functions/private/Install-WinUtilAPPX.ps1",
+      "sha256": "f706b5e76b6c2dcd0a81c8ac5894bf7acccf321409178b7ccc9ab2dbbca66e02"
+    },
+    {
+      "path": "functions/private/Install-WinUtilChoco.ps1",
+      "sha256": "8074464294462072efde85643d11a22547d7fa470d6ad9d4a41920642b0e8831"
+    },
+    {
+      "path": "functions/private/Install-WinUtilProgramChoco.ps1",
+      "sha256": "ffd0eaad2777def37aed4498be55b4abbe85727fa11f28340cad0daaf4f5b0c9"
+    },
+    {
+      "path": "functions/private/Install-WinUtilProgramWinget.ps1",
+      "sha256": "054d25c5dc32660df949ada85c6941706aee33b9085eb5ad00331e0b9f3a59bd"
+    },
+    {
+      "path": "functions/private/Install-WinUtilWinget.ps1",
+      "sha256": "cbcc896e5cc890011388cd34b129f8cd209d59f9fcdcf401d8df0c834cbd98ea"
+    },
+    {
+      "path": "functions/private/Invoke-WinUtilAppCategoryChip.ps1",
+      "sha256": "7f9f9798e2f2e1db1ca7055f08cad71b7bb77352b423650c97731375fa25d256"
+    },
+    {
+      "path": "functions/private/Invoke-WinUtilAssets.ps1",
+      "sha256": "230efb4a5e1177b5a865635d2d3857f378f064b6ee7561ec46ebf2bd687f7dd1"
+    },
+    {
+      "path": "functions/private/Invoke-WinUtilCloseRequest.ps1",
+      "sha256": "852e4f0cd6d3780b54764090e9419d8a07b0b52f3493835e8267e4bdbe0f58db"
+    },
+    {
+      "path": "functions/private/Invoke-WinUtilCurrentSystem.ps1",
+      "sha256": "93efef9f22a5aac8f13829bf40cf362194bb1ac4f1340674903cc1e2011e8102"
+    },
+    {
+      "path": "functions/private/Invoke-WinUtilExplorerUpdate.ps1",
+      "sha256": "87de9e6357524a952d35b666ee3039a4dffe9506ce80b6f63e24425c40c054a9"
+    },
+    {
+      "path": "functions/private/Invoke-WinUtilFeatureInstall.ps1",
+      "sha256": "324b0e60802efd2e91463d6a9cab0622a2c9b1ea2a3f68841766259ec456ad33"
+    },
+    {
+      "path": "functions/private/Invoke-WinUtilFontScaling.ps1",
+      "sha256": "07555e06eeccba8102b07e97cbf60a0793b5ae4674d0da73963cdee98a14c64e"
+    },
+    {
+      "path": "functions/private/Invoke-WinUtilGoatModule.ps1",
+      "sha256": "970bc5eadfc3d163dbe69565f8aae4bf993fab89ba7536a0037cc8e70e48aa5b"
+    },
+    {
+      "path": "functions/private/Invoke-WinUtilISO.ps1",
+      "sha256": "c26568667c18017298067e907c02e6c752163f94218c637465a6c397a3fc0103"
+    },
+    {
+      "path": "functions/private/Invoke-WinUtilISOScript.ps1",
+      "sha256": "dd8bdcc93ba4d5e4900d2954064b80eb7fc32d6ccd2accfc371728a8aa564553"
+    },
+    {
+      "path": "functions/private/Invoke-WinUtilISOUSB.ps1",
+      "sha256": "156f684a13d09d999664bb4626fda8bbf51e16ae4fdcbe145c413f697ed7b7eb"
+    },
+    {
+      "path": "functions/private/Invoke-WinUtilInstallPSProfile.ps1",
+      "sha256": "d74185487c2dcaf491e6047ce716b3dd4941f7265efa5a1063c90663326d91e6"
+    },
+    {
+      "path": "functions/private/Invoke-WinUtilSSHServer.ps1",
+      "sha256": "e14f89baf051e9778eb933b8b3db4c550ecfca632be7d3b621a9467797547439"
+    },
+    {
+      "path": "functions/private/Invoke-WinUtilScript.ps1",
+      "sha256": "4b8cc731920a81dd0b2d5e55f3fa6f82a8c941273bffe2abeefa0bbcbaed2584"
+    },
+    {
+      "path": "functions/private/Invoke-WinUtilTweaks.ps1",
+      "sha256": "9355e9cc141cd8698e9aefe82f2feae3fd1d89c1b1cce78b6ac467d41e28b3ac"
+    },
+    {
+      "path": "functions/private/Invoke-WinUtilUninstallPSProfile.ps1",
+      "sha256": "7598e656b21be529e598728b77af1bc2f55f8d3c57758d3f8ff82d29b3a1c242"
+    },
+    {
+      "path": "functions/private/Invoke-WinutilThemeChange.ps1",
+      "sha256": "cc1384678fa06c0bd2532b7ddb91c12b69711a546d1de18a29056cc57b6afb93"
+    },
+    {
+      "path": "functions/private/Measure-WinUtilStep.ps1",
+      "sha256": "a61385ed4cf5c27f59b98d917583090f0321b94fb4344b9bd5ecdf0ebd870acf"
+    },
+    {
+      "path": "functions/private/New-WinUtilFossBadge.ps1",
+      "sha256": "a984fe89c911c495d819531a4eae0eac72801b9819f051c4003d158e5574fb27"
+    },
+    {
+      "path": "functions/private/New-WinUtilSessionState.ps1",
+      "sha256": "e6b18e9068c8136a2921a4cba9dc9a2235867c2f98222a295d7a93bd01602ca4"
+    },
+    {
+      "path": "functions/private/Register-WinUtilRunspaceCleanup.ps1",
+      "sha256": "8af460fd9869d7bfcfcfc7619cf1a0fac2db0411857a2448e34ddbb83c4db3af"
+    },
+    {
+      "path": "functions/private/Remove-WinUtilAPPX.ps1",
+      "sha256": "eeef7b0f6686e72a4d9c4a8e02056621138e3e902509ddb2f22d98bae0e4d55d"
+    },
+    {
+      "path": "functions/private/Remove-WinUtilProvisionedAPPX.ps1",
+      "sha256": "8ace0bfbc10b560890cfae7047821db6d3d151dd0b1dd9a3bcbef4e95d5edf9b"
+    },
+    {
+      "path": "functions/private/Reset-WPFCheckBoxes.ps1",
+      "sha256": "08481ad1de9d0e1bc4ca93108f1314ec4980f7fe6b7b7092adf24ae76510e138"
+    },
+    {
+      "path": "functions/private/Save-WinUtilFile.ps1",
+      "sha256": "4d009b182f0ea4648ceda24ecf2605b7c99d4a92d00a29e7a6ab0594c46f0153"
+    },
+    {
+      "path": "functions/private/Set-WinUtilAppCategoryFilter.ps1",
+      "sha256": "5efa490595f4279d47c0bede63f587b72acdacbd35735f476a47ba358fd74d48"
+    },
+    {
+      "path": "functions/private/Set-WinUtilDNS.ps1",
+      "sha256": "1c787335c8f4813c1365a4b8f0d3b6afb8a1918fee45aa6854643e99774161a7"
+    },
+    {
+      "path": "functions/private/Set-WinUtilRegistry.ps1",
+      "sha256": "e041cdf83c346fafdec5d82f30a91762a4cd45814433b910b1cdddc2ab6554a8"
+    },
+    {
+      "path": "functions/private/Set-WinUtilRegistryComboState.ps1",
+      "sha256": "b96e6a4d24239381964867b5b56f3215d4f2899c6d66ccd2fe109ce87af5b15c"
+    },
+    {
+      "path": "functions/private/Set-WinUtilService.ps1",
+      "sha256": "c20752477c0b1883ac82dca39e645272badc506f6e36eff1c83011f1fbe667da"
+    },
+    {
+      "path": "functions/private/Set-WinUtilTaskbarItem.ps1",
+      "sha256": "5608f4db18d1f65390bae7567059937a18f584896163727769687aec899b75b5"
+    },
+    {
+      "path": "functions/private/Show-CustomDialog.ps1",
+      "sha256": "8e8d20c30d86a3c042983069dc2f4913fcd5ba6a3d1ae5cb052816bd46ea0a9c"
+    },
+    {
+      "path": "functions/private/Show-WinUtilMessage.ps1",
+      "sha256": "3762ed6d24bea6c6ade68a1bad4bb3ac1110730c1a3943f75a8ed846dc8f555b"
+    },
+    {
+      "path": "functions/private/Start-WinUtilAssetRendering.ps1",
+      "sha256": "a2302b589bb34efb8d437663e35a21102c0786d59e83a2b0e00e02b980cdc51b"
+    },
+    {
+      "path": "functions/private/Start-WinUtilBackgroundQueue.ps1",
+      "sha256": "7c9bb8da6906ae6cd0cbaaed25f64096cb8b88b894129c9ff62114255ba3db4e"
+    },
+    {
+      "path": "functions/private/Start-WinUtilInstallAppRendering.ps1",
+      "sha256": "c56be394e0df2863b08595ea67f1890f0cb414aad7e582cd5be2bbce87572a51"
+    },
+    {
+      "path": "functions/private/Start-WinUtilJob.ps1",
+      "sha256": "4a7feaeb31edc2a971d9027da6b43b2b603ab33900c15357ef437bd1ba0b8381"
+    },
+    {
+      "path": "functions/private/Start-WinUtilTabWarmup.ps1",
+      "sha256": "8c9f5ec31a6a33490bb0efeec7fd184773368b0ce2e023374aaf56fbd3dcbe74"
+    },
+    {
+      "path": "functions/private/Start-WinUtilUserInterface.ps1",
+      "sha256": "ea9577b611e54f5338968ee6463a3e74f432d4a45dcb135d34159d7e6936a47a"
+    },
+    {
+      "path": "functions/private/Step-WinUtilJob.ps1",
+      "sha256": "9b1f8fdc269f482cf3beee51b25aeaa594694ccd3b2e8d8928fcb883d7b2084a"
+    },
+    {
+      "path": "functions/private/Stop-WinUtilActiveWork.ps1",
+      "sha256": "df46e438f8c0fb9747c60bb523a3b97325272816765c9984031e4db187a0fcbd"
+    },
+    {
+      "path": "functions/private/Test-WinUtilDeferBackgroundWork.ps1",
+      "sha256": "4379b12ab90c1d3febe23ddecdd9b2b96051cc4a9e279c168679323a20e1f5ab"
+    },
+    {
+      "path": "functions/private/Test-WinUtilPackageManager.ps1",
+      "sha256": "b7b8e084c003317707bba2e6c81facb06ae43d2b1429b343c44da6907f06e30d"
+    },
+    {
+      "path": "functions/private/Update-WinUtilAppCategoryChip.ps1",
+      "sha256": "479acd2c39061f1cd5cebc8ad2514e283c8c9bb96c46722cf270f61886bb1cc0"
+    },
+    {
+      "path": "functions/private/Update-WinUtilSelections.ps1",
+      "sha256": "daeb309aba61abde10f494f78e88f11af17ffdaadf6f1c8564dfdd5d6267694b"
+    },
+    {
+      "path": "functions/private/Write-WinUtilConsoleProgress.ps1",
+      "sha256": "acd87baf5fa80c6c672d162e2b2ac8a9ab18d3cf065d592066d23df07d971e98"
+    },
+    {
+      "path": "functions/private/Write-WinUtilEnvironmentReportExport.ps1",
+      "sha256": "9e4198387222f14a670d1921500357bebae13f0d8d5d12b6bcece2ea546c994f"
+    },
+    {
+      "path": "functions/private/Write-WinUtilErrorRecord.ps1",
+      "sha256": "36b657421df22ee604901b572cf8945aae5f7f79c7daec4687f3e8ddc4d64028"
+    },
+    {
+      "path": "functions/private/Write-WinUtilJobBanner.ps1",
+      "sha256": "2d3e93b2d9bc55f1bdec8391366b4d3d16a471d0a0c8b7adaf5b24210e386f67"
+    },
+    {
+      "path": "functions/private/Write-WinUtilLog.ps1",
+      "sha256": "9098f0bc9ba70b5cee1bf0210d38ba29cc359c9e692d1bbd7fcc4b53daad6c0b"
+    },
+    {
+      "path": "functions/public/Initialize-WPFUI.ps1",
+      "sha256": "1e20b6e46b7fbc46478ba729bed1887bea3769df25c4dd4211d3dce1307e9e19"
+    },
+    {
+      "path": "functions/public/Invoke-WPFAppxInstall.ps1",
+      "sha256": "7a3effe6ec6e922f3494db6dfc5d65703c4d01ff8d48d55d97d3746c981d807c"
+    },
+    {
+      "path": "functions/public/Invoke-WPFAppxRemoval.ps1",
+      "sha256": "ff2716b2625019247ca6ee759cc803fb308b18f9a36675442c1c7010e1d08dea"
+    },
+    {
+      "path": "functions/public/Invoke-WPFButton.ps1",
+      "sha256": "8e7e6b0c37c4a300071c104179ddf15c44f7202d1a256c090c4625fb75bb4797"
+    },
+    {
+      "path": "functions/public/Invoke-WPFExportEnvironmentReport.ps1",
+      "sha256": "9a55f626d7483817a82bae46c0ff0b097e49b9b7014c93955b5877554988f05e"
+    },
+    {
+      "path": "functions/public/Invoke-WPFFeatureInstall.ps1",
+      "sha256": "7b91e8d53504650c342c0389be0bf970f58b3395be34fbc98f4b0cffe0f0ed7d"
+    },
+    {
+      "path": "functions/public/Invoke-WPFFixesNTPPool.ps1",
+      "sha256": "2f13064ad1881cdedb0bec14e445fcb6b7f12aa1b8fc31b45647b5e185a139ca"
+    },
+    {
+      "path": "functions/public/Invoke-WPFFixesNetwork.ps1",
+      "sha256": "961586e05686baadd6a1298bb111948ac81a948d69d0384fd3bdf71020f691a8"
+    },
+    {
+      "path": "functions/public/Invoke-WPFFixesUpdate.ps1",
+      "sha256": "a4e6c8c74d438575f66485f4e7bc1afd866d78d66d808272a1242887725c4a3a"
+    },
+    {
+      "path": "functions/public/Invoke-WPFFixesWinget.ps1",
+      "sha256": "172d307f74b6f5dc5b9c25859c76ccdaa82375b0b2121f45880b17c13db87c82"
+    },
+    {
+      "path": "functions/public/Invoke-WPFGetInstalled.ps1",
+      "sha256": "60c2cc53d07732ed805308110ebe1f2d77aea8e6411d3569d5a178dfe5462023"
+    },
+    {
+      "path": "functions/public/Invoke-WPFImpex.ps1",
+      "sha256": "96bc3875e4df5e70397a620d50516f01917f08596d7450c761d3dcb5db0fbc82"
+    },
+    {
+      "path": "functions/public/Invoke-WPFInstall.ps1",
+      "sha256": "2b4439b39536172bc061155acc6f91c0fe064325cb3b51d7b67e10abd8e58f0e"
+    },
+    {
+      "path": "functions/public/Invoke-WPFInstallUpgrade.ps1",
+      "sha256": "d3e44185f01a8ceafdc56853dadceb35e91c58de28104cf47a74cb805db7ebc4"
+    },
+    {
+      "path": "functions/public/Invoke-WPFOOSU.ps1",
+      "sha256": "789cd0fff1245140e1dcc254f0017b50b028edadca1efdac7197de1a8b1c4470"
+    },
+    {
+      "path": "functions/public/Invoke-WPFPanelAutologin.ps1",
+      "sha256": "aef35003a81c6e524f88f8a8dc16dd741cfa399092ac0592db550b38f0eb308a"
+    },
+    {
+      "path": "functions/public/Invoke-WPFPopup.ps1",
+      "sha256": "cef1270c76acc73850f9a149fd5db9d708e8920bfdde4d58a1dcf11b8726bb13"
+    },
+    {
+      "path": "functions/public/Invoke-WPFPresets.ps1",
+      "sha256": "95c350de8ec7dd5b88fa3d701e7178eb4becf365d7b746444cc42dc0b3d55906"
+    },
+    {
+      "path": "functions/public/Invoke-WPFRunspace.ps1",
+      "sha256": "d0dd427821ef41971150179bf50a20221cea8caf53a789f08adaaf789217b90d"
+    },
+    {
+      "path": "functions/public/Invoke-WPFSSHServer.ps1",
+      "sha256": "72bf7084c89d6737c1d473c1695ec1689245b52eb946c4255e1db0b3f282d788"
+    },
+    {
+      "path": "functions/public/Invoke-WPFSelectedCheckboxesUpdate.ps1",
+      "sha256": "a122472ec38748152cfb258cf8fa5dbfe2d813074c55b843058b17486719ae1c"
+    },
+    {
+      "path": "functions/public/Invoke-WPFSystemRepair.ps1",
+      "sha256": "4f7b39c637a1390cb1ca38bf5526fe63d2f908c93a0945a6366f0873035e8b80"
+    },
+    {
+      "path": "functions/public/Invoke-WPFTab.ps1",
+      "sha256": "4c3c84796cd16b0cf3fa2a316a4f944a2d6e09f9214654019b4276e411db232d"
+    },
+    {
+      "path": "functions/public/Invoke-WPFToggleAllCategories.ps1",
+      "sha256": "cd1a35a11c5d35e79947a0cf82bf86c486d7a16c45a9717778bc6ce7ab3d7dcc"
+    },
+    {
+      "path": "functions/public/Invoke-WPFToggleSelections.ps1",
+      "sha256": "cfb740d19fc824c396ebde2ceb03ac10d94c277be37496e0e48aa245584dc28f"
+    },
+    {
+      "path": "functions/public/Invoke-WPFUIElements.ps1",
+      "sha256": "398288aa09e0547387c4fdbf46fbe09993a506b3edb795a7ae0cba4f24db4f9d"
+    },
+    {
+      "path": "functions/public/Invoke-WPFUIThread.ps1",
+      "sha256": "e54689d1bdefe05747e3a4bb0858a0ff07095d1c3934de723dfe6f5011e52468"
+    },
+    {
+      "path": "functions/public/Invoke-WPFUltimatePerformance.ps1",
+      "sha256": "06827284117dbd1b7f50b1cd196f04f2e5e614bddd5c2ec1141991860e4df401"
+    },
+    {
+      "path": "functions/public/Invoke-WPFUnInstall.ps1",
+      "sha256": "24605803be1d242849e3284d14b52d7020eabb024abb14f2f30c8601724d219d"
+    },
+    {
+      "path": "functions/public/Invoke-WPFUpdatesdefault.ps1",
+      "sha256": "c2f55673ae7158f48905a1ef3db6d172f6c293319aeea803f8166c193a30e963"
+    },
+    {
+      "path": "functions/public/Invoke-WPFUpdatesdisable.ps1",
+      "sha256": "0e3e8a5944fc5d978a88af915192f571f546a21e60c9f7ba35825983da8120bb"
+    },
+    {
+      "path": "functions/public/Invoke-WPFUpdatessecurity.ps1",
+      "sha256": "1601a5a48a18be68826ca2c20bc5b9fffff2a890ca69e0990043b51b4bfe73fc"
+    },
+    {
+      "path": "functions/public/Invoke-WPFtweaksbutton.ps1",
+      "sha256": "54e089703a1afec376b5c796e2be66ef4c4e8e668182fe74d1e076c74b4f1633"
+    },
+    {
+      "path": "functions/public/Invoke-WPFundoall.ps1",
+      "sha256": "5180c00a3044f500a43a9cdb0d1d9ac276d37fe97ee384377ce9578f40ef9f43"
+    },
+    {
+      "path": "functions/public/Invoke-WinUtilAutoRun.ps1",
+      "sha256": "2370bd21a63941d554be442fa01a29303f7c43b163227543e14af3cacd273294"
+    },
+    {
+      "path": "licenses/RyTuneX-AGPL-3.0.txt",
+      "sha256": "8486a10c4393cee1c25392769ddd3b2d6c242d6ec7928e1414efff7dfb2f07ef"
+    },
+    {
+      "path": "licenses/Ultimate-MIT.txt",
+      "sha256": "4146501b22aa3b8d04d5e6764860226079312b1d51e80e58fb634669afce8b0d"
+    },
+    {
+      "path": "licenses/WinSux-MIT.txt",
+      "sha256": "9684da786c4a368b343f0b8b4edffe94cff3a0b78174366a165c8a77bc09fd85"
+    },
+    {
+      "path": "licenses/WinUtil-MIT.txt",
+      "sha256": "469b54dadfa5c0d0002291e452fcaa32165356d3459e1dee040404db5439fb1c"
+    },
+    {
+      "path": "lint/PSScriptAnalyser.ps1",
+      "sha256": "72904705d4c78445e08969cc01dacf8074bfd6aa0bd21559852b1749ba77c648"
+    },
+    {
+      "path": "modules/ultimate/1 Check/1 Bios Check.ps1",
+      "sha256": "4b3bed7766217e2bb8842500f3bcd1cc45ffbeb45a9fd028d7c0c79b79a0907c"
+    },
+    {
+      "path": "modules/ultimate/1 Check/2 Storage Check.ps1",
+      "sha256": "455136d8a02affe8e3bbdc6f5df1787bb2debd32926e7c3f7ee5602716988879"
+    },
+    {
+      "path": "modules/ultimate/1 Check/3 Ram Check.ps1",
+      "sha256": "2ea36afd4213c4cfd2e5fdedf128391c20ab2bd84caa670ef9e1c3d3c3a8db11"
+    },
+    {
+      "path": "modules/ultimate/1 Check/4 Gpu Check.ps1",
+      "sha256": "dc7c7169ea7c32195a42c3d034e7f72fbf66dabb7b71ceeacc4c83b594b0e66a"
+    },
+    {
+      "path": "modules/ultimate/1 Check/5 Storage Ram Cpu Test & Bench.ps1",
+      "sha256": "b81662b1775dbb50639ac0e38ad424cfda27d9b11451ab74e7a3273d4665fa74"
+    },
+    {
+      "path": "modules/ultimate/1 Check/6 Gpu Test & Bench.ps1",
+      "sha256": "8cf45abd355b29ba9579d03285f6248503bf3eb108d25abd32605de391a9fd38"
+    },
+    {
+      "path": "modules/ultimate/2 Refresh/1 Factory Reset.ps1",
+      "sha256": "8fae0edbf1c98c71be4d9f7400a7b33a0dd0c7a72ead547aaa4603513995bf0f"
+    },
+    {
+      "path": "modules/ultimate/2 Refresh/2 Account Local.ps1",
+      "sha256": "0760340826eeb19e9b678a0da4cdc3e1c585af5de5a44e2555de7ff5f8be2a1f"
+    },
+    {
+      "path": "modules/ultimate/2 Refresh/3 Reinstall.ps1",
+      "sha256": "334718ecc47a91858fa5a2c40ef8a22b0852cc911d62b793c189b02c7b678cae"
+    },
+    {
+      "path": "modules/ultimate/2 Refresh/4 Autounattend.ps1",
+      "sha256": "0974cfcc4ffc4b21bf4eb62172c0c1c31ff32ab147878a4610fc19c95df74338"
+    },
+    {
+      "path": "modules/ultimate/2 Refresh/5 Updates Drivers Block.ps1",
+      "sha256": "4d4ec652c5a7f78824f53b7dc7fd46dda948f3716a7cd6fd102d6c678ee11991"
+    },
+    {
+      "path": "modules/ultimate/2 Refresh/6 Network Driver.ps1",
+      "sha256": "a4c4cd8835c05c0fc880142420f41fe9633cb44e9fd102b9368d30efd6b12b42"
+    },
+    {
+      "path": "modules/ultimate/2 Refresh/7 To Bios.ps1",
+      "sha256": "8efdd6b929efe46cd47a4abe19006ab33c1c6f4f60aa7954914526a474d742ce"
+    },
+    {
+      "path": "modules/ultimate/3 Setup/1 BitLocker.ps1",
+      "sha256": "03d2d76ed4bd5a13527b9810b20237d3e268d1b5e1dd734ddfdbc98cb457376a"
+    },
+    {
+      "path": "modules/ultimate/3 Setup/10 Edge Settings.ps1",
+      "sha256": "6cbe4fac85caf0d75a62b011f1b4a50f691dbe60eaae4a01ee2f2fe0f11be8b6"
+    },
+    {
+      "path": "modules/ultimate/3 Setup/11 Store Settings.ps1",
+      "sha256": "d6b2af6b399e2e9a34198578472fccafb924e2e8b15d1a38b85091be3ddf3167"
+    },
+    {
+      "path": "modules/ultimate/3 Setup/12 Updates Pause.ps1",
+      "sha256": "4bbef16c51fbebafaecb58307f8c619a37cd10bb3dc489bd4df9a59ddbd1a0bd"
+    },
+    {
+      "path": "modules/ultimate/3 Setup/2 Memory Compression.ps1",
+      "sha256": "ccbabb01d249c1206f4762579665dce6f95f12a8d221d9a65a6310a0393c2352"
+    },
+    {
+      "path": "modules/ultimate/3 Setup/3 Convert Home To Pro.ps1",
+      "sha256": "e77d557a3c698df93aefc038c40035ad8a658e1ac21d02a874a31b3a0c9db90d"
+    },
+    {
+      "path": "modules/ultimate/3 Setup/4 Keys.ps1",
+      "sha256": "b325f2f29937e029a7a790c33846e778374877cba953ae4f7799e278c17c2986"
+    },
+    {
+      "path": "modules/ultimate/3 Setup/5 Activation.ps1",
+      "sha256": "fd663a82dd32d736aa57eee2fb3fb41556d0020c28dbd3ef327c770442fe2997"
+    },
+    {
+      "path": "modules/ultimate/3 Setup/6 Date Language Region Time.ps1",
+      "sha256": "77f4b88f2fbb43f7eaca5f3ad850268210685f41e659df02eb09279422ea0ee9"
+    },
+    {
+      "path": "modules/ultimate/3 Setup/7 Startup Apps.ps1",
+      "sha256": "15895826f14392d72f54bddeb3d21f3e482289e0a6cac057366c0e6e34d45df7"
+    },
+    {
+      "path": "modules/ultimate/3 Setup/8 Startup Apps.ps1",
+      "sha256": "eb648780e90f95a7a65cd25edf21ccdfc1bfea92705aef0ac88c97b41989abf6"
+    },
+    {
+      "path": "modules/ultimate/3 Setup/9 Background Apps.ps1",
+      "sha256": "ad9730f3b66d0438c5cc689ebc6e5a933dbb83a9d803a5d2f51b970cd7055991"
+    },
+    {
+      "path": "modules/ultimate/4 Installers/1 Installers.ps1",
+      "sha256": "882c7b7378f7d8f7c96d287c9bac14823a9d0aca0fc6cd7ff0dd32fddce63a1a"
+    },
+    {
+      "path": "modules/ultimate/4 Installers/2 MSI Afterburner.ps1",
+      "sha256": "b808e078a13c29d0653dd31934b591057c6cbc5f3fcefc663197b112966f810e"
+    },
+    {
+      "path": "modules/ultimate/5 Graphics/1 Driver Clean.ps1",
+      "sha256": "564657374be33107ae7c69e61825cf8b2b7eb6ff668d40654908524a4d3ce9b5"
+    },
+    {
+      "path": "modules/ultimate/5 Graphics/10 Msi Mode.ps1",
+      "sha256": "a307384ff7685c82f2b5a9314bf3eaea62fbc128e0eaa2bf642bd594f1cd7e78"
+    },
+    {
+      "path": "modules/ultimate/5 Graphics/11 DirectX.ps1",
+      "sha256": "1fd9caaee64ef69dbcfdf3252e5ef5a7dc21b87abda8744f836863845f2d907f"
+    },
+    {
+      "path": "modules/ultimate/5 Graphics/12 C++.ps1",
+      "sha256": "cea2711dcd124f6767ba5b547ce50fdd0d813711d86d8c6ef431cef30e937b43"
+    },
+    {
+      "path": "modules/ultimate/5 Graphics/13 Resolution Refresh Rate.ps1",
+      "sha256": "583cebd7bb060a31bea7814b2b0920a0c2a7c1303136c130945073d387ae04d6"
+    },
+    {
+      "path": "modules/ultimate/5 Graphics/14 Hags Windowed.ps1",
+      "sha256": "5d8438c6e6cbb7aa87111518f24689095382f72f76dd72e64cbbf3019b9b13ca"
+    },
+    {
+      "path": "modules/ultimate/5 Graphics/2 Driver Updated Install.ps1",
+      "sha256": "70ceee8ca21f9543406dd493f85b22ecc451154f3c63394915c6d2fb82b8310f"
+    },
+    {
+      "path": "modules/ultimate/5 Graphics/3 Driver Updated Install & Settings.ps1",
+      "sha256": "c85ddb24ba54054ec0ac5ccf1dda965e49bfbc3a8c422f56bbaf584a65f68174"
+    },
+    {
+      "path": "modules/ultimate/5 Graphics/4 Driver Debloat Install & Settings.ps1",
+      "sha256": "adf2e6121a6fa2171e7b917c59a58af575c68366342cf173f7e542c8dd1b2d24"
+    },
+    {
+      "path": "modules/ultimate/5 Graphics/5 Nvidia Settings.ps1",
+      "sha256": "e8f9e32872ca98fd7d589568a167f73967c6d01605f8ada86eefa9ef30e936af"
+    },
+    {
+      "path": "modules/ultimate/5 Graphics/6 Amd Settings.ps1",
+      "sha256": "8a350809d11a8cab8fa3e18df582325d8d50c9533ca6dcb906570b4374bbc07f"
+    },
+    {
+      "path": "modules/ultimate/5 Graphics/7 Intel Settings.ps1",
+      "sha256": "2d56fe62f80e84d15b88e27477f150f672fd4e65a9c438895d1569a30d946dab"
+    },
+    {
+      "path": "modules/ultimate/5 Graphics/8 Hdcp.ps1",
+      "sha256": "7a3ef8986f7af22627042a3f98106468ee7df025db61ce278650db3899a88585"
+    },
+    {
+      "path": "modules/ultimate/5 Graphics/9 P0 State.ps1",
+      "sha256": "dbedb0b55d2a7ba8a098b85806896243b409285d57058ca4b0a610fd97d6e3fb"
+    },
+    {
+      "path": "modules/ultimate/6 Windows/1 Start Menu Taskbar.ps1",
+      "sha256": "88beb0e8c41f7a32aae6a0a6e184e87e678fb25bedeb092c63f4ba98b8712e91"
+    },
+    {
+      "path": "modules/ultimate/6 Windows/10 Gamemode.ps1",
+      "sha256": "f83275c0b3ce135679c2f1d98a1f0bd6b101936e0b2bc17b542de288ef6a0b82"
+    },
+    {
+      "path": "modules/ultimate/6 Windows/11 Pointer Precision.ps1",
+      "sha256": "ed66bb1c068df13fc2d58617e49c2274cea9609c689fe34f9a0b138ac22f618c"
+    },
+    {
+      "path": "modules/ultimate/6 Windows/12 Scaling.ps1",
+      "sha256": "d3b0143abbdb067e175a2f61948b6f4f831dba2fc82f5b0c3530a1c7f2ce2c2a"
+    },
+    {
+      "path": "modules/ultimate/6 Windows/13 Bloatware.ps1",
+      "sha256": "da3daacad0e9bc9d459f6237128a41bfbf3e4a299aad22ee0b2ebc92f7c4a1f5"
+    },
+    {
+      "path": "modules/ultimate/6 Windows/14 Bloatware Legacy Apps Check.ps1",
+      "sha256": "d407ed860d94b04fc0837939b1a46c830a3b989f8f7330cc08ca77202623fe77"
+    },
+    {
+      "path": "modules/ultimate/6 Windows/15 Bloatware Legacy Features Check.ps1",
+      "sha256": "f7aa02fb381242802faf771e1e7b23189e330992dcc94d14658110b5a01dc562"
+    },
+    {
+      "path": "modules/ultimate/6 Windows/16 Bloatware UWP Apps Check.ps1",
+      "sha256": "d77406ed61607bc20294938d0ba7bd68b1bd69e9136dfb765dad8528638bcdc5"
+    },
+    {
+      "path": "modules/ultimate/6 Windows/17 Bloatware UWP Features Check.ps1",
+      "sha256": "b3588255882cd6c72bc85e87ce4a21a3ec589bb5f6049700fff6d1d9ebd6dfc7"
+    },
+    {
+      "path": "modules/ultimate/6 Windows/18 Bloatware TaskMgr Check.ps1",
+      "sha256": "d54861b601cb8f045b52de72c89f88b361ecd9ee3e69d76abda0beff995b050a"
+    },
+    {
+      "path": "modules/ultimate/6 Windows/19 Gamebar.ps1",
+      "sha256": "48a2fab3a09a3b3d57944e45430222493dbd8c05aa40f550ffc3eda9c6ceed25"
+    },
+    {
+      "path": "modules/ultimate/6 Windows/2 Start Menu Layout.ps1",
+      "sha256": "81c1298d7c9e112db910c4398cd94e4b70ecd97ed3b185cf2fd2b8a380e069e8"
+    },
+    {
+      "path": "modules/ultimate/6 Windows/20 Edge & WebView.ps1",
+      "sha256": "d1a63c616c866c0535ced99a55a622938858fbfb564e1698bc8446ef39e4f325"
+    },
+    {
+      "path": "modules/ultimate/6 Windows/21 Notepad Settings.ps1",
+      "sha256": "2086d75faa560c9746b1fa2edb29ae9a8364633fd6268deedbe7fb4720ea39fb"
+    },
+    {
+      "path": "modules/ultimate/6 Windows/22 Control Panel Settings.ps1",
+      "sha256": "20f11d854496c42919b31d31ef58c4e76ddecd6e2f5fce04495d8cc4c52d6fcf"
+    },
+    {
+      "path": "modules/ultimate/6 Windows/23 Sound.ps1",
+      "sha256": "08fdb346a40595c68ff01d8f0882ac82d8be27f66d83b400fd5691388b35929b"
+    },
+    {
+      "path": "modules/ultimate/6 Windows/24 Loudness EQ.ps1",
+      "sha256": "2f11a145b3e035372ab023614662524159bddfa122a3778d6fee9824782416ae"
+    },
+    {
+      "path": "modules/ultimate/6 Windows/25 Device Manager Power Savings & Wake.ps1",
+      "sha256": "fb543a5c6bd8f2fbea5cd3069fd72dcdccab847d9e4753fd33bb0909843d209f"
+    },
+    {
+      "path": "modules/ultimate/6 Windows/26 Network Adapter Power Savings & Wake.ps1",
+      "sha256": "1daac872ecb1c601fd165fd471bfa9b9137d895333fbfbc5ade5427561d4bceb"
+    },
+    {
+      "path": "modules/ultimate/6 Windows/27 Network IPv4 Only.ps1",
+      "sha256": "2da2e14160ee787ee35442159725c291ab4672392c9f4926d8d04f2b95f63299"
+    },
+    {
+      "path": "modules/ultimate/6 Windows/28 Write Cache Buffer Flushing.ps1",
+      "sha256": "67d8ca0fecbfd9fce7d2c81ce1713f1b08e83b729dc8fec7b8c2e33806f9ad5d"
+    },
+    {
+      "path": "modules/ultimate/6 Windows/29 Power Plan.ps1",
+      "sha256": "f8eb24eed97870001ad1e82151f06cc7a9c83f485dcc24882be6488a4ef1328a"
+    },
+    {
+      "path": "modules/ultimate/6 Windows/3 Start Menu Shortcuts.ps1",
+      "sha256": "434cb024b1cf37b495541f8e3aa3c6d4d24c6eabd25c6fed907604f21e48f866"
+    },
+    {
+      "path": "modules/ultimate/6 Windows/30 Timer Resolution.ps1",
+      "sha256": "883f7cf4e6179383de02e44b94ffc8dafd380246751f1b1d81cab8800b1e8621"
+    },
+    {
+      "path": "modules/ultimate/6 Windows/31 UAC.ps1",
+      "sha256": "e0ab839073334f7a162e394dd406ded3173d445f5e2d61aefe2865a95395f168"
+    },
+    {
+      "path": "modules/ultimate/6 Windows/32 Core Isolation.ps1",
+      "sha256": "5c39046bf227ec46c4b4b88eddaee01180f139dd9f02e9ff368842a1e34367e4"
+    },
+    {
+      "path": "modules/ultimate/6 Windows/33 Defender Optimize.ps1",
+      "sha256": "512f12d805715e9232304abe5ba400be6b3965d63f77d3b39e4c304507bfb9b6"
+    },
+    {
+      "path": "modules/ultimate/6 Windows/34 Autoruns Startup Tasks & Apps Check.ps1",
+      "sha256": "d1c8a9692488c6282b71ecbccb621ab6cd6f56ce8c4a2c0e4b8a0bff9f82a1fc"
+    },
+    {
+      "path": "modules/ultimate/6 Windows/35 Cleanup.ps1",
+      "sha256": "2b43eda6815c22d06d1192ddd4c4aa5fc66558732f60036a4981b0a38880d919"
+    },
+    {
+      "path": "modules/ultimate/6 Windows/36 Restore Point.ps1",
+      "sha256": "5c8a459ed1e9d6a0daa1cb29aa3bf4490a3390d28fbad15c8fd00277cb16310e"
+    },
+    {
+      "path": "modules/ultimate/6 Windows/4 Context Menu.ps1",
+      "sha256": "33da36782cf6416a2fae98829adf0913b0e54dc53de454ab0c5210a79754b6f2"
+    },
+    {
+      "path": "modules/ultimate/6 Windows/5 Theme Black.ps1",
+      "sha256": "c7faea241747065a9b752d989c5d0ea740e1525f442abddfff3320766a005b2f"
+    },
+    {
+      "path": "modules/ultimate/6 Windows/6 Signout Lockscreen Wallpaper Black.ps1",
+      "sha256": "f399a0d36541f9b91641dafa25585a4103fe32c3230328fcdd57a162a9f2ae26"
+    },
+    {
+      "path": "modules/ultimate/6 Windows/7 User Account Pictures Black.ps1",
+      "sha256": "8b978374bc9d5ae51858fc71be02d0dffae29aadfefaf8662d8654d735443710"
+    },
+    {
+      "path": "modules/ultimate/6 Windows/8 Widgets.ps1",
+      "sha256": "7a530557aa503ee038bdf910007d6a496dabfe61fa0d8818c189774e33892a73"
+    },
+    {
+      "path": "modules/ultimate/6 Windows/9 Copilot.ps1",
+      "sha256": "21b58212b241a6c0b74582063e3e74f746014e9137194b58b088cc6692f22a90"
+    },
+    {
+      "path": "modules/ultimate/7 Hardware/1 Scaling Higher No Accel.ps1",
+      "sha256": "90519da93f469513bcd02c9c25126888739d72840d3f4b0da93e5b9a39e9d891"
+    },
+    {
+      "path": "modules/ultimate/7 Hardware/2 Background Polling Rate Cap.ps1",
+      "sha256": "bc10625f598080bbfce4d4d303d63bdba0b80f888a264671cc629df133691966"
+    },
+    {
+      "path": "modules/ultimate/7 Hardware/3 Mouse Polling Rate Test.ps1",
+      "sha256": "b2a890bf664eecc7665c084d3d445a0f2db1ca4d07fcc3c8d200fcb68578e691"
+    },
+    {
+      "path": "modules/ultimate/7 Hardware/4 Controller Overclock.ps1",
+      "sha256": "cf2b2e8cb2f243c1b54e7f4def50b2b1bafa1726a9030f8085db44dc31b468cf"
+    },
+    {
+      "path": "modules/ultimate/7 Hardware/5 Controller Polling Rate Test.ps1",
+      "sha256": "2c385f162feddc946f6a5ef4c6f2b31531f8bd8bf604418d2bbf6fb64d8139f0"
+    },
+    {
+      "path": "modules/ultimate/7 Hardware/6 Monitor Optimization.ps1",
+      "sha256": "c165fb74e8cbac535fa3135d71429cb25270f11f4c9134d591e0055e084043b5"
+    },
+    {
+      "path": "modules/ultimate/7 Hardware/7 Network Bufferbloat Test.ps1",
+      "sha256": "69f66cf587610ea866fc5366e7db2350ce6374bd2a2f0704a6f0d8f16ef0ba1b"
+    },
+    {
+      "path": "modules/ultimate/7 Hardware/8 PC Build Guide.ps1",
+      "sha256": "45e0ced5628fb6d51285b37816a75a77771f0a87a08a5737dff6432587fb32ca"
+    },
+    {
+      "path": "modules/ultimate/8 Advanced/1 Defender.ps1",
+      "sha256": "8fa0b102d2f33271142516781a33abc1d0ce5801fe9f847689ee4af2c1c05527"
+    },
+    {
+      "path": "modules/ultimate/8 Advanced/10 Priority.ps1",
+      "sha256": "cfab55413957600bfef2b75cdcf6f574e45c64a3a78009070d9a99a4ff888900"
+    },
+    {
+      "path": "modules/ultimate/8 Advanced/11 Mpo.ps1",
+      "sha256": "e98b02d165fddb4cfdbed72cb539a3c93219a11aa48754345ffa593abda4d249"
+    },
+    {
+      "path": "modules/ultimate/8 Advanced/12 Hardware Legacy Flip.ps1",
+      "sha256": "1807f4da7f1f85cf30633a83aa73339c967c1218d4ad941a54d9fa1a4453a971"
+    },
+    {
+      "path": "modules/ultimate/8 Advanced/13 Hardware Composed Independent Flip.ps1",
+      "sha256": "5e120e4070ed853c84bab48320f2747c46e91acff2cf8cefb2e220fc6017bd1c"
+    },
+    {
+      "path": "modules/ultimate/8 Advanced/14 Ulps.ps1",
+      "sha256": "b799bade96c2a663f4b9094c29caadc70f5c908cd4ccd5404107b13f37f002a2"
+    },
+    {
+      "path": "modules/ultimate/8 Advanced/15 Driver Whql Secure Boot Bypass.ps1",
+      "sha256": "6f7d00d25f33d1c4e94f9486e8e4e76e5d5b9c34549e4b1defdc16e5bbc1f483"
+    },
+    {
+      "path": "modules/ultimate/8 Advanced/16 Keyboard Shortcuts.ps1",
+      "sha256": "afd372e7b9e1e613177a84175bc38d30dc75132d9ccea9e703f3d7369660c536"
+    },
+    {
+      "path": "modules/ultimate/8 Advanced/17 Services.ps1",
+      "sha256": "386eef403f48907e82c2e8e4be5dfe509b0ed93cadbb5639b42d6326163edb8f"
+    },
+    {
+      "path": "modules/ultimate/8 Advanced/18 Start Search Shell Mobsync.ps1",
+      "sha256": "5c23527e5d966905a4e03cc00d91f57468239e9609832b5cd1198b1e7035eb27"
+    },
+    {
+      "path": "modules/ultimate/8 Advanced/19 NVME Faster Driver.ps1",
+      "sha256": "bac4930d43949d545036803fd5b6fae17885bc67081aad29343e4d98572029d1"
+    },
+    {
+      "path": "modules/ultimate/8 Advanced/2 Firewall.ps1",
+      "sha256": "36535573b71a78e9e2246367ccade8ac552c9730087dced41106a49679d0b0ae"
+    },
+    {
+      "path": "modules/ultimate/8 Advanced/3 Spectre Meltdown.ps1",
+      "sha256": "3989b93bc4b3367b1ed0cf831c93da6c2e87c556d945854fee4eca5d4c66ab50"
+    },
+    {
+      "path": "modules/ultimate/8 Advanced/4 Data Execution Prevention.ps1",
+      "sha256": "e8514675ee8c5608e4674177011e99d2ef46022aa5f488a142f33528ec5eef88"
+    },
+    {
+      "path": "modules/ultimate/8 Advanced/5 File Download Security Warning.ps1",
+      "sha256": "2b7073a2deb037a58f4e8550e7dfd1342e6b5f25809d5154d61c1c6b367dc3da"
+    },
+    {
+      "path": "modules/ultimate/8 Advanced/6 MMAgent Features.ps1",
+      "sha256": "c7e6e7879b7b32e548607a5d30124cc327622e09e7bef817d36e8bc095b64a79"
+    },
+    {
+      "path": "modules/ultimate/8 Advanced/7 ReBar Force.ps1",
+      "sha256": "8777f95d38972e39d7daabdbc9ca1f504a154d61cbedb11b5d1f17ae4e67a773"
+    },
+    {
+      "path": "modules/ultimate/8 Advanced/8 Smt Ht.ps1",
+      "sha256": "5d53bf2a9a589ecb14d9f8f9048ff4830d2e6f4dee7e4b54ba6b6b6f77f004fe"
+    },
+    {
+      "path": "modules/ultimate/8 Advanced/9 Core 1 Thread 1.ps1",
+      "sha256": "7a0bc921d8920b0e3b9f178b137fb38c3ad296da19533a8b9e9b317110df8968"
+    },
+    {
+      "path": "modules/ultimate/LICENSE",
+      "sha256": "843cc333cc0773bebab9f5e4e5de9dc83aace81bb98e29312a0cf0c15a5b9956"
+    },
+    {
+      "path": "modules/winsux/LICENSE",
+      "sha256": "ad282690b72134c0a965e0c5e5d9c96c5a24fbda808e01df0d3a8fc8a84eb2ee"
+    },
+    {
+      "path": "modules/winsux/reg.reg",
+      "sha256": "6099bb9eac5dabd6189d83f13e1c03912268517107a145f20a45e2d5ad1ba6a4"
+    },
+    {
+      "path": "modules/winsux/settimerresolutionservice.cs",
+      "sha256": "ed63af040501a350e1dc58191a7a833c5945d533672d30ab01ed859bd1bb4143"
+    },
+    {
+      "path": "modules/winsux/start2.txt",
+      "sha256": "979f5d6c3af88efae2e8d4c5b5a78a0bb7ba1b4965006be9e2adea0f374a95aa"
+    },
+    {
+      "path": "modules/winsux/stepone.ps1",
+      "sha256": "d3d33639e292eacca9159202364312729fe86cff854c9a8ad2677fcf2a6b8950"
+    },
+    {
+      "path": "modules/winsux/steptwo.ps1",
+      "sha256": "f395fbb0132e3ca0e3b2aa923dce2b6a1051c991cf956e8215b93b91b4f38e6f"
+    },
+    {
+      "path": "modules/winsux/winsux.ps1",
+      "sha256": "67bee63d1cfc39eb8852e8bb03f4a7823f9d19d00d468123039afa747c497771"
+    },
+    {
+      "path": "pester/activity-history.Tests.ps1",
+      "sha256": "19dbbfb4110cabce212319bb01cc033e27a4dee615ddc8c7ae5bc144fcf9b024"
+    },
+    {
+      "path": "pester/appx.Tests.ps1",
+      "sha256": "b80d0c2123c6494a079ef5f0000bdec126bb996ee8077c6a6b11734e8bc832d8"
+    },
+    {
+      "path": "pester/assets.Tests.ps1",
+      "sha256": "87aa0327646f5499ddda8a8c545c905e4a25971c79fe1e09538d3b9745e21e3e"
+    },
+    {
+      "path": "pester/background-deferral.Tests.ps1",
+      "sha256": "7069b4f006fb3f384947a2e1a25f10871ded27ef7544c6561a535e5b84a4e62a"
+    },
+    {
+      "path": "pester/button-routing.Tests.ps1",
+      "sha256": "c936918a4662df542179c0250e25dbe09158f93cf637b4f3e716a3d82e379974"
+    },
+    {
+      "path": "pester/configs.Tests.ps1",
+      "sha256": "b03d4e69772abbd1c0b73265022bfda70ab8544e4f03e6f8414546dfcfb0ee72"
+    },
+    {
+      "path": "pester/dns-benchmark.Tests.ps1",
+      "sha256": "a245ad8a2e7035c3c2e1869878ee4d0cc6308c56e28db551089ea6e77ef7f503"
+    },
+    {
+      "path": "pester/dns.Tests.ps1",
+      "sha256": "f259afe61eb62804d18b6a3934d3febb19712b224e92c870aaff4c5302a2a1b2"
+    },
+    {
+      "path": "pester/edge-removal.Tests.ps1",
+      "sha256": "e7ece3ebaf45f0a836ab73dcfc35355649ec24bd91ffe0157f66009909815d63"
+    },
+    {
+      "path": "pester/environment-report-logs.Tests.ps1",
+      "sha256": "9fee63be08d288663bc214171302876e9c8d2506f98e49a52eae498a2f56adb8"
+    },
+    {
+      "path": "pester/environment-report.Tests.ps1",
+      "sha256": "8e1479dd321061664fe3078a2ac5f3fe19c3c66b2a123c88cfe8950071e32b94"
+    },
+    {
+      "path": "pester/favicon-loading.Tests.ps1",
+      "sha256": "1f1c77217c3965ca2c20247c26f87d420af6ae2115ed5792051fab5dc61c74ae"
+    },
+    {
+      "path": "pester/feature-install.Tests.ps1",
+      "sha256": "6202021bd409e841f7881ed4e5686c655942298dcc901dcde3221f86c917fef8"
+    },
+    {
+      "path": "pester/first-logon.Tests.ps1",
+      "sha256": "c33ab1ff2305cf1375e8bc827b8bfd9fb61bd9bbd1cd0a0ae8cb4b577df53b26"
+    },
+    {
+      "path": "pester/fixtures/legacy-config.json",
+      "sha256": "d5c829648329551d140324767c1eb9e0d197b543669d075416db88314980074f"
+    },
+    {
+      "path": "pester/functions.Tests.ps1",
+      "sha256": "c3356416dd433d0b0af36280f1f7c9fd753591608ef11e8e5c97824bb21bfa94"
+    },
+    {
+      "path": "pester/generated-controls.Tests.ps1",
+      "sha256": "82410a349171b69992b37614e6e27367787c088c300f57bbb2f6d0ee21017b7a"
+    },
+    {
+      "path": "pester/goat.Tests.ps1",
+      "sha256": "f80b89b23228214677a1c5c93686bc6235d978b30eb0d10ecb347c4c1a29111e"
+    },
+    {
+      "path": "pester/headless-ui.Tests.ps1",
+      "sha256": "15fab05fe087af45c1636655e3e7975a0f75b30dbb261456d6744b66791cb9a5"
+    },
+    {
+      "path": "pester/headless.Tests.ps1",
+      "sha256": "7b7c47eeaa20344972d72dd41420fbb36671d9a3cafc0f1122533cfb4f2757aa"
+    },
+    {
+      "path": "pester/impex-command.Tests.ps1",
+      "sha256": "2269456fbec64d4e6277b9d8ba6bd29849badf7cfca1f811b833a9081d8a2c57"
+    },
+    {
+      "path": "pester/impex-paths.Tests.ps1",
+      "sha256": "76d5ed8f3015ed43b3bedf472f4b7958d4140d98f6c2670ed99b67ada68c6f37"
+    },
+    {
+      "path": "pester/install-rendering.Tests.ps1",
+      "sha256": "df2f295e0fafc5535e373de9b7bab2ff4535a9ce0cc3a672e365a395c50630ad"
+    },
+    {
+      "path": "pester/install-workflow.Tests.ps1",
+      "sha256": "ad4205bc70b51a1e6c22303c636be80a7c638e79c9c7d3cfd845e92cea57b986"
+    },
+    {
+      "path": "pester/job-layer.Tests.ps1",
+      "sha256": "f64b6b9deb30ea1dda38efab818e5b473c691b3a90a6f81f1e31d0a63f83ef17"
+    },
+    {
+      "path": "pester/job-routing.Tests.ps1",
+      "sha256": "0054cb03fead23df8a4a9fe04cb0a2b3a5776362dadbb1e1c27c3eb7328dd10f"
+    },
+    {
+      "path": "pester/lazy-tabs.Tests.ps1",
+      "sha256": "f544575d53b22fd416037a59b1c2bbc0d861fa78b1400f0de03802d58896aebb"
+    },
+    {
+      "path": "pester/logging.Tests.ps1",
+      "sha256": "36977fedac20bda4ba605d84ad44b1491eb30b4a0a1cee914104217aeca54121"
+    },
+    {
+      "path": "pester/multiplane-overlay.Tests.ps1",
+      "sha256": "cc547e75053725980883dedac2a5df091cab8737c84f2f90797a62f67fc9d6d2"
+    },
+    {
+      "path": "pester/onedrive-removal.Tests.ps1",
+      "sha256": "cdfd8fea77cf7f89458ea79761dc8f3fd2d43e2db57f0250c802f583937fa3e1"
+    },
+    {
+      "path": "pester/onedrive-service.Tests.ps1",
+      "sha256": "bc83b9557ce0ab03818413d206724eb35e107951270c70e18da02da13e4cd554"
+    },
+    {
+      "path": "pester/oosu.Tests.ps1",
+      "sha256": "56abde6c34abb27dcb2b4c6678e6aea6f3db9307d2083f7d5d1b8e863ff2f87b"
+    },
+    {
+      "path": "pester/package-outcome.Tests.ps1",
+      "sha256": "42eda56b1a4aa7bfbe2f78cb045e2bcd13b85edad3a5ee4415aa4ef288bb9c19"
+    },
+    {
+      "path": "pester/package.Tests.ps1",
+      "sha256": "a4b9cb5460d7743bf10ab820245bd7d5297a7834e1656db543f0f39d8a49cddc"
+    },
+    {
+      "path": "pester/powershell-msi-upgrade.Tests.ps1",
+      "sha256": "b951056d1224d2132f4fc6ce55f98fdd724ac3f7b37b3b62906fbe5182682014"
+    },
+    {
+      "path": "pester/preferences-theme.Tests.ps1",
+      "sha256": "38bc60926149b640d9ca81ea0b9e5af9e283f1444cc99cdec46b83261600282b"
+    },
+    {
+      "path": "pester/progress-state.Tests.ps1",
+      "sha256": "5b528c960f9b43d69e277bcdf8713dacd0303df7b2382bcf42fd86918ba5875c"
+    },
+    {
+      "path": "pester/runspace-lifecycle.Tests.ps1",
+      "sha256": "95aa2424a5b29b03ccf17776c9afd0c60a373beda54395c72a7ad0633a2e5149"
+    },
+    {
+      "path": "pester/runspace.Tests.ps1",
+      "sha256": "b23186778043f948039c5196013a7bcafadf6df207cc04f995ecc10ff8c71055"
+    },
+    {
+      "path": "pester/sanity.Tests.ps1",
+      "sha256": "85acd74b5f6be52fb809078d77b151ee7588ad11837f74c1a2463832e3582c05"
+    },
+    {
+      "path": "pester/search-filter.Tests.ps1",
+      "sha256": "d92fc0fde103d97cbe87dd303579190433af380b3ecc54e3d20ae75d2d6d4f1e"
+    },
+    {
+      "path": "pester/shutdown.Tests.ps1",
+      "sha256": "ee5ad7ce664842e5ee0b00dc1a5fdce847e16464b7f4718c1692030d97046d4d"
+    },
+    {
+      "path": "pester/slider.Tests.ps1",
+      "sha256": "967f4e2db5d18973d2b55fb98ea3be86707ed05c2656e0f7dd14a98dffd932dd"
+    },
+    {
+      "path": "pester/ssh-server.Tests.ps1",
+      "sha256": "66de5e164894205b98f6ff4551755f78b395c3e50e6b0096029519cfc8e2ad95"
+    },
+    {
+      "path": "pester/system-helpers.Tests.ps1",
+      "sha256": "5f4f39d8d122915881b40c15b3bcc46b32afce10d6217d721fd2719cf8ce4fed"
+    },
+    {
+      "path": "pester/system-repair.Tests.ps1",
+      "sha256": "6bceab16485e347d186fe514fb8acb6004617df0299d01d37173f83c95bd607d"
+    },
+    {
+      "path": "pester/toggle-status.Tests.ps1",
+      "sha256": "6f4caa75864964d92b056d63745291d6d3ea4259ce02405a02960b45e4e90e9e"
+    },
+    {
+      "path": "pester/tooltip-key.Tests.ps1",
+      "sha256": "27ee96e59436aa47c68420d8bdb4dfe800e0c603ce8fe93d88afaead40ce1ecf"
+    },
+    {
+      "path": "pester/tweaks.Tests.ps1",
+      "sha256": "e105ee180be96fb0f3a3591c7321376f4b78200c13ce76644c48064358322a31"
+    },
+    {
+      "path": "pester/ui-state.Tests.ps1",
+      "sha256": "e5cc3c8fa9591ef8beaf9f9b1641e92c17f32a96541ce60c962c2d4f226cefeb"
+    },
+    {
+      "path": "pester/update-profiles.Tests.ps1",
+      "sha256": "0fd2eb1456f6ae165246b798a3f148ba621448b3d45ea1c7a60c800aa5d9758b"
+    },
+    {
+      "path": "pester/variables.Tests.ps1",
+      "sha256": "02fca0cc317105f66f87eb8fd8b498dcbe41081e02c74fce80a2e399a18ec499"
+    },
+    {
+      "path": "pester/win11creator.Tests.ps1",
+      "sha256": "b9b9fc05e07bfa092adbe34e89d03e10d5177641876a3d5509253ce0fd113359"
+    },
+    {
+      "path": "pester/windows-ai.Tests.ps1",
+      "sha256": "aba0fcd52c9bd749509160d7f01a32a2f44bfbf0d3ab9aaed80a044b1fcff5e9"
+    },
+    {
+      "path": "pester/xaml.Tests.ps1",
+      "sha256": "dabf6e4839b3052f4b099067979557ea1d5fe90f7d6bf6ac49788075b6665146"
+    },
+    {
+      "path": "scripts/main.ps1",
+      "sha256": "9520e3e0864d29234ab01db8261e8bf4fd140ac092606ad0ea0ec2445b398ab9"
+    },
+    {
+      "path": "scripts/start.ps1",
+      "sha256": "d8cec9d1c5c83c93b6c6de94eeae285b7b08a9691c8ae4d538139bd75690e5d6"
+    },
+    {
+      "path": "tools/autounattend.xml",
+      "sha256": "c375b75903956ee9b68eb3571f916ee8245553cf23d72b397c5ff6d1ebd7138b"
+    },
+    {
+      "path": "windev.ps1",
+      "sha256": "7105509760c1df06874c6bd228607549e7b89c6f1d8ed1b5987f061eb2beda40"
+    },
+    {
+      "path": "xaml/inputXML.xaml",
+      "sha256": "723a885d83386bcd1e897c71a5055eb72786d4a0400705d86272dfeae44c20a5"
+    }
+  ]
+}

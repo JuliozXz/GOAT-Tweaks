@@ -1,0 +1,31 @@
+name: Capturar HUD VitorSaviolli em VM Windows
+
+on:
+  push:
+    branches: [review/vitor-hud-20261022]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  hud:
+    runs-on: windows-2022
+    timeout-minutes: 15
+    defaults:
+      run:
+        shell: powershell
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Compilar fonte fixada e capturar somente a interface
+        run: ./tools/Review-VitorHud.ps1
+      - name: Guardar fotos e resultado
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: hud-vitor-windows
+          path: artifacts/vitor-hud/
+          retention-days: 30
+          if-no-files-found: warn
