@@ -14,4 +14,7 @@
     <ProjectReference Include="../GoatTweaks.Core/GoatTweaks.Core.csproj" />
     <ProjectReference Include="../GoatTweaks.Runner/GoatTweaks.Runner.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="../../catalog/workflow.pt-BR.json" LogicalName="GoatTweaks.workflow.pt-BR.json" />
+  </ItemGroup>
 </Project>

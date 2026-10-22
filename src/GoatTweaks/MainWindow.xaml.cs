@@ -14,6 +14,7 @@ using GoatTweaks.Core.Assets;
 using GoatTweaks.Core.Catalog;
 using GoatTweaks.Core.Conflicts;
 using GoatTweaks.Core.Execution;
+using GoatTweaks.Workflow;
 
 namespace GoatTweaks;
 
@@ -26,7 +27,7 @@ public partial class MainWindow : Window
     private readonly Dictionary<string, ListBoxItem> _sectionItems = new(StringComparer.Ordinal);
     private readonly DispatcherTimer _searchDebounce = new() { Interval = TimeSpan.FromMilliseconds(220) };
     private readonly DispatcherTimer _tailTimer = new(DispatcherPriority.Background) { Interval = TimeSpan.FromMilliseconds(800) };
-    private string _activeSection = CatalogSections.All[0];
+    private string _activeSection = "Home";
     private bool _isApplying;
     private bool _closed;
     private string? _logPath;
@@ -46,6 +47,8 @@ public partial class MainWindow : Window
 
     public MainWindow()
     {
+        _workflow = ServiceCatalog.Load(_catalog);
+        DataContext = Dashboard;
         InitializeComponent();
         var availableWidth = Math.Max(600, SystemParameters.WorkArea.Width - 24);
         var availableHeight = Math.Max(480, SystemParameters.WorkArea.Height - 24);
@@ -56,29 +59,7 @@ public partial class MainWindow : Window
         _searchDebounce.Tick += (_, _) => { _searchDebounce.Stop(); RenderCards(); };
         _tailTimer.Tick += async (_, _) => await RefreshLogsAsync();
         _queue.CollectionChanged += (_, _) => UpdateQueueState();
-        Loaded += async (_, _) => await RefreshLogsAsync();
-        Closed += (_, _) => { _closed = true; _searchDebounce.Stop(); _tailTimer.Stop(); };
-        foreach (var section in CatalogSections.All)
-        {
-            var label = section switch
-            {
-                "Optimize" => "Otimizar",
-                "Privacy" => "Privacidade",
-                "Features" => "Recursos",
-                "Debloat (AppX)" => "Remover apps",
-                "Install Apps" => "Instalar apps",
-                "Network/DNS" => "Rede e DNS",
-                "Repair" => "Reparar",
-                "Security" => "Segurança",
-                "Power" => "Energia",
-                "Advanced" => "Avançado",
-                _ => section
-            };
-            var item = new ListBoxItem { Content = label, Padding = new Thickness(10, 9, 6, 9) };
-            SectionsList.Items.Add(item);
-            _sectionItems[section] = item;
-        }
-        SectionsList.Items.Add(new ListBoxItem { Content = "Registros", Padding = new Thickness(10, 9, 6, 9) });
+        InitializeDashboard();
         QueueList.ItemsSource = _queue;
         LogsList.ItemsSource = _logRows;
         LogsDetailList.ItemsSource = _logRows;
@@ -87,66 +68,10 @@ public partial class MainWindow : Window
         UpdateQueueState();
     }
 
-    private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
-    {
-        if (SidebarColumn is null || QueueColumn is null || RecentActivityRow is null) return;
-        var compact = ActualWidth < 1120;
-        SidebarColumn.Width = new GridLength(compact ? 158 : 190);
-        QueueColumn.Width = new GridLength(compact ? 290 : 330);
-        var showRecent = ActualHeight >= 640;
-        RecentActivityRow.Height = new GridLength(showRecent ? ActualHeight < 760 ? 80 : 125 : 0);
-        RecentActivityHeading.Visibility = LogsList.Visibility = showRecent ? Visibility.Visible : Visibility.Collapsed;
-    }
-
-    private async void SectionsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        if (SectionsList.SelectedItem is not ListBoxItem selected) return;
-        SectionTitle.Text = selected.Content?.ToString() ?? "GOAT Tweaks";
-        _activeSection = _sectionItems.FirstOrDefault(pair => ReferenceEquals(pair.Value, selected)).Key ?? "Logs";
-        RenderCards();
-        if (_activeSection == "Logs") await RefreshLogsAsync();
-    }
-
     private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
     {
         _searchDebounce.Stop();
         _searchDebounce.Start();
-    }
-
-    private void RenderCards()
-    {
-        if (CardsList is null || SearchBox is null) return;
-        var showingLogs = _activeSection == "Logs" && SearchBox.Text.Trim().Length == 0;
-        CardsList.Visibility = showingLogs ? Visibility.Collapsed : Visibility.Visible;
-        LogsDetailList.Visibility = showingLogs ? Visibility.Visible : Visibility.Collapsed;
-        if (showingLogs)
-        {
-            ResultsLabel.Text = "Atividade deste computador · detalhes completos na pasta de registros";
-            return;
-        }
-        var query = SearchBox.Text.Trim();
-        var advanced = AdvancedModeCheck?.IsChecked == true;
-        var items = _catalog.Items.Where(item =>
-            (query.Length > 0 || item.Section.Equals(_activeSection, StringComparison.Ordinal)) &&
-            (query.Length == 0 || item.Title.Contains(query, StringComparison.OrdinalIgnoreCase) ||
-             item.Description.Contains(query, StringComparison.OrdinalIgnoreCase) ||
-             item.Id.Contains(query, StringComparison.OrdinalIgnoreCase)))
-            .Select(item => new ActionCard(item, advanced)).ToList();
-        CardsList.ItemsSource = items;
-        var blocked = items.Count(item => item.IsRestricted);
-        ResultsLabel.Text = $"{items.Count} ações · {blocked} exigem o modo avançado";
-    }
-
-    public sealed record ActionCard(CatalogItem Item, bool AdvancedEnabled)
-    {
-        public string Title => Item.Title;
-        public string Source => Item.Source;
-        public string Description => string.IsNullOrWhiteSpace(Item.Description) ? Item.Category : Item.Description;
-        public string Metadata => $"{RiskLabel(Item.Risk)} · {(Item.RequiresAdmin ? "Administrador" : "Sem elevação")}";
-        public bool CanRevert => MainWindow.CanRevert(Item);
-        public bool IsRestricted => ActionSafetyPolicy.RequiresAdvancedMode(Item) && !AdvancedEnabled;
-        public bool CanExecute => !IsRestricted;
-        public string Restriction => "Disponível no modo avançado. " + ActionSafetyPolicy.RestrictionReason(Item);
     }
 
     private void UpdateQueueState()
@@ -154,6 +79,8 @@ public partial class MainWindow : Window
         if (QueueCountLabel is null) return;
         var pending = _queue.Count(action => action.State == "pending");
         QueueCountLabel.Text = _queue.Count.ToString("00");
+        Dashboard.QueueButton = $"Revisar fila · {_queue.Count:00}";
+        Dashboard.QueueSummary = pending > 0 ? $"{pending} ação(ões) aguardando execução" : _queue.Count > 0 ? "Confira os resultados da execução" : "Sua fila está vazia";
         ApplyButton.IsEnabled = pending > 0 && !_isApplying;
         ClearQueueButton.IsEnabled = _queue.Count > 0 && !_isApplying;
         if (!_isApplying)
@@ -224,7 +151,8 @@ public partial class MainWindow : Window
         var readOnly = !CanEditQueue || ActionSafetyPolicy.RequiresAdvancedMode(item) && AdvancedModeCheck.IsChecked != true;
         var fields = new List<(string Prompt, TextBox Input)>();
         var body = new StackPanel { Margin = new Thickness(18) };
-        body.Children.Add(new TextBlock { Text = item.Title, FontSize = 20, FontWeight = FontWeights.SemiBold, TextWrapping = TextWrapping.Wrap });
+        body.Children.Add(new TextBlock { Text = _workflow.Actions[item.Id].Title, FontSize = 20, FontWeight = FontWeights.SemiBold, TextWrapping = TextWrapping.Wrap });
+        body.Children.Add(new TextBlock { Text = "Nome original: " + item.Title, FontSize = 11, Foreground = (Brush)FindResource("MutedBrush"), TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 6, 0, 0) });
         body.Children.Add(new TextBlock { Text = item.Description, Margin = new Thickness(0, 8, 0, 12), TextWrapping = TextWrapping.Wrap });
         body.Children.Add(new TextBlock
         {
@@ -573,7 +501,11 @@ public partial class MainWindow : Window
         foreach (var previous in _queue.Where(action => action.Item.Id == item.Id ||
                      action.State == "pending" && replaced.Contains(action.Item.Id)).ToList())
             _queue.Remove(previous);
-        _queue.Add(new QueuedAction(item, request));
+        _queue.Add(new QueuedAction(item, request)
+        {
+            DisplayTitle = _workflow.Actions[item.Id].Title,
+            Area = _workflow.Find(_workflow.Actions[item.Id].Service)!.Label + " / " + _workflow.Actions[item.Id].Topic
+        });
         ShowStatus(replaced.Count > 0
             ? $"Adicionada: {item.Title}. A escolha conflitante anterior foi substituída."
             : $"Adicionada à fila: {item.Title}.");
@@ -592,6 +524,7 @@ public partial class MainWindow : Window
         {
             QueueHintLabel.Text = $"{done} de {_runActions.Count} ações finalizadas";
             RunSummaryLabel.Text = $"{_runActions.Count - done} restantes";
+            Dashboard.QueueSummary = $"Em execução · {done} de {_runActions.Count} finalizadas";
         }
     }
 
@@ -695,7 +628,7 @@ public partial class MainWindow : Window
                     if (row.Event == "started" && action.State == "pending")
                     {
                         action.SetState("running", "Em execução");
-                        CurrentActionLabel.Text = action.Item.Title;
+                        CurrentActionLabel.Text = action.DisplayTitle;
                     }
                     else if (row.Event != "detail" && row.Event != "started" && row.ExitCode is { } code)
                         SetActionResult(action, code);
@@ -703,7 +636,7 @@ public partial class MainWindow : Window
             }
             foreach (var row in rows.TakeLast(80))
             {
-                var title = row.Id is not null && _catalog.ById.TryGetValue(row.Id, out var item) ? item.Title : row.Id ?? "GOAT Tweaks";
+                var title = row.Id is not null && _workflow.Actions.TryGetValue(row.Id, out var placement) ? placement.Title : row.Id ?? "GOAT Tweaks";
                 var detail = string.IsNullOrWhiteSpace(row.Stderr) ? row.Stdout ?? "" : row.Stderr;
                 var state = row.Event == "started" ? "Em execução" : row.Event == "detail" || row.ExitCode is null
                     ? "Informação" : row.ExitCode == 0 ? "Concluída" : row.ExitCode == 1223 ? "Cancelada" : $"Falhou · código {row.ExitCode}";
@@ -724,6 +657,8 @@ public partial class MainWindow : Window
     public sealed class QueuedAction(CatalogItem item, ActionRequest request) : INotifyPropertyChanged
     {
         public CatalogItem Item { get; } = item;
+        public string DisplayTitle { get; init; } = item.Title;
+        public string Area { get; init; } = "";
         public ActionRequest Request { get; } = request;
         public string State { get; private set; } = "pending";
         public string Status { get; private set; } = "Na fila";

@@ -1,0 +1,3808 @@
+{
+  "services": [
+    {
+      "id": "clean",
+      "number": "01",
+      "label": "Limpeza",
+      "title": "Limpeza e remoção de aplicativos",
+      "description": "Arquivos temporários, espaço em disco e remoção de programas. Ferramentas de desinstalação ficam juntas, com a indicação de que precisam ser instaladas.",
+      "glyph": ""
+    },
+    {
+      "id": "cpu",
+      "number": "02",
+      "label": "CPU e memória",
+      "title": "Processador e memória RAM",
+      "description": "Diagnóstico de CPU e RAM, compressão de memória, cache e agendamento. Consulte o fabricante para drivers específicos do processador e do chipset.",
+      "glyph": ""
+    },
+    {
+      "id": "gpu",
+      "number": "03",
+      "label": "Placa de vídeo",
+      "title": "Placa de vídeo e drivers gráficos",
+      "description": "Limpeza e instalação de drivers de vídeo, ferramentas de diagnóstico e ajustes de renderização, separados por assunto.",
+      "glyph": ""
+    },
+    {
+      "id": "devices",
+      "number": "04",
+      "label": "Drivers e periféricos",
+      "title": "Drivers, armazenamento e periféricos",
+      "description": "Drivers do sistema, armazenamento, USB, mouse, teclado, controles, áudio e monitor. As ferramentas são as disponibilizadas pelas origens.",
+      "glyph": ""
+    },
+    {
+      "id": "network",
+      "number": "05",
+      "label": "Rede e internet",
+      "title": "Rede, internet e DNS",
+      "description": "Adaptadores e drivers de rede, provedores DNS, protocolos, conectividade e reparos da conexão.",
+      "glyph": ""
+    },
+    {
+      "id": "windows",
+      "number": "06",
+      "label": "Windows e interface",
+      "title": "Windows, interface e inicialização",
+      "description": "Menu Iniciar, barra de tarefas, aparência, recursos opcionais e aplicativos em segundo plano.",
+      "glyph": ""
+    },
+    {
+      "id": "privacy",
+      "number": "07",
+      "label": "Privacidade e segurança",
+      "title": "Privacidade e segurança",
+      "description": "Telemetria, permissões, proteção do Windows e criptografia. Os controles sensíveis continuam identificados pelo risco e pelo modo avançado.",
+      "glyph": ""
+    },
+    {
+      "id": "power",
+      "number": "08",
+      "label": "Energia e suspensão",
+      "title": "Energia, bateria e suspensão",
+      "description": "Planos de energia, hibernação e comportamento de suspensão. Observe as indicações originais para notebooks.",
+      "glyph": ""
+    },
+    {
+      "id": "apps",
+      "number": "09",
+      "label": "Instalar programas",
+      "title": "Instalação de programas",
+      "description": "Programas separados por finalidade: trabalho, documentos, comunicação, multimídia, jogos e desenvolvimento. Cada instalação é adicionada individualmente à fila.",
+      "glyph": ""
+    },
+    {
+      "id": "repair",
+      "number": "10",
+      "label": "Preparação e reparos",
+      "title": "Preparação, reparos e recuperação",
+      "description": "Pontos de restauração, manutenção do Windows, verificação de integridade e ferramentas de recuperação. Um ponto de restauração não substitui um backup dos arquivos do cliente.",
+      "glyph": ""
+    },
+    {
+      "id": "advanced",
+      "number": "11",
+      "label": "Avançado e BIOS",
+      "title": "Avançado, BIOS e serviços",
+      "description": "Inicialização, BIOS, serviços e rotinas que abrangem várias áreas. O fluxo completo do WinSux permanece isolado, sem mistura com a fila de outros serviços.",
+      "glyph": ""
+    }
+  ],
+  "actions": [
+    {
+      "id": "ultimate:1 Check/1 Bios Check.ps1",
+      "service": "advanced",
+      "topic": "BIOS e inicialização",
+      "title": "Verificar BIOS e UEFI"
+    },
+    {
+      "id": "ultimate:1 Check/2 Storage Check.ps1",
+      "service": "devices",
+      "topic": "Armazenamento e NVMe",
+      "title": "Verificar armazenamento"
+    },
+    {
+      "id": "ultimate:1 Check/3 Ram Check.ps1",
+      "service": "cpu",
+      "topic": "Diagnóstico de CPU e RAM",
+      "title": "Verificar memória RAM"
+    },
+    {
+      "id": "ultimate:1 Check/4 Gpu Check.ps1",
+      "service": "gpu",
+      "topic": "Diagnóstico e ferramentas",
+      "title": "Identificar placa de vídeo"
+    },
+    {
+      "id": "ultimate:1 Check/5 Storage Ram Cpu Test & Bench.ps1",
+      "service": "cpu",
+      "topic": "Diagnóstico de CPU e RAM",
+      "title": "Ferramentas de diagnóstico de disco, RAM e CPU"
+    },
+    {
+      "id": "ultimate:1 Check/6 Gpu Test & Bench.ps1",
+      "service": "gpu",
+      "topic": "Diagnóstico e ferramentas",
+      "title": "Ferramentas de diagnóstico e benchmark de vídeo"
+    },
+    {
+      "id": "ultimate:2 Refresh/1 Factory Reset.ps1",
+      "service": "repair",
+      "topic": "Recuperação e reinstalação",
+      "title": "Restauração de fábrica do Windows"
+    },
+    {
+      "id": "ultimate:2 Refresh/2 Account Local.ps1",
+      "service": "repair",
+      "topic": "Conta, data e região",
+      "title": "Configurar conta local"
+    },
+    {
+      "id": "ultimate:2 Refresh/3 Reinstall.ps1",
+      "service": "repair",
+      "topic": "Recuperação e reinstalação",
+      "title": "Reinstalação do Windows"
+    },
+    {
+      "id": "ultimate:2 Refresh/4 Autounattend.ps1",
+      "service": "repair",
+      "topic": "Recuperação e reinstalação",
+      "title": "Instalação automatizada do Windows"
+    },
+    {
+      "id": "ultimate:2 Refresh/5 Updates Drivers Block.ps1",
+      "service": "devices",
+      "topic": "Drivers do sistema",
+      "title": "Bloquear drivers pelo Windows Update"
+    },
+    {
+      "id": "ultimate:2 Refresh/6 Network Driver.ps1",
+      "service": "network",
+      "topic": "Drivers e adaptadores",
+      "title": "Driver do adaptador de rede"
+    },
+    {
+      "id": "ultimate:2 Refresh/7 To Bios.ps1",
+      "service": "advanced",
+      "topic": "BIOS e inicialização",
+      "title": "Reiniciar para o BIOS / UEFI"
+    },
+    {
+      "id": "ultimate:3 Setup/1 BitLocker.ps1",
+      "service": "privacy",
+      "topic": "Criptografia e acesso",
+      "title": "Configurar BitLocker"
+    },
+    {
+      "id": "ultimate:3 Setup/2 Memory Compression.ps1",
+      "service": "cpu",
+      "topic": "Memória, cache e compressão",
+      "title": "Configurar compressão de memória"
+    },
+    {
+      "id": "ultimate:3 Setup/3 Convert Home To Pro.ps1",
+      "service": "advanced",
+      "topic": "PowerShell e edição do Windows",
+      "title": "Alterar edição Home para Pro"
+    },
+    {
+      "id": "ultimate:3 Setup/4 Keys.ps1",
+      "service": "advanced",
+      "topic": "PowerShell e edição do Windows",
+      "title": "Consultar e configurar chaves do Windows"
+    },
+    {
+      "id": "ultimate:3 Setup/5 Activation.ps1",
+      "service": "advanced",
+      "topic": "PowerShell e edição do Windows",
+      "title": "Opções de ativação do Windows"
+    },
+    {
+      "id": "ultimate:3 Setup/6 Date Language Region Time.ps1",
+      "service": "repair",
+      "topic": "Conta, data e região",
+      "title": "Data, idioma, região e horário"
+    },
+    {
+      "id": "ultimate:3 Setup/7 Startup Apps.ps1",
+      "service": "windows",
+      "topic": "Inicialização e segundo plano",
+      "title": "Gerenciar aplicativos de inicialização"
+    },
+    {
+      "id": "ultimate:3 Setup/8 Startup Apps.ps1",
+      "service": "windows",
+      "topic": "Inicialização e segundo plano",
+      "title": "Gerenciar aplicativos de inicialização"
+    },
+    {
+      "id": "ultimate:3 Setup/9 Background Apps.ps1",
+      "service": "windows",
+      "topic": "Inicialização e segundo plano",
+      "title": "Gerenciar aplicativos em segundo plano"
+    },
+    {
+      "id": "ultimate:3 Setup/10 Edge Settings.ps1",
+      "service": "windows",
+      "topic": "Navegadores e aplicativos do sistema",
+      "title": "Configurações do Microsoft Edge"
+    },
+    {
+      "id": "ultimate:3 Setup/11 Store Settings.ps1",
+      "service": "windows",
+      "topic": "Navegadores e aplicativos do sistema",
+      "title": "Configurações da Microsoft Store"
+    },
+    {
+      "id": "ultimate:3 Setup/12 Updates Pause.ps1",
+      "service": "repair",
+      "topic": "Windows Update e componentes",
+      "title": "Pausar atualizações do Windows"
+    },
+    {
+      "id": "ultimate:4 Installers/1 Installers.ps1",
+      "service": "apps",
+      "topic": "Instaladores da origem",
+      "title": "Instaladores de programas"
+    },
+    {
+      "id": "ultimate:4 Installers/2 MSI Afterburner.ps1",
+      "service": "gpu",
+      "topic": "Diagnóstico e ferramentas",
+      "title": "MSI Afterburner"
+    },
+    {
+      "id": "ultimate:5 Graphics/1 Driver Clean.ps1",
+      "service": "gpu",
+      "topic": "Limpeza e instalação de drivers",
+      "title": "Limpar driver de vídeo"
+    },
+    {
+      "id": "ultimate:5 Graphics/2 Driver Updated Install.ps1",
+      "service": "gpu",
+      "topic": "Limpeza e instalação de drivers",
+      "title": "Instalar driver de vídeo atualizado"
+    },
+    {
+      "id": "ultimate:5 Graphics/3 Driver Updated Install & Settings.ps1",
+      "service": "gpu",
+      "topic": "Limpeza e instalação de drivers",
+      "title": "Atualizar driver de vídeo e configurar"
+    },
+    {
+      "id": "ultimate:5 Graphics/4 Driver Debloat Install & Settings.ps1",
+      "service": "gpu",
+      "topic": "Limpeza e instalação de drivers",
+      "title": "Instalar e configurar driver de vídeo enxuto"
+    },
+    {
+      "id": "ultimate:5 Graphics/5 Nvidia Settings.ps1",
+      "service": "gpu",
+      "topic": "NVIDIA, AMD e Intel",
+      "title": "Configurações NVIDIA"
+    },
+    {
+      "id": "ultimate:5 Graphics/6 Amd Settings.ps1",
+      "service": "gpu",
+      "topic": "NVIDIA, AMD e Intel",
+      "title": "Configurações AMD"
+    },
+    {
+      "id": "ultimate:5 Graphics/7 Intel Settings.ps1",
+      "service": "gpu",
+      "topic": "NVIDIA, AMD e Intel",
+      "title": "Configurações Intel"
+    },
+    {
+      "id": "ultimate:5 Graphics/8 Hdcp.ps1",
+      "service": "gpu",
+      "topic": "NVIDIA, AMD e Intel",
+      "title": "Configurar HDCP"
+    },
+    {
+      "id": "ultimate:5 Graphics/9 P0 State.ps1",
+      "service": "gpu",
+      "topic": "NVIDIA, AMD e Intel",
+      "title": "Configurar estado de desempenho P0"
+    },
+    {
+      "id": "ultimate:5 Graphics/10 Msi Mode.ps1",
+      "service": "gpu",
+      "topic": "Renderização e jogos",
+      "title": "Configurar modo de interrupção MSI"
+    },
+    {
+      "id": "ultimate:5 Graphics/11 DirectX.ps1",
+      "service": "gpu",
+      "topic": "DirectX e bibliotecas",
+      "title": "DirectX"
+    },
+    {
+      "id": "ultimate:5 Graphics/12 C++.ps1",
+      "service": "gpu",
+      "topic": "DirectX e bibliotecas",
+      "title": "C++"
+    },
+    {
+      "id": "ultimate:5 Graphics/13 Resolution Refresh Rate.ps1",
+      "service": "devices",
+      "topic": "Monitor e áudio",
+      "title": "Resolução e taxa de atualização"
+    },
+    {
+      "id": "ultimate:5 Graphics/14 Hags Windowed.ps1",
+      "service": "gpu",
+      "topic": "Renderização e jogos",
+      "title": "Agendamento de GPU e jogos em janela"
+    },
+    {
+      "id": "ultimate:6 Windows/1 Start Menu Taskbar.ps1",
+      "service": "windows",
+      "topic": "Menu Iniciar e barra de tarefas",
+      "title": "Menu Iniciar e barra de tarefas"
+    },
+    {
+      "id": "ultimate:6 Windows/2 Start Menu Layout.ps1",
+      "service": "windows",
+      "topic": "Menu Iniciar e barra de tarefas",
+      "title": "Layout do menu Iniciar"
+    },
+    {
+      "id": "ultimate:6 Windows/3 Start Menu Shortcuts.ps1",
+      "service": "windows",
+      "topic": "Menu Iniciar e barra de tarefas",
+      "title": "Atalhos do menu Iniciar"
+    },
+    {
+      "id": "ultimate:6 Windows/4 Context Menu.ps1",
+      "service": "windows",
+      "topic": "Aparência e comportamento",
+      "title": "Configurar menu de contexto"
+    },
+    {
+      "id": "ultimate:6 Windows/5 Theme Black.ps1",
+      "service": "windows",
+      "topic": "Aparência e comportamento",
+      "title": "Aplicar tema escuro"
+    },
+    {
+      "id": "ultimate:6 Windows/6 Signout Lockscreen Wallpaper Black.ps1",
+      "service": "windows",
+      "topic": "Aparência e comportamento",
+      "title": "Fundo escuro de saída e bloqueio"
+    },
+    {
+      "id": "ultimate:6 Windows/7 User Account Pictures Black.ps1",
+      "service": "windows",
+      "topic": "Aparência e comportamento",
+      "title": "Imagem escura da conta do usuário"
+    },
+    {
+      "id": "ultimate:6 Windows/8 Widgets.ps1",
+      "service": "windows",
+      "topic": "Aparência e comportamento",
+      "title": "Configurar widgets"
+    },
+    {
+      "id": "ultimate:6 Windows/9 Copilot.ps1",
+      "service": "windows",
+      "topic": "Navegadores e aplicativos do sistema",
+      "title": "Configurar Copilot"
+    },
+    {
+      "id": "ultimate:6 Windows/10 Gamemode.ps1",
+      "service": "gpu",
+      "topic": "Renderização e jogos",
+      "title": "Configurar modo de jogo"
+    },
+    {
+      "id": "ultimate:6 Windows/11 Pointer Precision.ps1",
+      "service": "devices",
+      "topic": "Mouse, teclado e controles",
+      "title": "Precisão do ponteiro do mouse"
+    },
+    {
+      "id": "ultimate:6 Windows/12 Scaling.ps1",
+      "service": "devices",
+      "topic": "Monitor e áudio",
+      "title": "Escala da tela"
+    },
+    {
+      "id": "ultimate:6 Windows/13 Bloatware.ps1",
+      "service": "clean",
+      "topic": "Remoção de aplicativos",
+      "title": "Remover aplicativos pré-instalados"
+    },
+    {
+      "id": "ultimate:6 Windows/14 Bloatware Legacy Apps Check.ps1",
+      "service": "clean",
+      "topic": "Remoção de aplicativos",
+      "title": "Revisar aplicativos clássicos desnecessários"
+    },
+    {
+      "id": "ultimate:6 Windows/15 Bloatware Legacy Features Check.ps1",
+      "service": "clean",
+      "topic": "Remoção de aplicativos",
+      "title": "Revisar recursos clássicos do Windows"
+    },
+    {
+      "id": "ultimate:6 Windows/16 Bloatware UWP Apps Check.ps1",
+      "service": "clean",
+      "topic": "Remoção de aplicativos",
+      "title": "Revisar aplicativos UWP"
+    },
+    {
+      "id": "ultimate:6 Windows/17 Bloatware UWP Features Check.ps1",
+      "service": "clean",
+      "topic": "Remoção de aplicativos",
+      "title": "Revisar recursos UWP"
+    },
+    {
+      "id": "ultimate:6 Windows/18 Bloatware TaskMgr Check.ps1",
+      "service": "clean",
+      "topic": "Remoção de aplicativos",
+      "title": "Revisar tarefas e aplicativos desnecessários"
+    },
+    {
+      "id": "ultimate:6 Windows/19 Gamebar.ps1",
+      "service": "gpu",
+      "topic": "Renderização e jogos",
+      "title": "Configurar Xbox Game Bar"
+    },
+    {
+      "id": "ultimate:6 Windows/20 Edge & WebView.ps1",
+      "service": "clean",
+      "topic": "Navegadores e componentes",
+      "title": "Gerenciar Edge e WebView"
+    },
+    {
+      "id": "ultimate:6 Windows/21 Notepad Settings.ps1",
+      "service": "windows",
+      "topic": "Navegadores e aplicativos do sistema",
+      "title": "Configurações do Bloco de Notas"
+    },
+    {
+      "id": "ultimate:6 Windows/22 Control Panel Settings.ps1",
+      "service": "windows",
+      "topic": "Aparência e comportamento",
+      "title": "Configurações do Painel de Controle"
+    },
+    {
+      "id": "ultimate:6 Windows/23 Sound.ps1",
+      "service": "devices",
+      "topic": "Monitor e áudio",
+      "title": "Configurar áudio"
+    },
+    {
+      "id": "ultimate:6 Windows/24 Loudness EQ.ps1",
+      "service": "devices",
+      "topic": "Monitor e áudio",
+      "title": "Equalização de volume"
+    },
+    {
+      "id": "ultimate:6 Windows/25 Device Manager Power Savings & Wake.ps1",
+      "service": "devices",
+      "topic": "USB e gerenciamento de dispositivos",
+      "title": "Energia e ativação dos dispositivos"
+    },
+    {
+      "id": "ultimate:6 Windows/26 Network Adapter Power Savings & Wake.ps1",
+      "service": "network",
+      "topic": "Drivers e adaptadores",
+      "title": "Energia e ativação do adaptador de rede"
+    },
+    {
+      "id": "ultimate:6 Windows/27 Network IPv4 Only.ps1",
+      "service": "network",
+      "topic": "Protocolos e conectividade",
+      "title": "Configurar rede para IPv4"
+    },
+    {
+      "id": "ultimate:6 Windows/28 Write Cache Buffer Flushing.ps1",
+      "service": "devices",
+      "topic": "Armazenamento e NVMe",
+      "title": "Configurar cache de gravação do disco"
+    },
+    {
+      "id": "ultimate:6 Windows/29 Power Plan.ps1",
+      "service": "power",
+      "topic": "Planos de energia",
+      "title": "Configurar plano de energia"
+    },
+    {
+      "id": "ultimate:6 Windows/30 Timer Resolution.ps1",
+      "service": "cpu",
+      "topic": "Processador e agendamento",
+      "title": "Configurar resolução do temporizador"
+    },
+    {
+      "id": "ultimate:6 Windows/31 UAC.ps1",
+      "service": "privacy",
+      "topic": "Proteção do Windows",
+      "title": "Configurar Controle de Conta de Usuário"
+    },
+    {
+      "id": "ultimate:6 Windows/32 Core Isolation.ps1",
+      "service": "privacy",
+      "topic": "Proteção do Windows",
+      "title": "Configurar isolamento de núcleo"
+    },
+    {
+      "id": "ultimate:6 Windows/33 Defender Optimize.ps1",
+      "service": "privacy",
+      "topic": "Proteção do Windows",
+      "title": "Ajustes do Microsoft Defender"
+    },
+    {
+      "id": "ultimate:6 Windows/34 Autoruns Startup Tasks & Apps Check.ps1",
+      "service": "windows",
+      "topic": "Inicialização e segundo plano",
+      "title": "Revisar tarefas e programas com Autoruns"
+    },
+    {
+      "id": "ultimate:6 Windows/35 Cleanup.ps1",
+      "service": "clean",
+      "topic": "Arquivos temporários e disco",
+      "title": "Limpeza geral do computador"
+    },
+    {
+      "id": "ultimate:6 Windows/36 Restore Point.ps1",
+      "service": "repair",
+      "topic": "Pontos de restauração e backup",
+      "title": "Gerenciar pontos de restauração"
+    },
+    {
+      "id": "ultimate:7 Hardware/1 Scaling Higher No Accel.ps1",
+      "service": "devices",
+      "topic": "Mouse, teclado e controles",
+      "title": "Escala e aceleração do ponteiro"
+    },
+    {
+      "id": "ultimate:7 Hardware/2 Background Polling Rate Cap.ps1",
+      "service": "devices",
+      "topic": "Mouse, teclado e controles",
+      "title": "Limitar polling rate em segundo plano"
+    },
+    {
+      "id": "ultimate:7 Hardware/3 Mouse Polling Rate Test.ps1",
+      "service": "devices",
+      "topic": "Mouse, teclado e controles",
+      "title": "Verificar polling rate do mouse"
+    },
+    {
+      "id": "ultimate:7 Hardware/4 Controller Overclock.ps1",
+      "service": "devices",
+      "topic": "Mouse, teclado e controles",
+      "title": "Configurar polling rate do controle"
+    },
+    {
+      "id": "ultimate:7 Hardware/5 Controller Polling Rate Test.ps1",
+      "service": "devices",
+      "topic": "Mouse, teclado e controles",
+      "title": "Verificar polling rate do controle"
+    },
+    {
+      "id": "ultimate:7 Hardware/6 Monitor Optimization.ps1",
+      "service": "devices",
+      "topic": "Monitor e áudio",
+      "title": "Configurar e otimizar monitor"
+    },
+    {
+      "id": "ultimate:7 Hardware/7 Network Bufferbloat Test.ps1",
+      "service": "network",
+      "topic": "Diagnóstico e ferramentas",
+      "title": "Ferramentas de diagnóstico de bufferbloat"
+    },
+    {
+      "id": "ultimate:7 Hardware/8 PC Build Guide.ps1",
+      "service": "advanced",
+      "topic": "BIOS e inicialização",
+      "title": "Guia de montagem de computador"
+    },
+    {
+      "id": "ultimate:8 Advanced/1 Defender.ps1",
+      "service": "privacy",
+      "topic": "Proteção do Windows",
+      "title": "Configurar Microsoft Defender"
+    },
+    {
+      "id": "ultimate:8 Advanced/2 Firewall.ps1",
+      "service": "privacy",
+      "topic": "Proteção do Windows",
+      "title": "Configurar firewall"
+    },
+    {
+      "id": "ultimate:8 Advanced/3 Spectre Meltdown.ps1",
+      "service": "privacy",
+      "topic": "Proteção do Windows",
+      "title": "Configurar mitigações Spectre e Meltdown"
+    },
+    {
+      "id": "ultimate:8 Advanced/4 Data Execution Prevention.ps1",
+      "service": "privacy",
+      "topic": "Proteção do Windows",
+      "title": "Configurar prevenção de execução de dados"
+    },
+    {
+      "id": "ultimate:8 Advanced/5 File Download Security Warning.ps1",
+      "service": "privacy",
+      "topic": "Proteção do Windows",
+      "title": "Avisos de segurança de downloads"
+    },
+    {
+      "id": "ultimate:8 Advanced/6 MMAgent Features.ps1",
+      "service": "cpu",
+      "topic": "Memória, cache e compressão",
+      "title": "Recursos de gerenciamento de memória"
+    },
+    {
+      "id": "ultimate:8 Advanced/7 ReBar Force.ps1",
+      "service": "gpu",
+      "topic": "Renderização e jogos",
+      "title": "Forçar configuração de Resizable BAR"
+    },
+    {
+      "id": "ultimate:8 Advanced/8 Smt Ht.ps1",
+      "service": "cpu",
+      "topic": "Processador e agendamento",
+      "title": "Configurar SMT / Hyper-Threading"
+    },
+    {
+      "id": "ultimate:8 Advanced/9 Core 1 Thread 1.ps1",
+      "service": "cpu",
+      "topic": "Processador e agendamento",
+      "title": "Configurar primeiro núcleo e thread"
+    },
+    {
+      "id": "ultimate:8 Advanced/10 Priority.ps1",
+      "service": "cpu",
+      "topic": "Processador e agendamento",
+      "title": "Configurar prioridades do processador"
+    },
+    {
+      "id": "ultimate:8 Advanced/11 Mpo.ps1",
+      "service": "gpu",
+      "topic": "Renderização e jogos",
+      "title": "Configurar Multiplane Overlay"
+    },
+    {
+      "id": "ultimate:8 Advanced/12 Hardware Legacy Flip.ps1",
+      "service": "gpu",
+      "topic": "Renderização e jogos",
+      "title": "Configurar modo Hardware Legacy Flip"
+    },
+    {
+      "id": "ultimate:8 Advanced/13 Hardware Composed Independent Flip.ps1",
+      "service": "gpu",
+      "topic": "Renderização e jogos",
+      "title": "Configurar Hardware Composed Independent Flip"
+    },
+    {
+      "id": "ultimate:8 Advanced/14 Ulps.ps1",
+      "service": "gpu",
+      "topic": "NVIDIA, AMD e Intel",
+      "title": "Configurar economia de energia ULPS"
+    },
+    {
+      "id": "ultimate:8 Advanced/15 Driver Whql Secure Boot Bypass.ps1",
+      "service": "devices",
+      "topic": "Drivers do sistema",
+      "title": "Contornar exigências WHQL e Secure Boot"
+    },
+    {
+      "id": "ultimate:8 Advanced/16 Keyboard Shortcuts.ps1",
+      "service": "devices",
+      "topic": "Mouse, teclado e controles",
+      "title": "Atalhos de teclado"
+    },
+    {
+      "id": "ultimate:8 Advanced/17 Services.ps1",
+      "service": "advanced",
+      "topic": "Serviços e comportamento do sistema",
+      "title": "Configurar serviços do Windows"
+    },
+    {
+      "id": "ultimate:8 Advanced/18 Start Search Shell Mobsync.ps1",
+      "service": "advanced",
+      "topic": "Serviços e comportamento do sistema",
+      "title": "Configurar Iniciar, pesquisa e shell"
+    },
+    {
+      "id": "ultimate:8 Advanced/19 NVME Faster Driver.ps1",
+      "service": "devices",
+      "topic": "Armazenamento e NVMe",
+      "title": "Opções de driver NVMe"
+    },
+    {
+      "id": "winsux:pipeline",
+      "service": "advanced",
+      "topic": "Rotina completa WinSux",
+      "title": "WinSux · rotina completa e isolada"
+    },
+    {
+      "id": "winutil:tweak:WPFTweaksActivity",
+      "service": "privacy",
+      "topic": "Telemetria e histórico",
+      "title": "Desativar histórico de atividades"
+    },
+    {
+      "id": "winutil:tweak:WPFTweaksHiber",
+      "service": "power",
+      "topic": "Suspensão e hibernação",
+      "title": "Desativar hibernação"
+    },
+    {
+      "id": "winutil:tweak:WPFTweaksWidget",
+      "service": "clean",
+      "topic": "Remoção de aplicativos",
+      "title": "Remover widgets"
+    },
+    {
+      "id": "winutil:tweak:WPFTweaksRevertStartMenu",
+      "service": "windows",
+      "topic": "Menu Iniciar e barra de tarefas",
+      "title": "Ativar layout anterior do menu Iniciar"
+    },
+    {
+      "id": "winutil:tweak:WPFTweaksDisableStoreSearch",
+      "service": "windows",
+      "topic": "Aparência e comportamento",
+      "title": "Desativar recomendações da Store na pesquisa"
+    },
+    {
+      "id": "winutil:tweak:WPFTweaksLocation",
+      "service": "privacy",
+      "topic": "Telemetria e histórico",
+      "title": "Desativar rastreamento de localização"
+    },
+    {
+      "id": "winutil:tweak:WPFTweaksServices",
+      "service": "advanced",
+      "topic": "Serviços e comportamento do sistema",
+      "title": "Configurar serviços para início manual"
+    },
+    {
+      "id": "winutil:tweak:WPFTweaksSvcHostSplitting",
+      "service": "cpu",
+      "topic": "Memória, cache e compressão",
+      "title": "Desativar divisão de processos svchost"
+    },
+    {
+      "id": "winutil:tweak:WPFTweaksBraveDebloat",
+      "service": "clean",
+      "topic": "Navegadores e componentes",
+      "title": "Remover componentes extras do Brave"
+    },
+    {
+      "id": "winutil:tweak:WPFTweaksDisableWarningForUnsignedRdp",
+      "service": "privacy",
+      "topic": "Proteção do Windows",
+      "title": "Desativar aviso de arquivos RDP não assinados"
+    },
+    {
+      "id": "winutil:tweak:WPFTweaksEdgeDebloat",
+      "service": "clean",
+      "topic": "Navegadores e componentes",
+      "title": "Remover componentes extras do Edge"
+    },
+    {
+      "id": "winutil:tweak:WPFTweaksConsumerFeatures",
+      "service": "windows",
+      "topic": "Aparência e comportamento",
+      "title": "Desativar sugestões e recursos de consumo"
+    },
+    {
+      "id": "winutil:tweak:WPFTweaksTelemetry",
+      "service": "privacy",
+      "topic": "Telemetria e histórico",
+      "title": "Desativar telemetria"
+    },
+    {
+      "id": "winutil:tweak:WPFTweaksDeliveryOptimization",
+      "service": "network",
+      "topic": "Protocolos e conectividade",
+      "title": "Desativar Otimização de Entrega"
+    },
+    {
+      "id": "winutil:tweak:WPFTweaksRemoveEdge",
+      "service": "clean",
+      "topic": "Remoção de aplicativos",
+      "title": "Remover Microsoft Edge"
+    },
+    {
+      "id": "winutil:tweak:WPFTweaksDisableBitLocker",
+      "service": "privacy",
+      "topic": "Criptografia e acesso",
+      "title": "Desativar BitLocker"
+    },
+    {
+      "id": "winutil:tweak:WPFTweaksUTC",
+      "service": "repair",
+      "topic": "Conta, data e região",
+      "title": "Configurar relógio para UTC"
+    },
+    {
+      "id": "winutil:tweak:WPFTweaksRemoveOneDrive",
+      "service": "clean",
+      "topic": "Remoção de aplicativos",
+      "title": "Remover Microsoft OneDrive"
+    },
+    {
+      "id": "winutil:tweak:WPFTweaksRemoveHomeAndGallery",
+      "service": "windows",
+      "topic": "Explorador de arquivos",
+      "title": "Desativar Início e Galeria do Explorador"
+    },
+    {
+      "id": "winutil:tweak:WPFTweaksDisplay",
+      "service": "windows",
+      "topic": "Aparência e comportamento",
+      "title": "Configurar efeitos visuais para desempenho"
+    },
+    {
+      "id": "winutil:tweak:WPFTweaksReservedStorage",
+      "service": "clean",
+      "topic": "Arquivos temporários e disco",
+      "title": "Desativar armazenamento reservado"
+    },
+    {
+      "id": "winutil:tweak:WPFTweaksRestorePoint",
+      "service": "repair",
+      "topic": "Pontos de restauração e backup",
+      "title": "Criar ponto de restauração"
+    },
+    {
+      "id": "winutil:tweak:WPFTweaksEndTaskOnTaskbar",
+      "service": "windows",
+      "topic": "Menu Iniciar e barra de tarefas",
+      "title": "Ativar Finalizar tarefa pelo clique direito"
+    },
+    {
+      "id": "winutil:tweak:WPFTweaksStorage",
+      "service": "clean",
+      "topic": "Arquivos temporários e disco",
+      "title": "Desativar Sensor de Armazenamento"
+    },
+    {
+      "id": "winutil:tweak:WPFTweaksWindowsAI",
+      "service": "clean",
+      "topic": "Remoção de aplicativos",
+      "title": "Desativar e remover recursos de IA do Windows"
+    },
+    {
+      "id": "winutil:tweak:WPFTweaksWPBT",
+      "service": "privacy",
+      "topic": "Telemetria e histórico",
+      "title": "Desativar Windows Platform Binary Table"
+    },
+    {
+      "id": "winutil:tweak:WPFTweaksPreventDeviceMetadataFromNetwork",
+      "service": "devices",
+      "topic": "Drivers do sistema",
+      "title": "Impedir aplicativos auxiliares de dispositivos"
+    },
+    {
+      "id": "winutil:tweak:WPFTweaksRazerBlock",
+      "service": "devices",
+      "topic": "Drivers do sistema",
+      "title": "Bloquear instalação automática de software Razer"
+    },
+    {
+      "id": "winutil:tweak:WPFTweaksLogiBlock",
+      "service": "devices",
+      "topic": "Drivers do sistema",
+      "title": "Bloquear instalação automática do assistente Logitech"
+    },
+    {
+      "id": "winutil:tweak:WPFTweaksDisableNotifications",
+      "service": "windows",
+      "topic": "Notificações e sugestões",
+      "title": "Desativar notificações e calendário da bandeja"
+    },
+    {
+      "id": "winutil:tweak:WPFTweaksBlockAdobeNet",
+      "service": "privacy",
+      "topic": "Telemetria e permissões",
+      "title": "Ativar lista de bloqueio de URLs Adobe"
+    },
+    {
+      "id": "winutil:tweak:WPFTweaksRightClickMenu",
+      "service": "windows",
+      "topic": "Aparência e comportamento",
+      "title": "Ativar menu de contexto clássico"
+    },
+    {
+      "id": "winutil:tweak:WPFTweaksDiskCleanup",
+      "service": "clean",
+      "topic": "Arquivos temporários e disco",
+      "title": "Executar Limpeza de Disco"
+    },
+    {
+      "id": "winutil:tweak:WPFTweaksDeleteTempFiles",
+      "service": "clean",
+      "topic": "Arquivos temporários e disco",
+      "title": "Remover arquivos temporários"
+    },
+    {
+      "id": "winutil:tweak:WPFTweaksIPv46",
+      "service": "network",
+      "topic": "Protocolos e conectividade",
+      "title": "Dar preferência ao IPv4"
+    },
+    {
+      "id": "winutil:tweak:WPFTweaksTeredo",
+      "service": "network",
+      "topic": "Protocolos e conectividade",
+      "title": "Desativar Teredo"
+    },
+    {
+      "id": "winutil:tweak:WPFTweaksDisableIPv6",
+      "service": "network",
+      "topic": "Protocolos e conectividade",
+      "title": "Desativar IPv6"
+    },
+    {
+      "id": "winutil:tweak:WPFTweaksDisableBGapps",
+      "service": "windows",
+      "topic": "Inicialização e segundo plano",
+      "title": "Desativar aplicativos em segundo plano"
+    },
+    {
+      "id": "winutil:tweak:WPFTweaksDisableExplorerAutoDiscovery",
+      "service": "windows",
+      "topic": "Explorador de arquivos",
+      "title": "Desativar descoberta automática de pastas"
+    },
+    {
+      "id": "winutil:tweak:WPFToggleDetailedBSoD",
+      "service": "advanced",
+      "topic": "Serviços e comportamento do sistema",
+      "title": "Exibir detalhes na tela azul"
+    },
+    {
+      "id": "winutil:tweak:WPFToggleBatteryPercentage",
+      "service": "power",
+      "topic": "Suspensão e hibernação",
+      "title": "Exibir porcentagem da bateria"
+    },
+    {
+      "id": "winutil:tweak:WPFToggleDarkMode",
+      "service": "windows",
+      "topic": "Aparência e comportamento",
+      "title": "Tema escuro do Windows"
+    },
+    {
+      "id": "winutil:tweak:WPFToggleShowExt",
+      "service": "windows",
+      "topic": "Explorador de arquivos",
+      "title": "Extensões de arquivos no Explorador"
+    },
+    {
+      "id": "winutil:tweak:WPFToggleHiddenFiles",
+      "service": "windows",
+      "topic": "Explorador de arquivos",
+      "title": "Arquivos ocultos no Explorador"
+    },
+    {
+      "id": "winutil:tweak:WPFToggleVerboseLogon",
+      "service": "advanced",
+      "topic": "Serviços e comportamento do sistema",
+      "title": "Exibir detalhes durante o logon"
+    },
+    {
+      "id": "winutil:tweak:WPFToggleNewOutlook",
+      "service": "windows",
+      "topic": "Navegadores e aplicativos do sistema",
+      "title": "Nova versão do Microsoft Outlook"
+    },
+    {
+      "id": "winutil:tweak:WPFToggleScrollbars",
+      "service": "windows",
+      "topic": "Aparência e comportamento",
+      "title": "Manter barras de rolagem visíveis"
+    },
+    {
+      "id": "winutil:tweak:WPFMultiplaneOverlay",
+      "service": "gpu",
+      "topic": "Renderização e jogos",
+      "title": "Configurar Multiplane Overlay"
+    },
+    {
+      "id": "winutil:tweak:WPFToggleMouseAcceleration",
+      "service": "devices",
+      "topic": "Mouse, teclado e controles",
+      "title": "Aceleração do mouse"
+    },
+    {
+      "id": "winutil:tweak:WPFToggleNumLock",
+      "service": "devices",
+      "topic": "Mouse, teclado e controles",
+      "title": "Num Lock na inicialização"
+    },
+    {
+      "id": "winutil:tweak:WPFToggleWindowSnapping",
+      "service": "windows",
+      "topic": "Aparência e comportamento",
+      "title": "Encaixe de janelas"
+    },
+    {
+      "id": "winutil:tweak:WPFToggleStandbyFix",
+      "service": "power",
+      "topic": "Suspensão e hibernação",
+      "title": "Conexão de rede durante suspensão S0"
+    },
+    {
+      "id": "winutil:tweak:WPFToggleS3Sleep",
+      "service": "power",
+      "topic": "Suspensão e hibernação",
+      "title": "Suspensão S3"
+    },
+    {
+      "id": "winutil:tweak:WPFToggleHideSettingsHome",
+      "service": "windows",
+      "topic": "Aparência e comportamento",
+      "title": "Página inicial das Configurações"
+    },
+    {
+      "id": "winutil:tweak:WPFToggleBingSearch",
+      "service": "windows",
+      "topic": "Menu Iniciar e barra de tarefas",
+      "title": "Pesquisa Bing no menu Iniciar"
+    },
+    {
+      "id": "winutil:tweak:WPFToggleLoginBlur",
+      "service": "windows",
+      "topic": "Aparência e comportamento",
+      "title": "Desfoque da tela de logon"
+    },
+    {
+      "id": "winutil:tweak:WPFToggleDisableLockscreen",
+      "service": "windows",
+      "topic": "Aparência e comportamento",
+      "title": "Desativar tela de bloqueio"
+    },
+    {
+      "id": "winutil:tweak:WPFToggleStartMenuRecommendations",
+      "service": "windows",
+      "topic": "Menu Iniciar e barra de tarefas",
+      "title": "Recomendações do menu Iniciar"
+    },
+    {
+      "id": "winutil:tweak:WPFToggleStickyKeys",
+      "service": "devices",
+      "topic": "Mouse, teclado e controles",
+      "title": "Teclas de aderência"
+    },
+    {
+      "id": "winutil:tweak:WPFToggleTaskbarAlignment",
+      "service": "windows",
+      "topic": "Menu Iniciar e barra de tarefas",
+      "title": "Ícones centralizados na barra de tarefas"
+    },
+    {
+      "id": "winutil:tweak:WPFToggleTaskbarSearch",
+      "service": "windows",
+      "topic": "Menu Iniciar e barra de tarefas",
+      "title": "Ícone de pesquisa da barra de tarefas"
+    },
+    {
+      "id": "winutil:tweak:WPFToggleTaskView",
+      "service": "windows",
+      "topic": "Menu Iniciar e barra de tarefas",
+      "title": "Ícone de Visão de Tarefas"
+    },
+    {
+      "id": "winutil:tweak:WPFToggleGameMode",
+      "service": "gpu",
+      "topic": "Renderização e jogos",
+      "title": "Modo de jogo do Windows"
+    },
+    {
+      "id": "winutil:tweak:WPFToggleLongPaths",
+      "service": "windows",
+      "topic": "Explorador de arquivos",
+      "title": "Ativar caminhos longos"
+    },
+    {
+      "id": "winutil:tweak:WPFOOSUbutton",
+      "service": "privacy",
+      "topic": "Telemetria e histórico",
+      "title": "Abrir O&O ShutUp10++"
+    },
+    {
+      "id": "winutil:tweak:WPFchangedns",
+      "service": "network",
+      "topic": "DNS e filtros",
+      "title": "Configurar provedor DNS"
+    },
+    {
+      "id": "winutil:tweak:WPFAddUltPerf",
+      "service": "power",
+      "topic": "Planos de energia",
+      "title": "Ativar plano Desempenho Máximo"
+    },
+    {
+      "id": "winutil:tweak:WPFRemoveUltPerf",
+      "service": "power",
+      "topic": "Planos de energia",
+      "title": "Remover plano Desempenho Máximo"
+    },
+    {
+      "id": "winutil:feature:WPFFeaturesdotnet",
+      "service": "windows",
+      "topic": "Recursos opcionais do Windows",
+      "title": "Ativar .NET Framework 2, 3 e 4"
+    },
+    {
+      "id": "winutil:feature:WPFFixesNTPPool",
+      "service": "repair",
+      "topic": "Conta, data e região",
+      "title": "Configurar servidor de horário NTP"
+    },
+    {
+      "id": "winutil:feature:WPFFeatureshyperv",
+      "service": "windows",
+      "topic": "Recursos opcionais do Windows",
+      "title": "Ativar Hyper-V"
+    },
+    {
+      "id": "winutil:feature:WPFFeatureslegacymedia",
+      "service": "windows",
+      "topic": "Recursos opcionais do Windows",
+      "title": "Ativar componentes multimídia legados"
+    },
+    {
+      "id": "winutil:feature:WPFFeaturewsl",
+      "service": "windows",
+      "topic": "Recursos opcionais do Windows",
+      "title": "Ativar Subsistema do Windows para Linux"
+    },
+    {
+      "id": "winutil:feature:WPFFeaturenfs",
+      "service": "network",
+      "topic": "Protocolos e conectividade",
+      "title": "Ativar cliente NFS"
+    },
+    {
+      "id": "winutil:feature:WPFFeatureRegBackup",
+      "service": "repair",
+      "topic": "Pontos de restauração e backup",
+      "title": "Agendar backup diário do Registro (00h30)"
+    },
+    {
+      "id": "winutil:feature:WPFFeatureEnableLegacyRecovery",
+      "service": "advanced",
+      "topic": "BIOS e inicialização",
+      "title": "Ativar recuperação legada pela tecla F8"
+    },
+    {
+      "id": "winutil:feature:WPFFeatureDisableLegacyRecovery",
+      "service": "advanced",
+      "topic": "BIOS e inicialização",
+      "title": "Desativar recuperação legada pela tecla F8"
+    },
+    {
+      "id": "winutil:feature:WPFFeaturesSandbox",
+      "service": "windows",
+      "topic": "Recursos opcionais do Windows",
+      "title": "Ativar Área Restrita do Windows"
+    },
+    {
+      "id": "winutil:feature:WPFFeatureInstall",
+      "service": "windows",
+      "topic": "Recursos opcionais do Windows",
+      "title": "Instalar recursos opcionais do Windows"
+    },
+    {
+      "id": "winutil:feature:WPFPanelAutologin",
+      "service": "privacy",
+      "topic": "Criptografia e acesso",
+      "title": "Abrir configuração de logon automático"
+    },
+    {
+      "id": "winutil:feature:WPFFixesUpdate",
+      "service": "repair",
+      "topic": "Windows Update e componentes",
+      "title": "Redefinir Windows Update"
+    },
+    {
+      "id": "winutil:feature:WPFFixesNetwork",
+      "service": "network",
+      "topic": "Reparos de conexão",
+      "title": "Redefinir rede do Windows"
+    },
+    {
+      "id": "winutil:feature:WPFPanelDISM",
+      "service": "repair",
+      "topic": "Integridade do Windows",
+      "title": "Verificar corrupção de arquivos do sistema"
+    },
+    {
+      "id": "winutil:feature:WPFFixesWinget",
+      "service": "repair",
+      "topic": "Windows Update e componentes",
+      "title": "Reinstalar WinGet"
+    },
+    {
+      "id": "winutil:feature:WPFPanelComputer",
+      "service": "devices",
+      "topic": "USB e gerenciamento de dispositivos",
+      "title": "Abrir Gerenciamento do Computador"
+    },
+    {
+      "id": "winutil:feature:WPFPanelControl",
+      "service": "windows",
+      "topic": "Aparência e comportamento",
+      "title": "Abrir Painel de Controle"
+    },
+    {
+      "id": "winutil:feature:WPFPanelMouse",
+      "service": "devices",
+      "topic": "Mouse, teclado e controles",
+      "title": "Abrir propriedades do mouse"
+    },
+    {
+      "id": "winutil:feature:WPFPanelNetwork",
+      "service": "network",
+      "topic": "Drivers e adaptadores",
+      "title": "Abrir conexões de rede"
+    },
+    {
+      "id": "winutil:feature:WPFPanelPower",
+      "service": "power",
+      "topic": "Planos de energia",
+      "title": "Abrir opções de energia"
+    },
+    {
+      "id": "winutil:feature:WPFPanelPrinter",
+      "service": "devices",
+      "topic": "USB e gerenciamento de dispositivos",
+      "title": "Abrir configurações de impressoras"
+    },
+    {
+      "id": "winutil:feature:WPFPanelPrograms",
+      "service": "clean",
+      "topic": "Remoção de aplicativos",
+      "title": "Abrir Programas e Recursos"
+    },
+    {
+      "id": "winutil:feature:WPFPanelRegion",
+      "service": "repair",
+      "topic": "Conta, data e região",
+      "title": "Abrir configurações de região"
+    },
+    {
+      "id": "winutil:feature:WPFPanelSecurity",
+      "service": "privacy",
+      "topic": "Proteção do Windows",
+      "title": "Abrir Segurança e Manutenção"
+    },
+    {
+      "id": "winutil:feature:WPFPanelSound",
+      "service": "devices",
+      "topic": "Monitor e áudio",
+      "title": "Abrir configurações de som"
+    },
+    {
+      "id": "winutil:feature:WPFPanelSystem",
+      "service": "windows",
+      "topic": "Aparência e comportamento",
+      "title": "Abrir propriedades do sistema"
+    },
+    {
+      "id": "winutil:feature:WPFPanelTimedate",
+      "service": "repair",
+      "topic": "Conta, data e região",
+      "title": "Abrir configurações de data e hora"
+    },
+    {
+      "id": "winutil:feature:WPFPanelFirewall",
+      "service": "privacy",
+      "topic": "Proteção do Windows",
+      "title": "Abrir Firewall do Windows Defender"
+    },
+    {
+      "id": "winutil:feature:WPFPanelRestore",
+      "service": "repair",
+      "topic": "Pontos de restauração e backup",
+      "title": "Abrir restauração do Windows"
+    },
+    {
+      "id": "winutil:feature:WPFWinUtilInstallPSProfile",
+      "service": "advanced",
+      "topic": "PowerShell e edição do Windows",
+      "title": "Instalar perfil CTT do PowerShell"
+    },
+    {
+      "id": "winutil:feature:WPFWinUtilUninstallPSProfile",
+      "service": "advanced",
+      "topic": "PowerShell e edição do Windows",
+      "title": "Remover perfil CTT do PowerShell"
+    },
+    {
+      "id": "winutil:feature:WPFWinUtilSSHServer",
+      "service": "network",
+      "topic": "Protocolos e conectividade",
+      "title": "Ativar servidor OpenSSH"
+    },
+    {
+      "id": "winutil:appx:WPFAppxMicrosoft_WindowsFeedbackHub",
+      "service": "clean",
+      "topic": "Apps pré-instalados do Windows",
+      "title": "Remover Feedback Hub"
+    },
+    {
+      "id": "winutil:appx:WPFAppxMicrosoft_GetHelp",
+      "service": "clean",
+      "topic": "Apps pré-instalados do Windows",
+      "title": "Remover Get Help"
+    },
+    {
+      "id": "winutil:appx:WPFAppxMicrosoft_OutlookForWindows",
+      "service": "clean",
+      "topic": "Apps pré-instalados do Windows",
+      "title": "Remover Outlook for Windows"
+    },
+    {
+      "id": "winutil:appx:WPFAppxMSTeams",
+      "service": "clean",
+      "topic": "Apps pré-instalados do Windows",
+      "title": "Remover Microsoft Teams"
+    },
+    {
+      "id": "winutil:appx:WPFAppxClipchamp_Clipchamp",
+      "service": "clean",
+      "topic": "Apps pré-instalados do Windows",
+      "title": "Remover Clipchamp"
+    },
+    {
+      "id": "winutil:appx:WPFAppxMicrosoft_MicrosoftOfficeHub",
+      "service": "clean",
+      "topic": "Apps pré-instalados do Windows",
+      "title": "Remover Microsoft 365"
+    },
+    {
+      "id": "winutil:appx:WPFAppxMicrosoft_ZuneMusic",
+      "service": "clean",
+      "topic": "Apps pré-instalados do Windows",
+      "title": "Remover Media Player"
+    },
+    {
+      "id": "winutil:appx:WPFAppxMicrosoft_BingSearch",
+      "service": "clean",
+      "topic": "Apps pré-instalados do Windows",
+      "title": "Remover Bing Search"
+    },
+    {
+      "id": "winutil:appx:WPFAppxMicrosoftCorporationII_QuickAssist",
+      "service": "clean",
+      "topic": "Apps pré-instalados do Windows",
+      "title": "Remover Quick Assist"
+    },
+    {
+      "id": "winutil:appx:WPFAppxMicrosoft_WindowsDevHome",
+      "service": "clean",
+      "topic": "Apps pré-instalados do Windows",
+      "title": "Remover Dev Home"
+    },
+    {
+      "id": "winutil:appx:WPFAppxMicrosoft_WindowsCrossDevice",
+      "service": "clean",
+      "topic": "Apps pré-instalados do Windows",
+      "title": "Remover Mobile Devices"
+    },
+    {
+      "id": "winutil:appx:WPFAppxMicrosoft_Todos",
+      "service": "clean",
+      "topic": "Apps pré-instalados do Windows",
+      "title": "Remover To Do"
+    },
+    {
+      "id": "winutil:appx:WPFAppxMicrosoft_PowerAutomateDesktop",
+      "service": "clean",
+      "topic": "Apps pré-instalados do Windows",
+      "title": "Remover Power Automate"
+    },
+    {
+      "id": "winutil:appx:WPFAppxMicrosoft_YourPhone",
+      "service": "clean",
+      "topic": "Apps pré-instalados do Windows",
+      "title": "Remover Phone Link"
+    },
+    {
+      "id": "winutil:appx:WPFAppxMicrosoft_MicrosoftStickyNotes",
+      "service": "clean",
+      "topic": "Apps pré-instalados do Windows",
+      "title": "Remover Sticky Notes"
+    },
+    {
+      "id": "winutil:appx:WPFAppxMicrosoft_WindowsSoundRecorder",
+      "service": "clean",
+      "topic": "Apps pré-instalados do Windows",
+      "title": "Remover Sound Recorder"
+    },
+    {
+      "id": "winutil:appx:WPFAppxMicrosoft_WindowsAlarms",
+      "service": "clean",
+      "topic": "Apps pré-instalados do Windows",
+      "title": "Remover Clock"
+    },
+    {
+      "id": "winutil:appx:WPFAppxMicrosoft_Paint",
+      "service": "clean",
+      "topic": "Apps pré-instalados do Windows",
+      "title": "Remover Paint"
+    },
+    {
+      "id": "winutil:appx:WPFAppxMicrosoft_WindowsNotepad",
+      "service": "clean",
+      "topic": "Apps pré-instalados do Windows",
+      "title": "Remover Notepad"
+    },
+    {
+      "id": "winutil:appx:WPFAppxMicrosoft_ScreenSketch",
+      "service": "clean",
+      "topic": "Apps pré-instalados do Windows",
+      "title": "Remover Snipping Tool"
+    },
+    {
+      "id": "winutil:appx:WPFAppxMicrosoft_Copilot",
+      "service": "clean",
+      "topic": "Apps pré-instalados do Windows",
+      "title": "Remover Copilot"
+    },
+    {
+      "id": "winutil:appx:WPFAppxMicrosoft_WindowsCalculator",
+      "service": "clean",
+      "topic": "Apps pré-instalados do Windows",
+      "title": "Remover Calculator"
+    },
+    {
+      "id": "winutil:appx:WPFAppxMicrosoft_WindowsCamera",
+      "service": "clean",
+      "topic": "Apps pré-instalados do Windows",
+      "title": "Remover Camera"
+    },
+    {
+      "id": "winutil:appx:WPFAppxMicrosoft_WindowsPhotos",
+      "service": "clean",
+      "topic": "Apps pré-instalados do Windows",
+      "title": "Remover Photos"
+    },
+    {
+      "id": "winutil:appx:WPFAppxMicrosoft_BingNews",
+      "service": "clean",
+      "topic": "Apps pré-instalados do Windows",
+      "title": "Remover News"
+    },
+    {
+      "id": "winutil:appx:WPFAppxMicrosoft_BingWeather",
+      "service": "clean",
+      "topic": "Apps pré-instalados do Windows",
+      "title": "Remover Weather"
+    },
+    {
+      "id": "winutil:appx:WPFAppxMicrosoft_GamingApp",
+      "service": "clean",
+      "topic": "Apps pré-instalados do Windows",
+      "title": "Remover Xbox App"
+    },
+    {
+      "id": "winutil:appx:WPFAppxMicrosoft_XboxGamingOverlay",
+      "service": "clean",
+      "topic": "Apps pré-instalados do Windows",
+      "title": "Remover Xbox Game Bar"
+    },
+    {
+      "id": "winutil:appx:WPFAppxMicrosoft_XboxIdentityProvider",
+      "service": "clean",
+      "topic": "Apps pré-instalados do Windows",
+      "title": "Remover Xbox Identity Provider"
+    },
+    {
+      "id": "winutil:appx:WPFAppxMicrosoft_XboxSpeechToTextOverlay",
+      "service": "clean",
+      "topic": "Apps pré-instalados do Windows",
+      "title": "Remover Xbox Speech To Text Overlay"
+    },
+    {
+      "id": "winutil:appx:WPFAppxMicrosoft_Xbox_TCUI",
+      "service": "clean",
+      "topic": "Apps pré-instalados do Windows",
+      "title": "Remover Xbox TCUI"
+    },
+    {
+      "id": "winutil:appx:WPFAppxMicrosoft_StartExperiencesApp",
+      "service": "clean",
+      "topic": "Apps pré-instalados do Windows",
+      "title": "Remover Start Experiences App"
+    },
+    {
+      "id": "winutil:appx:WPFAppxMicrosoft_MicrosoftSolitaireCollection",
+      "service": "clean",
+      "topic": "Apps pré-instalados do Windows",
+      "title": "Remover Solitaire Collection"
+    },
+    {
+      "id": "winutil:appx:WPFAppxMicrosoft_ZuneVideo",
+      "service": "clean",
+      "topic": "Apps pré-instalados do Windows",
+      "title": "Remover Movies & TV"
+    },
+    {
+      "id": "winutil:dns:Google",
+      "service": "network",
+      "topic": "DNS e filtros",
+      "title": "Google"
+    },
+    {
+      "id": "winutil:dns:Cloudflare",
+      "service": "network",
+      "topic": "DNS e filtros",
+      "title": "Cloudflare"
+    },
+    {
+      "id": "winutil:dns:Cloudflare_Malware",
+      "service": "network",
+      "topic": "DNS e filtros",
+      "title": "Cloudflare_Malware"
+    },
+    {
+      "id": "winutil:dns:Cloudflare_Malware_Adult",
+      "service": "network",
+      "topic": "DNS e filtros",
+      "title": "Cloudflare_Malware_Adult"
+    },
+    {
+      "id": "winutil:dns:Open_DNS",
+      "service": "network",
+      "topic": "DNS e filtros",
+      "title": "Open_DNS"
+    },
+    {
+      "id": "winutil:dns:Quad9",
+      "service": "network",
+      "topic": "DNS e filtros",
+      "title": "Quad9"
+    },
+    {
+      "id": "winutil:dns:AdGuard_Ads_Trackers",
+      "service": "network",
+      "topic": "DNS e filtros",
+      "title": "AdGuard_Ads_Trackers"
+    },
+    {
+      "id": "winutil:dns:AdGuard_Ads_Trackers_Malware_Adult",
+      "service": "network",
+      "topic": "DNS e filtros",
+      "title": "AdGuard_Ads_Trackers_Malware_Adult"
+    },
+    {
+      "id": "winutil:app:1password",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "1Password"
+    },
+    {
+      "id": "winutil:app:7zip",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "7-Zip"
+    },
+    {
+      "id": "winutil:app:abdownloadmanager",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "AB Download Manager"
+    },
+    {
+      "id": "winutil:app:adobe",
+      "service": "apps",
+      "topic": "Documentos e escritório",
+      "title": "Adobe Acrobat Reader"
+    },
+    {
+      "id": "winutil:app:advancedip",
+      "service": "network",
+      "topic": "Diagnóstico e ferramentas",
+      "title": "Advanced IP Scanner"
+    },
+    {
+      "id": "winutil:app:aimp",
+      "service": "apps",
+      "topic": "Áudio, vídeo e imagem",
+      "title": "AIMP (Music Player)"
+    },
+    {
+      "id": "winutil:app:angryipscanner",
+      "service": "network",
+      "topic": "Diagnóstico e ferramentas",
+      "title": "Angry IP Scanner"
+    },
+    {
+      "id": "winutil:app:anydesk",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "AnyDesk"
+    },
+    {
+      "id": "winutil:app:audacity",
+      "service": "apps",
+      "topic": "Áudio, vídeo e imagem",
+      "title": "Audacity"
+    },
+    {
+      "id": "winutil:app:autoruns",
+      "service": "advanced",
+      "topic": "Serviços e comportamento do sistema",
+      "title": "Autoruns"
+    },
+    {
+      "id": "winutil:app:rdcman",
+      "service": "apps",
+      "topic": "Ferramentas Microsoft",
+      "title": "RDCMan"
+    },
+    {
+      "id": "winutil:app:autohotkey",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "AutoHotkey"
+    },
+    {
+      "id": "winutil:app:battlenet",
+      "service": "apps",
+      "topic": "Jogos e launchers",
+      "title": "Battle.net"
+    },
+    {
+      "id": "winutil:app:bitwarden",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "Bitwarden"
+    },
+    {
+      "id": "winutil:app:blender",
+      "service": "apps",
+      "topic": "Áudio, vídeo e imagem",
+      "title": "Blender (3D Graphics)"
+    },
+    {
+      "id": "winutil:app:brave",
+      "service": "apps",
+      "topic": "Navegadores",
+      "title": "Brave"
+    },
+    {
+      "id": "winutil:app:bruno",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "Bruno"
+    },
+    {
+      "id": "winutil:app:bulkcrapuninstaller",
+      "service": "clean",
+      "topic": "Ferramentas de desinstalação",
+      "title": "Bulk Crap Uninstaller"
+    },
+    {
+      "id": "winutil:app:blurautoclicker",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "BlurAutoClicker"
+    },
+    {
+      "id": "winutil:app:calibre",
+      "service": "apps",
+      "topic": "Áudio, vídeo e imagem",
+      "title": "Calibre"
+    },
+    {
+      "id": "winutil:app:cemu",
+      "service": "apps",
+      "topic": "Jogos e launchers",
+      "title": "Cemu"
+    },
+    {
+      "id": "winutil:app:chatgpt",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "ChatGPT Desktop"
+    },
+    {
+      "id": "winutil:app:chatterino",
+      "service": "apps",
+      "topic": "Comunicação",
+      "title": "Chatterino"
+    },
+    {
+      "id": "winutil:app:chrome",
+      "service": "apps",
+      "topic": "Navegadores",
+      "title": "Chrome"
+    },
+    {
+      "id": "winutil:app:chromium",
+      "service": "apps",
+      "topic": "Navegadores",
+      "title": "Chromium"
+    },
+    {
+      "id": "winutil:app:cinebenchr23",
+      "service": "cpu",
+      "topic": "Diagnóstico de CPU e RAM",
+      "title": "Cinebench R23"
+    },
+    {
+      "id": "winutil:app:claude",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "Claude Desktop"
+    },
+    {
+      "id": "winutil:app:claude-code",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "Claude Code"
+    },
+    {
+      "id": "winutil:app:cmake",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "CMake"
+    },
+    {
+      "id": "winutil:app:codex",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "Codex"
+    },
+    {
+      "id": "winutil:app:cpuz",
+      "service": "cpu",
+      "topic": "Diagnóstico de CPU e RAM",
+      "title": "CPU-Z"
+    },
+    {
+      "id": "winutil:app:crystaldiskinfo",
+      "service": "devices",
+      "topic": "Armazenamento e NVMe",
+      "title": "Crystal Disk Info"
+    },
+    {
+      "id": "winutil:app:crystaldiskmark",
+      "service": "devices",
+      "topic": "Armazenamento e NVMe",
+      "title": "Crystal Disk Mark"
+    },
+    {
+      "id": "winutil:app:cursor",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "Cursor"
+    },
+    {
+      "id": "winutil:app:ddu",
+      "service": "gpu",
+      "topic": "Limpeza e instalação de drivers",
+      "title": "Display Driver Uninstaller"
+    },
+    {
+      "id": "winutil:app:discord",
+      "service": "apps",
+      "topic": "Comunicação",
+      "title": "Discord"
+    },
+    {
+      "id": "winutil:app:dismtools",
+      "service": "repair",
+      "topic": "Integridade do Windows",
+      "title": "DISMTools"
+    },
+    {
+      "id": "winutil:app:ntlite",
+      "service": "repair",
+      "topic": "Recuperação e reinstalação",
+      "title": "NTLite"
+    },
+    {
+      "id": "winutil:app:dorion",
+      "service": "apps",
+      "topic": "Comunicação",
+      "title": "Dorion"
+    },
+    {
+      "id": "winutil:app:dockerdesktop",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "Docker Desktop"
+    },
+    {
+      "id": "winutil:app:dotnet6",
+      "service": "apps",
+      "topic": "Ferramentas Microsoft",
+      "title": ".NET Desktop Runtime 6"
+    },
+    {
+      "id": "winutil:app:dotnet8",
+      "service": "apps",
+      "topic": "Ferramentas Microsoft",
+      "title": ".NET Desktop Runtime 8"
+    },
+    {
+      "id": "winutil:app:dotnet9",
+      "service": "apps",
+      "topic": "Ferramentas Microsoft",
+      "title": ".NET Desktop Runtime 9"
+    },
+    {
+      "id": "winutil:app:dotnet10",
+      "service": "apps",
+      "topic": "Ferramentas Microsoft",
+      "title": ".NET Desktop Runtime 10"
+    },
+    {
+      "id": "winutil:app:dropbox",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "Dropbox"
+    },
+    {
+      "id": "winutil:app:eaapp",
+      "service": "apps",
+      "topic": "Jogos e launchers",
+      "title": "EA App"
+    },
+    {
+      "id": "winutil:app:eartrumpet",
+      "service": "apps",
+      "topic": "Áudio, vídeo e imagem",
+      "title": "EarTrumpet (Audio)"
+    },
+    {
+      "id": "winutil:app:edge",
+      "service": "apps",
+      "topic": "Navegadores",
+      "title": "Edge"
+    },
+    {
+      "id": "winutil:app:es-de",
+      "service": "apps",
+      "topic": "Jogos e launchers",
+      "title": "EmulationStation Desktop Edition"
+    },
+    {
+      "id": "winutil:app:enteauth",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "Ente Auth"
+    },
+    {
+      "id": "winutil:app:epicgames",
+      "service": "apps",
+      "topic": "Jogos e launchers",
+      "title": "Epic Games Launcher"
+    },
+    {
+      "id": "winutil:app:files",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "Files"
+    },
+    {
+      "id": "winutil:app:fileconverter",
+      "service": "apps",
+      "topic": "Áudio, vídeo e imagem",
+      "title": "File Converter"
+    },
+    {
+      "id": "winutil:app:firefox",
+      "service": "apps",
+      "topic": "Navegadores",
+      "title": "Firefox"
+    },
+    {
+      "id": "winutil:app:firefoxesr",
+      "service": "apps",
+      "topic": "Navegadores",
+      "title": "Firefox ESR"
+    },
+    {
+      "id": "winutil:app:floorp",
+      "service": "apps",
+      "topic": "Navegadores",
+      "title": "Floorp"
+    },
+    {
+      "id": "winutil:app:flux",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "F.lux"
+    },
+    {
+      "id": "winutil:app:foobar",
+      "service": "apps",
+      "topic": "Áudio, vídeo e imagem",
+      "title": "foobar2000 (Music Player)"
+    },
+    {
+      "id": "winutil:app:fnm",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "Fast Node Manager"
+    },
+    {
+      "id": "winutil:app:foxpdfreader",
+      "service": "apps",
+      "topic": "Documentos e escritório",
+      "title": "Foxit PDF Reader"
+    },
+    {
+      "id": "winutil:app:geforcenow",
+      "service": "apps",
+      "topic": "Jogos e launchers",
+      "title": "GeForce NOW"
+    },
+    {
+      "id": "winutil:app:gimp",
+      "service": "apps",
+      "topic": "Áudio, vídeo e imagem",
+      "title": "GIMP (Image Editor)"
+    },
+    {
+      "id": "winutil:app:git",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "Git"
+    },
+    {
+      "id": "winutil:app:gitextensions",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "Git Extensions"
+    },
+    {
+      "id": "winutil:app:githubcli",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "GitHub CLI"
+    },
+    {
+      "id": "winutil:app:githubdesktop",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "GitHub Desktop"
+    },
+    {
+      "id": "winutil:app:gog",
+      "service": "apps",
+      "topic": "Jogos e launchers",
+      "title": "GOG Galaxy"
+    },
+    {
+      "id": "winutil:app:golang",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "Go"
+    },
+    {
+      "id": "winutil:app:googledrive",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "Google Drive"
+    },
+    {
+      "id": "winutil:app:gpuz",
+      "service": "gpu",
+      "topic": "Diagnóstico e ferramentas",
+      "title": "GPU-Z"
+    },
+    {
+      "id": "winutil:app:gsudo",
+      "service": "apps",
+      "topic": "Ferramentas técnicas",
+      "title": "gsudo"
+    },
+    {
+      "id": "winutil:app:helium",
+      "service": "apps",
+      "topic": "Navegadores",
+      "title": "Helium"
+    },
+    {
+      "id": "winutil:app:hugo",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "Hugo"
+    },
+    {
+      "id": "winutil:app:handbrake",
+      "service": "apps",
+      "topic": "Áudio, vídeo e imagem",
+      "title": "HandBrake"
+    },
+    {
+      "id": "winutil:app:heroiclauncher",
+      "service": "apps",
+      "topic": "Jogos e launchers",
+      "title": "Heroic Games Launcher"
+    },
+    {
+      "id": "winutil:app:hwinfo",
+      "service": "cpu",
+      "topic": "Diagnóstico de CPU e RAM",
+      "title": "HWiNFO"
+    },
+    {
+      "id": "winutil:app:hwmonitor",
+      "service": "cpu",
+      "topic": "Diagnóstico de CPU e RAM",
+      "title": "HWMonitor"
+    },
+    {
+      "id": "winutil:app:imhex",
+      "service": "apps",
+      "topic": "Ferramentas técnicas",
+      "title": "ImHex"
+    },
+    {
+      "id": "winutil:app:imageglass",
+      "service": "apps",
+      "topic": "Áudio, vídeo e imagem",
+      "title": "ImageGlass (Image Viewer)"
+    },
+    {
+      "id": "winutil:app:internetdownloadmanager",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "Internet Download Manager"
+    },
+    {
+      "id": "winutil:app:irfanview",
+      "service": "apps",
+      "topic": "Áudio, vídeo e imagem",
+      "title": "IrfanView"
+    },
+    {
+      "id": "winutil:app:itch",
+      "service": "apps",
+      "topic": "Jogos e launchers",
+      "title": "Itch.io"
+    },
+    {
+      "id": "winutil:app:itunes",
+      "service": "apps",
+      "topic": "Áudio, vídeo e imagem",
+      "title": "iTunes"
+    },
+    {
+      "id": "winutil:app:java8",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "Amazon Corretto 8 (LTS)"
+    },
+    {
+      "id": "winutil:app:java21",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "Amazon Corretto 21 (LTS)"
+    },
+    {
+      "id": "winutil:app:java25",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "Amazon Corretto 25 (LTS)"
+    },
+    {
+      "id": "winutil:app:jellyfinmediaplayer",
+      "service": "apps",
+      "topic": "Servidores e compartilhamento",
+      "title": "Jellyfin Media Player"
+    },
+    {
+      "id": "winutil:app:jellyfinserver",
+      "service": "apps",
+      "topic": "Servidores e compartilhamento",
+      "title": "Jellyfin Server"
+    },
+    {
+      "id": "winutil:app:jetbrains",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "Jetbrains Toolbox"
+    },
+    {
+      "id": "winutil:app:jpegview",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "JPEG View"
+    },
+    {
+      "id": "winutil:app:joplin",
+      "service": "apps",
+      "topic": "Documentos e escritório",
+      "title": "Joplin"
+    },
+    {
+      "id": "winutil:app:keepassxc",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "KeePassXC"
+    },
+    {
+      "id": "winutil:app:klite",
+      "service": "apps",
+      "topic": "Áudio, vídeo e imagem",
+      "title": "K-Lite Codec Standard"
+    },
+    {
+      "id": "winutil:app:kodi",
+      "service": "apps",
+      "topic": "Servidores e compartilhamento",
+      "title": "Kodi Media Center"
+    },
+    {
+      "id": "winutil:app:lazygit",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "Lazygit"
+    },
+    {
+      "id": "winutil:app:libreoffice",
+      "service": "apps",
+      "topic": "Documentos e escritório",
+      "title": "LibreOffice"
+    },
+    {
+      "id": "winutil:app:librewolf",
+      "service": "apps",
+      "topic": "Navegadores",
+      "title": "LibreWolf"
+    },
+    {
+      "id": "winutil:app:localsend",
+      "service": "apps",
+      "topic": "Servidores e compartilhamento",
+      "title": "LocalSend"
+    },
+    {
+      "id": "winutil:app:mpc-qt",
+      "service": "apps",
+      "topic": "Áudio, vídeo e imagem",
+      "title": "mpc-qt"
+    },
+    {
+      "id": "winutil:app:mpv",
+      "service": "apps",
+      "topic": "Áudio, vídeo e imagem",
+      "title": "mpv"
+    },
+    {
+      "id": "winutil:app:matrix",
+      "service": "apps",
+      "topic": "Comunicação",
+      "title": "Element"
+    },
+    {
+      "id": "winutil:app:minitoolpartitionwizard",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "MiniTool Partition Wizard"
+    },
+    {
+      "id": "winutil:app:modrinth",
+      "service": "apps",
+      "topic": "Jogos e launchers",
+      "title": "Modrinth App"
+    },
+    {
+      "id": "winutil:app:moonlight",
+      "service": "apps",
+      "topic": "Servidores e compartilhamento",
+      "title": "Moonlight/GameStream Client"
+    },
+    {
+      "id": "winutil:app:mpchc",
+      "service": "apps",
+      "topic": "Áudio, vídeo e imagem",
+      "title": "Media Player Classic - Home Cinema"
+    },
+    {
+      "id": "winutil:app:msedgeredirect",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "MSEdgeRedirect"
+    },
+    {
+      "id": "winutil:app:msiafterburner",
+      "service": "gpu",
+      "topic": "Diagnóstico e ferramentas",
+      "title": "MSI Afterburner"
+    },
+    {
+      "id": "winutil:app:mullvadvpn",
+      "service": "network",
+      "topic": "Diagnóstico e ferramentas",
+      "title": "Mullvad VPN"
+    },
+    {
+      "id": "winutil:app:mullvadbrowser",
+      "service": "apps",
+      "topic": "Navegadores",
+      "title": "Mullvad Browser"
+    },
+    {
+      "id": "winutil:app:nomacs",
+      "service": "apps",
+      "topic": "Áudio, vídeo e imagem",
+      "title": "nomacs"
+    },
+    {
+      "id": "winutil:app:nanazip",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "NanaZip"
+    },
+    {
+      "id": "winutil:app:netbird",
+      "service": "network",
+      "topic": "Diagnóstico e ferramentas",
+      "title": "NetBird"
+    },
+    {
+      "id": "winutil:app:tailscale",
+      "service": "network",
+      "topic": "Diagnóstico e ferramentas",
+      "title": "Tailscale"
+    },
+    {
+      "id": "winutil:app:naps2",
+      "service": "apps",
+      "topic": "Documentos e escritório",
+      "title": "NAPS2 (Scanner)"
+    },
+    {
+      "id": "winutil:app:neovim",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "Neovim"
+    },
+    {
+      "id": "winutil:app:nextclouddesktop",
+      "service": "apps",
+      "topic": "Servidores e compartilhamento",
+      "title": "Nextcloud Desktop"
+    },
+    {
+      "id": "winutil:app:nmap",
+      "service": "network",
+      "topic": "Diagnóstico e ferramentas",
+      "title": "Nmap"
+    },
+    {
+      "id": "winutil:app:nodejs",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "NodeJS"
+    },
+    {
+      "id": "winutil:app:nodejslts",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "NodeJS LTS"
+    },
+    {
+      "id": "winutil:app:pnpm",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "pnpm"
+    },
+    {
+      "id": "winutil:app:notepadplus",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "Notepad++"
+    },
+    {
+      "id": "winutil:app:nuget",
+      "service": "apps",
+      "topic": "Ferramentas Microsoft",
+      "title": "NuGet"
+    },
+    {
+      "id": "winutil:app:nvclean",
+      "service": "gpu",
+      "topic": "Limpeza e instalação de drivers",
+      "title": "NVCleanstall"
+    },
+    {
+      "id": "winutil:app:obs",
+      "service": "apps",
+      "topic": "Áudio, vídeo e imagem",
+      "title": "OBS Studio"
+    },
+    {
+      "id": "winutil:app:obsidian",
+      "service": "apps",
+      "topic": "Documentos e escritório",
+      "title": "Obsidian"
+    },
+    {
+      "id": "winutil:app:okular",
+      "service": "apps",
+      "topic": "Documentos e escritório",
+      "title": "Okular"
+    },
+    {
+      "id": "winutil:app:onedrive",
+      "service": "apps",
+      "topic": "Ferramentas Microsoft",
+      "title": "OneDrive"
+    },
+    {
+      "id": "winutil:app:onlyoffice",
+      "service": "apps",
+      "topic": "Documentos e escritório",
+      "title": "ONLYOFFICE Desktop"
+    },
+    {
+      "id": "winutil:app:OPAutoClicker",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "OPAutoClicker"
+    },
+    {
+      "id": "winutil:app:opencode",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "OpenCode"
+    },
+    {
+      "id": "winutil:app:openrgb",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "OpenRGB"
+    },
+    {
+      "id": "winutil:app:OpenVPN",
+      "service": "apps",
+      "topic": "Ferramentas técnicas",
+      "title": "OpenVPN Connect"
+    },
+    {
+      "id": "winutil:app:OVirtualBox",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "Oracle VirtualBox"
+    },
+    {
+      "id": "winutil:app:policyplus",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "Policy Plus"
+    },
+    {
+      "id": "winutil:app:processexplorer",
+      "service": "advanced",
+      "topic": "Serviços e comportamento do sistema",
+      "title": "Process Explorer"
+    },
+    {
+      "id": "winutil:app:Paintdotnet",
+      "service": "apps",
+      "topic": "Áudio, vídeo e imagem",
+      "title": "Paint.NET"
+    },
+    {
+      "id": "winutil:app:parsec",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "Parsec"
+    },
+    {
+      "id": "winutil:app:peazip",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "PeaZip"
+    },
+    {
+      "id": "winutil:app:pdf-xchange",
+      "service": "apps",
+      "topic": "Documentos e escritório",
+      "title": "PDF-XChange Editor"
+    },
+    {
+      "id": "winutil:app:pdf24creator",
+      "service": "apps",
+      "topic": "Documentos e escritório",
+      "title": "PDF24 Creator"
+    },
+    {
+      "id": "winutil:app:pdfgear",
+      "service": "apps",
+      "topic": "Documentos e escritório",
+      "title": "PDFgear"
+    },
+    {
+      "id": "winutil:app:pdfsam",
+      "service": "apps",
+      "topic": "Documentos e escritório",
+      "title": "PDFsam Basic"
+    },
+    {
+      "id": "winutil:app:playnite",
+      "service": "apps",
+      "topic": "Jogos e launchers",
+      "title": "Playnite"
+    },
+    {
+      "id": "winutil:app:plex",
+      "service": "apps",
+      "topic": "Servidores e compartilhamento",
+      "title": "Plex Media Server"
+    },
+    {
+      "id": "winutil:app:plexdesktop",
+      "service": "apps",
+      "topic": "Servidores e compartilhamento",
+      "title": "Plex Desktop"
+    },
+    {
+      "id": "winutil:app:posh",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "Oh My Posh (Prompt)"
+    },
+    {
+      "id": "winutil:app:postman",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "Postman"
+    },
+    {
+      "id": "winutil:app:powershell",
+      "service": "apps",
+      "topic": "Ferramentas Microsoft",
+      "title": "PowerShell"
+    },
+    {
+      "id": "winutil:app:powertoys",
+      "service": "apps",
+      "topic": "Ferramentas Microsoft",
+      "title": "PowerToys"
+    },
+    {
+      "id": "winutil:app:prismlauncher",
+      "service": "apps",
+      "topic": "Jogos e launchers",
+      "title": "Prism Launcher"
+    },
+    {
+      "id": "winutil:app:processlasso",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "Process Lasso"
+    },
+    {
+      "id": "winutil:app:protonauth",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "Proton Authenticator"
+    },
+    {
+      "id": "winutil:app:protonmail",
+      "service": "apps",
+      "topic": "Comunicação",
+      "title": "Proton Mail"
+    },
+    {
+      "id": "winutil:app:protondrive",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "Proton Drive"
+    },
+    {
+      "id": "winutil:app:protonpass",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "Proton Pass"
+    },
+    {
+      "id": "winutil:app:protonvpn",
+      "service": "network",
+      "topic": "Diagnóstico e ferramentas",
+      "title": "Proton VPN"
+    },
+    {
+      "id": "winutil:app:processmonitor",
+      "service": "advanced",
+      "topic": "Serviços e comportamento do sistema",
+      "title": "Process Monitor"
+    },
+    {
+      "id": "winutil:app:pstools",
+      "service": "apps",
+      "topic": "Ferramentas Microsoft",
+      "title": "PsTools"
+    },
+    {
+      "id": "winutil:app:putty",
+      "service": "apps",
+      "topic": "Ferramentas técnicas",
+      "title": "PuTTY"
+    },
+    {
+      "id": "winutil:app:python3",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "Python3"
+    },
+    {
+      "id": "winutil:app:qbittorrent",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "qBittorrent"
+    },
+    {
+      "id": "winutil:app:qownnotes",
+      "service": "apps",
+      "topic": "Documentos e escritório",
+      "title": "QOwnNotes"
+    },
+    {
+      "id": "winutil:app:qtox",
+      "service": "apps",
+      "topic": "Comunicação",
+      "title": "QTox"
+    },
+    {
+      "id": "winutil:app:revo",
+      "service": "clean",
+      "topic": "Ferramentas de desinstalação",
+      "title": "Revo Uninstaller"
+    },
+    {
+      "id": "winutil:app:WiseProgramUninstaller",
+      "service": "clean",
+      "topic": "Ferramentas de desinstalação",
+      "title": "Wise Program Uninstaller (WiseCleaner)"
+    },
+    {
+      "id": "winutil:app:rufus",
+      "service": "apps",
+      "topic": "Ferramentas técnicas",
+      "title": "Rufus Imager"
+    },
+    {
+      "id": "winutil:app:rustlang",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "Rust"
+    },
+    {
+      "id": "winutil:app:sdio",
+      "service": "devices",
+      "topic": "Drivers do sistema",
+      "title": "Snappy Driver Installer Origin"
+    },
+    {
+      "id": "winutil:app:sharex",
+      "service": "apps",
+      "topic": "Áudio, vídeo e imagem",
+      "title": "ShareX (Screenshots)"
+    },
+    {
+      "id": "winutil:app:nilesoftShell",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "Nilesoft Shell"
+    },
+    {
+      "id": "winutil:app:systeminformer",
+      "service": "apps",
+      "topic": "Ferramentas técnicas",
+      "title": "System Informer"
+    },
+    {
+      "id": "winutil:app:signal",
+      "service": "apps",
+      "topic": "Comunicação",
+      "title": "Signal"
+    },
+    {
+      "id": "winutil:app:signalrgb",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "SignalRGB"
+    },
+    {
+      "id": "winutil:app:simplenote",
+      "service": "apps",
+      "topic": "Documentos e escritório",
+      "title": "Simplenote"
+    },
+    {
+      "id": "winutil:app:simplewall",
+      "service": "apps",
+      "topic": "Ferramentas técnicas",
+      "title": "Simplewall"
+    },
+    {
+      "id": "winutil:app:slack",
+      "service": "apps",
+      "topic": "Comunicação",
+      "title": "Slack"
+    },
+    {
+      "id": "winutil:app:startallback",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "StartAllBack"
+    },
+    {
+      "id": "winutil:app:starship",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "Starship (Shell Prompt)"
+    },
+    {
+      "id": "winutil:app:steam",
+      "service": "apps",
+      "topic": "Jogos e launchers",
+      "title": "Steam"
+    },
+    {
+      "id": "winutil:app:roblox",
+      "service": "apps",
+      "topic": "Jogos e launchers",
+      "title": "Roblox"
+    },
+    {
+      "id": "winutil:app:sublimetext",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "Sublime Text"
+    },
+    {
+      "id": "winutil:app:sumatra",
+      "service": "apps",
+      "topic": "Documentos e escritório",
+      "title": "Sumatra PDF"
+    },
+    {
+      "id": "winutil:app:sunshine",
+      "service": "apps",
+      "topic": "Servidores e compartilhamento",
+      "title": "Sunshine/GameStream Server"
+    },
+    {
+      "id": "winutil:app:synctrayzor",
+      "service": "apps",
+      "topic": "Servidores e compartilhamento",
+      "title": "SyncTrayzor"
+    },
+    {
+      "id": "winutil:app:syncthing",
+      "service": "apps",
+      "topic": "Servidores e compartilhamento",
+      "title": "Syncthing (CLI / Web UI)"
+    },
+    {
+      "id": "winutil:app:tcpview",
+      "service": "apps",
+      "topic": "Ferramentas Microsoft",
+      "title": "TCPView"
+    },
+    {
+      "id": "winutil:app:teams",
+      "service": "apps",
+      "topic": "Comunicação",
+      "title": "Teams"
+    },
+    {
+      "id": "winutil:app:teamviewer",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "TeamViewer"
+    },
+    {
+      "id": "winutil:app:teamspeak3",
+      "service": "apps",
+      "topic": "Comunicação",
+      "title": "TeamSpeak 3"
+    },
+    {
+      "id": "winutil:app:teamspeak6",
+      "service": "apps",
+      "topic": "Comunicação",
+      "title": "TeamSpeak 6"
+    },
+    {
+      "id": "winutil:app:telegram",
+      "service": "apps",
+      "topic": "Comunicação",
+      "title": "Telegram"
+    },
+    {
+      "id": "winutil:app:terminal",
+      "service": "apps",
+      "topic": "Ferramentas Microsoft",
+      "title": "Windows Terminal"
+    },
+    {
+      "id": "winutil:app:thunderbird",
+      "service": "apps",
+      "topic": "Comunicação",
+      "title": "Thunderbird"
+    },
+    {
+      "id": "winutil:app:betterbird",
+      "service": "apps",
+      "topic": "Comunicação",
+      "title": "Betterbird"
+    },
+    {
+      "id": "winutil:app:tor",
+      "service": "apps",
+      "topic": "Navegadores",
+      "title": "Tor Browser"
+    },
+    {
+      "id": "winutil:app:totalcommander",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "Total Commander"
+    },
+    {
+      "id": "winutil:app:treesize",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "TreeSize Free"
+    },
+    {
+      "id": "winutil:app:ttaskbar",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "TranslucentTB"
+    },
+    {
+      "id": "winutil:app:ubisoft",
+      "service": "apps",
+      "topic": "Jogos e launchers",
+      "title": "Ubisoft Connect"
+    },
+    {
+      "id": "winutil:app:ungoogled",
+      "service": "apps",
+      "topic": "Navegadores",
+      "title": "Ungoogled Chromium"
+    },
+    {
+      "id": "winutil:app:unity",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "Unity Game Engine"
+    },
+    {
+      "id": "winutil:app:vagrant",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "Vagrant"
+    },
+    {
+      "id": "winutil:app:everything",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "Everything"
+    },
+    {
+      "id": "winutil:app:vc2015_32",
+      "service": "apps",
+      "topic": "Ferramentas Microsoft",
+      "title": "Visual C++ 2015-2022 32-bit"
+    },
+    {
+      "id": "winutil:app:vc2015_64",
+      "service": "apps",
+      "topic": "Ferramentas Microsoft",
+      "title": "Visual C++ 2015-2022 64-bit"
+    },
+    {
+      "id": "winutil:app:ventoy",
+      "service": "apps",
+      "topic": "Ferramentas técnicas",
+      "title": "Ventoy"
+    },
+    {
+      "id": "winutil:app:vesktop",
+      "service": "apps",
+      "topic": "Comunicação",
+      "title": "Vesktop"
+    },
+    {
+      "id": "winutil:app:viber",
+      "service": "apps",
+      "topic": "Comunicação",
+      "title": "Viber"
+    },
+    {
+      "id": "winutil:app:visualstudio2022",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "Visual Studio 2022"
+    },
+    {
+      "id": "winutil:app:visualstudio2026",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "Visual Studio 2026"
+    },
+    {
+      "id": "winutil:app:vivaldi",
+      "service": "apps",
+      "topic": "Navegadores",
+      "title": "Vivaldi"
+    },
+    {
+      "id": "winutil:app:vlc",
+      "service": "apps",
+      "topic": "Áudio, vídeo e imagem",
+      "title": "VLC (Video Player)"
+    },
+    {
+      "id": "winutil:app:vrdesktopstreamer",
+      "service": "apps",
+      "topic": "Jogos e launchers",
+      "title": "Virtual Desktop Streamer"
+    },
+    {
+      "id": "winutil:app:vscode",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "VS Code"
+    },
+    {
+      "id": "winutil:app:vscodium",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "VS Codium"
+    },
+    {
+      "id": "winutil:app:waterfox",
+      "service": "apps",
+      "topic": "Navegadores",
+      "title": "Waterfox"
+    },
+    {
+      "id": "winutil:app:whatsapp",
+      "service": "apps",
+      "topic": "Comunicação",
+      "title": "WhatsApp Desktop"
+    },
+    {
+      "id": "winutil:app:wingetui",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "UniGetUI"
+    },
+    {
+      "id": "winutil:app:winrar",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "WinRAR"
+    },
+    {
+      "id": "winutil:app:winscp",
+      "service": "apps",
+      "topic": "Ferramentas técnicas",
+      "title": "WinSCP"
+    },
+    {
+      "id": "winutil:app:wireguard",
+      "service": "network",
+      "topic": "Diagnóstico e ferramentas",
+      "title": "WireGuard"
+    },
+    {
+      "id": "winutil:app:wireshark",
+      "service": "network",
+      "topic": "Diagnóstico e ferramentas",
+      "title": "Wireshark"
+    },
+    {
+      "id": "winutil:app:wiztree",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "WizTree"
+    },
+    {
+      "id": "winutil:app:xeheditor",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "HxD Hex Editor"
+    },
+    {
+      "id": "winutil:app:xournal",
+      "service": "apps",
+      "topic": "Documentos e escritório",
+      "title": "Xournal++"
+    },
+    {
+      "id": "winutil:app:yarn",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "Yarn"
+    },
+    {
+      "id": "winutil:app:zoom",
+      "service": "apps",
+      "topic": "Comunicação",
+      "title": "Zoom"
+    },
+    {
+      "id": "winutil:app:uv",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "uv"
+    },
+    {
+      "id": "winutil:app:tightvnc",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "TightVNC"
+    },
+    {
+      "id": "winutil:app:glazewm",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "GlazeWM"
+    },
+    {
+      "id": "winutil:app:Overwolf",
+      "service": "apps",
+      "topic": "Jogos e launchers",
+      "title": "CurseForge"
+    },
+    {
+      "id": "winutil:app:OFGB",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "OFGB (Oh Frick Go Back)"
+    },
+    {
+      "id": "winutil:app:ZenBrowser",
+      "service": "apps",
+      "topic": "Navegadores",
+      "title": "Zen Browser"
+    },
+    {
+      "id": "winutil:app:Zed",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "Zed"
+    },
+    {
+      "id": "winutil:app:zotero",
+      "service": "apps",
+      "topic": "Documentos e escritório",
+      "title": "Zotero"
+    },
+    {
+      "id": "winutil:app:deskflow",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "Deskflow"
+    },
+    {
+      "id": "winutil:app:Ruby",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "Ruby"
+    },
+    {
+      "id": "winutil:app:Lua",
+      "service": "apps",
+      "topic": "Desenvolvimento",
+      "title": "Lua"
+    },
+    {
+      "id": "winutil:app:CloudflareWARP",
+      "service": "apps",
+      "topic": "Utilitários",
+      "title": "Cloudflare WARP"
+    },
+    {
+      "id": "rytunex:UsbPowerSaving",
+      "service": "devices",
+      "topic": "USB e gerenciamento de dispositivos",
+      "title": "Desativar economia de energia USB"
+    },
+    {
+      "id": "rytunex:PowerThrottling",
+      "service": "power",
+      "topic": "Planos de energia",
+      "title": "Desativar limitação de energia do processador"
+    },
+    {
+      "id": "rytunex:MenuShowDelay",
+      "service": "windows",
+      "topic": "Aparência e comportamento",
+      "title": "Desativar atraso de abertura dos menus"
+    },
+    {
+      "id": "rytunex:MouseHoverTime",
+      "service": "devices",
+      "topic": "Mouse, teclado e controles",
+      "title": "Desativar atraso ao posicionar o mouse"
+    },
+    {
+      "id": "rytunex:KeyboardLatency",
+      "service": "devices",
+      "topic": "Mouse, teclado e controles",
+      "title": "Otimizar latência do teclado"
+    },
+    {
+      "id": "rytunex:MouseAcceleration",
+      "service": "devices",
+      "topic": "Mouse, teclado e controles",
+      "title": "Desativar aceleração do mouse"
+    },
+    {
+      "id": "rytunex:AutoComplete",
+      "service": "windows",
+      "topic": "Aparência e comportamento",
+      "title": "Desativar preenchimento automático"
+    },
+    {
+      "id": "rytunex:WindowShake",
+      "service": "windows",
+      "topic": "Aparência e comportamento",
+      "title": "Desativar minimização ao agitar janelas"
+    },
+    {
+      "id": "rytunex:GlobalTimerResolution",
+      "service": "cpu",
+      "topic": "Processador e agendamento",
+      "title": "Ativar resolução global do temporizador"
+    },
+    {
+      "id": "rytunex:HPET",
+      "service": "cpu",
+      "topic": "Processador e agendamento",
+      "title": "Desativar temporizador HPET"
+    },
+    {
+      "id": "rytunex:DynamicTick",
+      "service": "cpu",
+      "topic": "Processador e agendamento",
+      "title": "Desativar tick dinâmico"
+    },
+    {
+      "id": "rytunex:SysMain",
+      "service": "cpu",
+      "topic": "Memória, cache e compressão",
+      "title": "Desativar serviço SysMain"
+    },
+    {
+      "id": "rytunex:Prefetch",
+      "service": "cpu",
+      "topic": "Memória, cache e compressão",
+      "title": "Desativar Prefetch e Superfetch"
+    },
+    {
+      "id": "rytunex:LargeSystemCache",
+      "service": "cpu",
+      "topic": "Memória, cache e compressão",
+      "title": "Ativar cache de sistema ampliado"
+    },
+    {
+      "id": "rytunex:NDU",
+      "service": "network",
+      "topic": "Protocolos e conectividade",
+      "title": "Desativar monitor de uso de dados de rede"
+    },
+    {
+      "id": "rytunex:PageFileEncryption",
+      "service": "privacy",
+      "topic": "Criptografia e acesso",
+      "title": "Desativar criptografia do arquivo de paginação"
+    },
+    {
+      "id": "rytunex:GamingMode",
+      "service": "gpu",
+      "topic": "Renderização e jogos",
+      "title": "Ativar modo de jogo"
+    },
+    {
+      "id": "rytunex:FullscreenOptimizations",
+      "service": "gpu",
+      "topic": "Renderização e jogos",
+      "title": "Ativar otimizações de tela cheia"
+    },
+    {
+      "id": "rytunex:GpuDriverTweaks",
+      "service": "gpu",
+      "topic": "NVIDIA, AMD e Intel",
+      "title": "Ajustes de desempenho do driver de vídeo"
+    },
+    {
+      "id": "rytunex:SystemProfile",
+      "service": "cpu",
+      "topic": "Processador e agendamento",
+      "title": "Otimizar perfil de desempenho do sistema"
+    },
+    {
+      "id": "rytunex:OptimizeNTFS",
+      "service": "clean",
+      "topic": "Arquivos temporários e disco",
+      "title": "Otimizar configurações do NTFS"
+    },
+    {
+      "id": "rytunex:PrioritizeForegroundApplications",
+      "service": "cpu",
+      "topic": "Processador e agendamento",
+      "title": "Otimizar desempenho de aplicativos em primeiro plano"
+    },
+    {
+      "id": "rytunex:LowDiskSpaceChecks",
+      "service": "clean",
+      "topic": "Arquivos temporários e disco",
+      "title": "Ativar avisos de pouco espaço em disco"
+    },
+    {
+      "id": "rytunex:FileExtensionsAndHiddenFiles",
+      "service": "windows",
+      "topic": "Explorador de arquivos",
+      "title": "Ocultar extensões e arquivos ocultos"
+    },
+    {
+      "id": "rytunex:LinkResolve",
+      "service": "windows",
+      "topic": "Explorador de arquivos",
+      "title": "Desativar resolução de atalhos"
+    },
+    {
+      "id": "rytunex:BackgroundApps",
+      "service": "windows",
+      "topic": "Inicialização e segundo plano",
+      "title": "Desativar aplicativos em segundo plano"
+    },
+    {
+      "id": "rytunex:CrashDump",
+      "service": "advanced",
+      "topic": "Serviços e comportamento do sistema",
+      "title": "Desativar despejo de memória após falha"
+    },
+    {
+      "id": "rytunex:RemoteAssistance",
+      "service": "privacy",
+      "topic": "Criptografia e acesso",
+      "title": "Desativar Assistência Remota"
+    },
+    {
+      "id": "rytunex:RemoteRegistry",
+      "service": "privacy",
+      "topic": "Criptografia e acesso",
+      "title": "Desativar Registro Remoto"
+    },
+    {
+      "id": "rytunex:ServiceHostSplitting",
+      "service": "cpu",
+      "topic": "Memória, cache e compressão",
+      "title": "Desativar divisão de processos de serviços"
+    },
+    {
+      "id": "rytunex:TaskTimeouts",
+      "service": "advanced",
+      "topic": "Serviços e comportamento do sistema",
+      "title": "Ajustar limites de espera de tarefas"
+    },
+    {
+      "id": "rytunex:ServiceTimeouts",
+      "service": "advanced",
+      "topic": "Serviços e comportamento do sistema",
+      "title": "Reduzir tempo de espera dos serviços"
+    },
+    {
+      "id": "rytunex:CopyMoveContextMenu",
+      "service": "windows",
+      "topic": "Explorador de arquivos",
+      "title": "Adicionar Copiar/Mover ao menu de contexto"
+    },
+    {
+      "id": "rytunex:WPBT",
+      "service": "privacy",
+      "topic": "Telemetria e histórico",
+      "title": "Desativar execução de WPBT"
+    },
+    {
+      "id": "rytunex:LegacyBootMenu",
+      "service": "advanced",
+      "topic": "BIOS e inicialização",
+      "title": "Ativar menu de inicialização legado"
+    },
+    {
+      "id": "rytunex:SystemRestore",
+      "service": "advanced",
+      "topic": "Recuperação e políticas avançadas",
+      "title": "Desativar Restauração do Sistema"
+    },
+    {
+      "id": "rytunex:Cortana",
+      "service": "windows",
+      "topic": "Navegadores e aplicativos do sistema",
+      "title": "Desativar Cortana"
+    },
+    {
+      "id": "rytunex:StoreUpdates",
+      "service": "repair",
+      "topic": "Windows Update e componentes",
+      "title": "Desativar atualizações da Microsoft Store"
+    },
+    {
+      "id": "rytunex:SmartScreen",
+      "service": "privacy",
+      "topic": "Proteção do Windows",
+      "title": "Desativar SmartScreen"
+    },
+    {
+      "id": "rytunex:Drivers",
+      "service": "devices",
+      "topic": "Drivers do sistema",
+      "title": "Excluir drivers das atualizações do Windows"
+    },
+    {
+      "id": "rytunex:WindowsTransparency",
+      "service": "windows",
+      "topic": "Aparência e comportamento",
+      "title": "Desativar transparência do Windows"
+    },
+    {
+      "id": "rytunex:WindowsDarkMode",
+      "service": "windows",
+      "topic": "Aparência e comportamento",
+      "title": "Ativar modo escuro do Windows"
+    },
+    {
+      "id": "rytunex:VerboseLogon",
+      "service": "advanced",
+      "topic": "Serviços e comportamento do sistema",
+      "title": "Ativar detalhes durante o logon"
+    },
+    {
+      "id": "rytunex:HomeGroup",
+      "service": "network",
+      "topic": "Protocolos e conectividade",
+      "title": "Desativar Grupo Doméstico"
+    },
+    {
+      "id": "rytunex:PrintService",
+      "service": "devices",
+      "topic": "USB e gerenciamento de dispositivos",
+      "title": "Desativar serviço de impressão"
+    },
+    {
+      "id": "rytunex:CompatibilityAssistant",
+      "service": "advanced",
+      "topic": "Serviços e comportamento do sistema",
+      "title": "Desativar Assistente de Compatibilidade"
+    },
+    {
+      "id": "rytunex:Search",
+      "service": "advanced",
+      "topic": "Serviços e comportamento do sistema",
+      "title": "Desativar serviço de pesquisa"
+    },
+    {
+      "id": "rytunex:FaxService",
+      "service": "devices",
+      "topic": "USB e gerenciamento de dispositivos",
+      "title": "Desativar serviço de fax"
+    },
+    {
+      "id": "rytunex:InsiderService",
+      "service": "repair",
+      "topic": "Windows Update e componentes",
+      "title": "Desativar serviço Windows Insider"
+    },
+    {
+      "id": "rytunex:Hibernation",
+      "service": "power",
+      "topic": "Suspensão e hibernação",
+      "title": "Desativar hibernação"
+    },
+    {
+      "id": "rytunex:StickyKeys",
+      "service": "devices",
+      "topic": "Mouse, teclado e controles",
+      "title": "Desativar teclas de aderência"
+    },
+    {
+      "id": "rytunex:WindowsInk",
+      "service": "devices",
+      "topic": "Mouse, teclado e controles",
+      "title": "Desativar Windows Ink"
+    },
+    {
+      "id": "rytunex:SpellingAndTypingFeatures",
+      "service": "devices",
+      "topic": "Mouse, teclado e controles",
+      "title": "Desativar recursos de ortografia e digitação"
+    },
+    {
+      "id": "rytunex:CloudClipboard",
+      "service": "privacy",
+      "topic": "Telemetria e permissões",
+      "title": "Desativar área de transferência na nuvem"
+    },
+    {
+      "id": "rytunex:QuickAccessHistory",
+      "service": "privacy",
+      "topic": "Telemetria e histórico",
+      "title": "Desativar histórico do Acesso Rápido"
+    },
+    {
+      "id": "rytunex:MyPeople",
+      "service": "windows",
+      "topic": "Menu Iniciar e barra de tarefas",
+      "title": "Desativar Pessoas na barra de tarefas"
+    },
+    {
+      "id": "rytunex:CastToDevice",
+      "service": "network",
+      "topic": "Protocolos e conectividade",
+      "title": "Desativar transmissão para dispositivos"
+    },
+    {
+      "id": "rytunex:ErrorReporting",
+      "service": "privacy",
+      "topic": "Telemetria e histórico",
+      "title": "Desativar relatórios de erros"
+    },
+    {
+      "id": "rytunex:GameBar",
+      "service": "gpu",
+      "topic": "Renderização e jogos",
+      "title": "Desativar Xbox Game Bar"
+    },
+    {
+      "id": "rytunex:LockScreenNotifications",
+      "service": "windows",
+      "topic": "Notificações e sugestões",
+      "title": "Desativar notificações da tela de bloqueio"
+    },
+    {
+      "id": "rytunex:ToastNotifications",
+      "service": "windows",
+      "topic": "Notificações e sugestões",
+      "title": "Desativar todas as notificações de aviso"
+    },
+    {
+      "id": "rytunex:NotificationCenter",
+      "service": "windows",
+      "topic": "Notificações e sugestões",
+      "title": "Desativar Central de Notificações"
+    },
+    {
+      "id": "rytunex:SuggestedActions",
+      "service": "windows",
+      "topic": "Aparência e comportamento",
+      "title": "Desativar ações sugeridas"
+    },
+    {
+      "id": "rytunex:ClassicContextMenu",
+      "service": "windows",
+      "topic": "Aparência e comportamento",
+      "title": "Ativar menu de contexto clássico"
+    },
+    {
+      "id": "rytunex:RecommendedSectionStartMenu",
+      "service": "windows",
+      "topic": "Menu Iniciar e barra de tarefas",
+      "title": "Desativar seção Recomendados do menu Iniciar"
+    },
+    {
+      "id": "rytunex:TaskbarToLeft",
+      "service": "windows",
+      "topic": "Menu Iniciar e barra de tarefas",
+      "title": "Alinhar barra de tarefas à esquerda"
+    },
+    {
+      "id": "rytunex:SnapAssist",
+      "service": "windows",
+      "topic": "Aparência e comportamento",
+      "title": "Desativar assistente de encaixe de janelas"
+    },
+    {
+      "id": "rytunex:Widgets",
+      "service": "windows",
+      "topic": "Aparência e comportamento",
+      "title": "Desativar widgets"
+    },
+    {
+      "id": "rytunex:Chat",
+      "service": "windows",
+      "topic": "Menu Iniciar e barra de tarefas",
+      "title": "Desativar Chat do Windows"
+    },
+    {
+      "id": "rytunex:FilesCompactMode",
+      "service": "windows",
+      "topic": "Explorador de arquivos",
+      "title": "Ativar modo compacto do Explorador"
+    },
+    {
+      "id": "rytunex:EndTask",
+      "service": "windows",
+      "topic": "Menu Iniciar e barra de tarefas",
+      "title": "Ativar opção Finalizar tarefa"
+    },
+    {
+      "id": "rytunex:Stickers",
+      "service": "windows",
+      "topic": "Aparência e comportamento",
+      "title": "Desativar adesivos da área de trabalho"
+    },
+    {
+      "id": "rytunex:CoPilotAI",
+      "service": "windows",
+      "topic": "Navegadores e aplicativos do sistema",
+      "title": "Desativar Copilot"
+    },
+    {
+      "id": "rytunex:WindowsRecall",
+      "service": "privacy",
+      "topic": "Telemetria e histórico",
+      "title": "Desativar Windows Recall"
+    },
+    {
+      "id": "rytunex:WindowsAI",
+      "service": "windows",
+      "topic": "Navegadores e aplicativos do sistema",
+      "title": "Desativar recursos de IA do Windows"
+    },
+    {
+      "id": "rytunex:EdgeDiscoverBar",
+      "service": "windows",
+      "topic": "Navegadores e aplicativos do sistema",
+      "title": "Desativar barra Descobrir do Edge"
+    },
+    {
+      "id": "rytunex:VBS",
+      "service": "privacy",
+      "topic": "Proteção do Windows",
+      "title": "Desativar segurança baseada em virtualização (VBS)"
+    },
+    {
+      "id": "rytunex:TakeOwnership",
+      "service": "windows",
+      "topic": "Explorador de arquivos",
+      "title": "Adicionar Assumir propriedade ao menu"
+    },
+    {
+      "id": "rytunex:OpenCmdHere",
+      "service": "windows",
+      "topic": "Explorador de arquivos",
+      "title": "Adicionar Abrir Prompt de Comando aqui"
+    },
+    {
+      "id": "rytunex:CopyFilePath",
+      "service": "windows",
+      "topic": "Explorador de arquivos",
+      "title": "Adicionar Copiar caminho do arquivo ao menu"
+    },
+    {
+      "id": "rytunex:AdvertisingID",
+      "service": "privacy",
+      "topic": "Telemetria e permissões",
+      "title": "Desativar ID de publicidade"
+    },
+    {
+      "id": "rytunex:BluetoothAdvertising",
+      "service": "privacy",
+      "topic": "Telemetria e permissões",
+      "title": "Desativar publicidade por Bluetooth"
+    },
+    {
+      "id": "rytunex:NewsAndInterests",
+      "service": "privacy",
+      "topic": "Telemetria e permissões",
+      "title": "Desativar Notícias e Interesses"
+    },
+    {
+      "id": "rytunex:SpotlightFeatures",
+      "service": "privacy",
+      "topic": "Telemetria e permissões",
+      "title": "Desativar Destaque do Windows"
+    },
+    {
+      "id": "rytunex:TailoredExperiences",
+      "service": "privacy",
+      "topic": "Telemetria e permissões",
+      "title": "Desativar experiências personalizadas"
+    },
+    {
+      "id": "rytunex:CloudOptimizedContent",
+      "service": "privacy",
+      "topic": "Telemetria e permissões",
+      "title": "Desativar conteúdo otimizado pela nuvem"
+    },
+    {
+      "id": "rytunex:FeedbackNotifications",
+      "service": "privacy",
+      "topic": "Telemetria e permissões",
+      "title": "Desativar notificações de comentários"
+    },
+    {
+      "id": "rytunex:TelemetryServices",
+      "service": "privacy",
+      "topic": "Telemetria e permissões",
+      "title": "Desativar serviços de telemetria"
+    },
+    {
+      "id": "rytunex:EdgeTelemetry",
+      "service": "privacy",
+      "topic": "Telemetria e permissões",
+      "title": "Desativar telemetria do Edge"
+    },
+    {
+      "id": "rytunex:VisualStudioTelemetry",
+      "service": "privacy",
+      "topic": "Telemetria e permissões",
+      "title": "Desativar telemetria do Visual Studio"
+    },
+    {
+      "id": "rytunex:NvidiaTelemetry",
+      "service": "privacy",
+      "topic": "Telemetria e permissões",
+      "title": "Desativar telemetria da NVIDIA"
+    },
+    {
+      "id": "rytunex:ChromeTelemetry",
+      "service": "privacy",
+      "topic": "Telemetria e permissões",
+      "title": "Desativar telemetria do Chrome"
+    },
+    {
+      "id": "rytunex:FirefoxTelemetry",
+      "service": "privacy",
+      "topic": "Telemetria e permissões",
+      "title": "Desativar telemetria do Firefox"
+    },
+    {
+      "id": "rytunex:DiagnosticsToast",
+      "service": "privacy",
+      "topic": "Telemetria e permissões",
+      "title": "Desativar avisos de diagnóstico"
+    },
+    {
+      "id": "rytunex:HandwritingDataSharing",
+      "service": "privacy",
+      "topic": "Telemetria e permissões",
+      "title": "Desativar compartilhamento de dados de escrita"
+    },
+    {
+      "id": "rytunex:TextInputDataCollection",
+      "service": "privacy",
+      "topic": "Telemetria e permissões",
+      "title": "Desativar coleta de dados de digitação"
+    },
+    {
+      "id": "rytunex:InputPersonalization",
+      "service": "privacy",
+      "topic": "Telemetria e permissões",
+      "title": "Desativar personalização de entrada"
+    },
+    {
+      "id": "rytunex:OnlineSpeechPrivacy",
+      "service": "privacy",
+      "topic": "Telemetria e permissões",
+      "title": "Desativar reconhecimento de fala online"
+    },
+    {
+      "id": "rytunex:SafeSearchMode",
+      "service": "privacy",
+      "topic": "Proteção do Windows",
+      "title": "Desativar Pesquisa Segura"
+    },
+    {
+      "id": "rytunex:ClipboardSync",
+      "service": "privacy",
+      "topic": "Telemetria e permissões",
+      "title": "Desativar sincronização da área de transferência"
+    },
+    {
+      "id": "rytunex:MessageSync",
+      "service": "privacy",
+      "topic": "Telemetria e permissões",
+      "title": "Desativar sincronização de mensagens"
+    },
+    {
+      "id": "rytunex:SettingSync",
+      "service": "privacy",
+      "topic": "Telemetria e permissões",
+      "title": "Desativar sincronização de configurações"
+    },
+    {
+      "id": "rytunex:Cdp",
+      "service": "privacy",
+      "topic": "Telemetria e permissões",
+      "title": "Desativar Plataforma de Dados do Cliente (CDP)"
+    },
+    {
+      "id": "rytunex:LocationFeatures",
+      "service": "privacy",
+      "topic": "Telemetria e permissões",
+      "title": "Desativar recursos de localização"
+    },
+    {
+      "id": "rytunex:Biometrics",
+      "service": "privacy",
+      "topic": "Criptografia e acesso",
+      "title": "Desativar recursos de biometria"
+    },
+    {
+      "id": "rytunex:FindMyDevice",
+      "service": "privacy",
+      "topic": "Criptografia e acesso",
+      "title": "Desativar Localizar Meu Dispositivo"
+    },
+    {
+      "id": "rytunex:VoiceActivation",
+      "service": "privacy",
+      "topic": "Telemetria e permissões",
+      "title": "Desativar ativação por voz"
+    },
+    {
+      "id": "rytunex:AutomaticRestartSignOn",
+      "service": "privacy",
+      "topic": "Criptografia e acesso",
+      "title": "Desativar logon automático após reinicialização"
+    },
+    {
+      "id": "rytunex:SMBv1",
+      "service": "network",
+      "topic": "Protocolos e conectividade",
+      "title": "Desativar protocolo SMBv1"
+    },
+    {
+      "id": "rytunex:SMBv2",
+      "service": "network",
+      "topic": "Protocolos e conectividade",
+      "title": "Desativar protocolo SMBv2"
+    },
+    {
+      "id": "rytunex:WiFiSense",
+      "service": "network",
+      "topic": "Protocolos e conectividade",
+      "title": "Desativar Sensor de Wi-Fi"
+    },
+    {
+      "id": "rytunex:WebSearchResults",
+      "service": "windows",
+      "topic": "Menu Iniciar e barra de tarefas",
+      "title": "Desativar resultados da web na pesquisa"
+    },
+    {
+      "id": "rytunex:AppLaunchTracking",
+      "service": "privacy",
+      "topic": "Telemetria e permissões",
+      "title": "Desativar rastreamento de abertura de aplicativos"
+    },
+    {
+      "id": "rytunex:TimelineHistory",
+      "service": "privacy",
+      "topic": "Telemetria e permissões",
+      "title": "Desativar Linha do Tempo e histórico de atividades"
+    },
+    {
+      "id": "rytunex:WindowsUpdates",
+      "service": "repair",
+      "topic": "Windows Update e componentes",
+      "title": "Configurar atualizações do Windows"
+    },
+    {
+      "id": "winutil:updates:Invoke-WPFUpdatesdefault",
+      "service": "repair",
+      "topic": "Windows Update e componentes",
+      "title": "Restaurar padrão do Windows Update"
+    },
+    {
+      "id": "winutil:updates:Invoke-WPFUpdatessecurity",
+      "service": "repair",
+      "topic": "Windows Update e componentes",
+      "title": "Configurar atualizações de segurança"
+    },
+    {
+      "id": "winutil:updates:Invoke-WPFUpdatesdisable",
+      "service": "repair",
+      "topic": "Windows Update e componentes",
+      "title": "Desativar todas as atualizações"
+    },
+    {
+      "id": "rytunex:tool:FlushDNS",
+      "service": "network",
+      "topic": "Reparos de conexão",
+      "title": "Limpar cache DNS"
+    },
+    {
+      "id": "rytunex:tool:ReleaseRenewIP",
+      "service": "network",
+      "topic": "Reparos de conexão",
+      "title": "Liberar e renovar endereço IP"
+    },
+    {
+      "id": "rytunex:tool:ResetTCPIP",
+      "service": "network",
+      "topic": "Reparos de conexão",
+      "title": "Redefinir TCP/IP e Winsock"
+    },
+    {
+      "id": "rytunex:tool:ResetDefaultDNS",
+      "service": "network",
+      "topic": "Reparos de conexão",
+      "title": "Restaurar DNS automático do adaptador"
+    },
+    {
+      "id": "rytunex:tool:MemoryDiagRestart",
+      "service": "cpu",
+      "topic": "Diagnóstico de CPU e RAM",
+      "title": "Diagnóstico de memória · reiniciar agora"
+    },
+    {
+      "id": "rytunex:tool:MemoryDiagNextBoot",
+      "service": "cpu",
+      "topic": "Diagnóstico de CPU e RAM",
+      "title": "Diagnóstico de memória · próxima inicialização"
+    },
+    {
+      "id": "rytunex:tool:DefenderQuickScan",
+      "service": "privacy",
+      "topic": "Proteção do Windows",
+      "title": "Executar verificação rápida do Defender"
+    },
+    {
+      "id": "rytunex:tool:DefenderUpdateSignatures",
+      "service": "privacy",
+      "topic": "Proteção do Windows",
+      "title": "Atualizar assinaturas do Defender"
+    },
+    {
+      "id": "rytunex:tool:DISMScan",
+      "service": "repair",
+      "topic": "Integridade do Windows",
+      "title": "Verificar imagem do Windows com DISM"
+    },
+    {
+      "id": "rytunex:tool:DISMRepair",
+      "service": "repair",
+      "topic": "Integridade do Windows",
+      "title": "Reparar imagem do Windows com DISM"
+    },
+    {
+      "id": "rytunex:tool:SFCVerify",
+      "service": "repair",
+      "topic": "Integridade do Windows",
+      "title": "Verificar arquivos do sistema com SFC"
+    },
+    {
+      "id": "rytunex:tool:SFCRepair",
+      "service": "repair",
+      "topic": "Integridade do Windows",
+      "title": "Verificar e reparar arquivos com SFC"
+    },
+    {
+      "id": "rytunex:tool:CHKDSKScan",
+      "service": "devices",
+      "topic": "Armazenamento e NVMe",
+      "title": "Verificar disco com CHKDSK · somente leitura"
+    },
+    {
+      "id": "rytunex:tool:CHKDSKSchedule",
+      "service": "devices",
+      "topic": "Armazenamento e NVMe",
+      "title": "Agendar reparo de disco para reinicialização"
+    }
+  ]
+}

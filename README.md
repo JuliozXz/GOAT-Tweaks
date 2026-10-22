@@ -1,6 +1,6 @@
 # GOAT Tweaks
 
-Interface única para revisar e executar 619 ações de Ultimate, winutil, RyTuneX e WinSux, preservando os arquivos originais incorporados.
+Painel de atendimento para Windows com identificação do computador e 619 ações de Ultimate, winutil, RyTuneX e WinSux organizadas por área, preservando os arquivos originais incorporados.
 
 ## Abrir a interface
 
@@ -18,10 +18,14 @@ O runtime .NET está incluído no aplicativo e é responsável por boa parte do 
 
 ## Uso
 
-1. Pesquise a ação ou escolha uma categoria.
-2. Clique em **Adicionar**. Ações que precisam de parâmetros abrem a configuração; **Detalhes** é opcional.
-3. Revise a **Fila de ações**. É possível remover ações individualmente.
-4. Clique em **Aplicar fila** e acompanhe o progresso e o resultado de cada ação. Os resultados permanecem visíveis até limpar ou remover os itens.
+1. Confira os cartões da **Visão geral** ou abra **Meu hardware**: usuário, processador, GPU, RAM/geração e placa-mãe. A identificação ocorre em segundo plano.
+2. Use **Preparar o atendimento** para encontrar criação/gerenciamento de pontos de restauração e backup do Registro. O atalho apenas abre o assunto; escolha a ação adequada ao cliente.
+3. Abra um dos **11 serviços por área**, selecione o assunto e clique em **Adicionar à fila**. Parâmetros aparecem quando necessários; **Detalhes** é opcional. A busca encontra ações de todas as áreas, inclusive sem digitar acentos.
+4. Abra **Revisar fila**, remova o que não deseja e clique em **Aplicar fila**. Acompanhe o resultado individual de cada ação. Os resultados permanecem visíveis até limpar ou remover os itens.
+
+Os serviços são: **Limpeza**, **CPU e memória**, **Placa de vídeo**, **Drivers e periféricos**, **Rede e internet**, **Windows e interface**, **Privacidade e segurança**, **Energia e suspensão**, **Instalar programas**, **Preparação e reparos** e **Avançado e BIOS**. Cada serviço reúne assuntos específicos e permite filtrar pela origem.
+
+Ferramentas como DDU, CPU-Z e desinstaladores ficam na área em que são usadas, com a indicação **Instalar programa / ferramenta**. A instalação da ferramenta e o atendimento realizado dentro dela são operações distintas.
 
 O modo cliente inicia com ações sensíveis bloqueadas. Use o seletor **Avançado** para liberar essas ações nesta sessão. Foram removidas as confirmações digitadas AVANCADO, CONFIRMAR e WINSUX. O UAC do Windows e as interações exigidas pelos scripts originais continuam fazendo parte das ações correspondentes. O fluxo completo do WinSux exige execução isolada.
 
@@ -29,8 +33,11 @@ O modo cliente inicia com ações sensíveis bloqueadas. Use o seletor **Avança
 
 ## Interface e execução
 
-- Tema preto com detalhes vermelhos, controles escuros e layout adaptado à área disponível da tela.
-- Lista virtualizada e busca com intervalo curto para evitar recriar centenas de controles a cada tecla.
+- HUD preto e vermelho com cartões de hardware, etapas de atendimento e navegação por área.
+- CPU, GPUs e drivers gráficos, RAM instalada/utilizável, geração e módulos, placa-mãe, Windows e BIOS identificados localmente. Dados indisponíveis são informados claramente. A geração da RAM usa SMBIOS; a geração de CPU só aparece quando declarada no nome informado pelo fabricante.
+- Gráficos reais de CPU e RAM dos últimos 60 segundos, com amostragem nativa a cada dois segundos, sem instalar serviços de monitoramento.
+- Layout adaptado à área útil e à escala da tela, com fila em uma página própria e também ao lado do catálogo em janelas maiores.
+- Lista virtualizada inclusive nos grupos por assunto, busca com intervalo curto e filtro por origem.
 - A biblioteca continua navegável durante a execução; alterações na fila ficam bloqueadas até a conclusão.
 - Progresso determinado e estados por ação: na fila, em execução, concluída, falhou ou cancelada.
 - Leitura incremental dos registros em segundo plano. Somente novos registros atualizam a tela, sem reconstruir as listas a cada intervalo.
@@ -40,12 +47,14 @@ O modo cliente inicia com ações sensíveis bloqueadas. Use o seletor **Avança
 
 Os registros ficam em `%LOCALAPPDATA%\GoatTweaks\logs` e podem ser abertos pela interface.
 
+Detalhes da organização, identificação e limitações de hardware estão em [docs/DASHBOARD.md](docs/DASHBOARD.md). O índice de apresentação é gerado com `python tools/build_workflow.py`, sem alterar o catálogo técnico ou os scripts originais.
+
 ## Compilar e publicar
 
 Instale .NET 10 SDK e PowerShell 7 em um ambiente de desenvolvimento e execute:
 
 ```powershell
-./tools/Publish-Release.ps1 -Repository JuliozXz/GOAT-Tweaks -Version v1.1.0
+./tools/Publish-Release.ps1 -Repository JuliozXz/GOAT-Tweaks -Version v2.0.0
 ```
 
 O script compila o aplicativo e gera `dist/GOATTweaks.exe`, seu SHA-256, `dist/GOATTweaks-win-x64.zip`, o SHA-256 do ZIP e `dist/goat.ps1`. O inicializador recebe os hashes da mesma compilação e permanece em ASCII sem BOM para compatibilidade com o Windows PowerShell 5.1. O script não executa testes nem ações de ajuste do Windows.
@@ -54,7 +63,7 @@ O workflow **Publicar GOAT Tweaks** em GitHub Actions faz a mesma compilação e
 
 ## Estado de validação
 
-Esta revisão foi preparada sem executar uma nova suíte de testes nem ajustes no Windows, conforme a solicitação do responsável. O histórico recuperado da Devin informava compilação anterior e testes automáticos aprovados, mas a sessão de ponta a ponta no Windows foi interrompida por falta de créditos. Os testes Windows continuam sem confirmação de conclusão. O plano está em `docs/VM-TEST-PLAN.md`.
+Esta revisão foi preparada sem executar uma nova suíte de testes nem ajustes no Windows, conforme a solicitação do responsável. Foram feitas compilação, preparação do pacote e conferência de integridade dos recursos. A aparência e o funcionamento completo desta interface em uma máquina Windows real ainda precisam de conferência. O plano de validação manual está em `docs/VM-TEST-PLAN.md`.
 
 ## Fontes e licença
 

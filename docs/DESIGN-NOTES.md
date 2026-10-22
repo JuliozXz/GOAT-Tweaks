@@ -1,5 +1,7 @@
 # GOAT Tweaks — design notes (lead working notes)
 
+> Registro histórico da implementação inicial. A interface v2.0 e o índice por serviços estão documentados em [DASHBOARD.md](DASHBOARD.md). As confirmações digitadas citadas abaixo foram removidas na versão 1.1.0; o UAC, o modo avançado e a execução isolada do WinSux continuam ativos.
+
 ## Upstream pins (shallow clones in ~/repos/src)
 - RyTuneX 957885f53beaacfa7322581cafdb9eba5df5726a (AGPL-3.0, C# WinUI3 .NET10, 200 files)
 - WinSux 91adbfd63b7ed2eb5fcf0821fd53405a3cf63573 (MIT, 8 files: winsux.ps1, stepone.ps1, steptwo.ps1, reg.reg, settimerresolutionservice.cs, start2.txt)
