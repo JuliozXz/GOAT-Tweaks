@@ -56,6 +56,16 @@ jobs:
           "RELEASE_TAG=$Tag" >> $env:GITHUB_ENV
       - name: Compilar e preparar os arquivos
         run: ./tools/Publish-Release.ps1 -Repository $env:GITHUB_REPOSITORY -Version $env:RELEASE_TAG
+      - name: Conferir abertura do painel e sintaxe do Windows PowerShell
+        run: ./tools/Confirm-WindowsStartup.ps1
+      - name: Guardar evidência da abertura
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: abertura-${{ env.RELEASE_TAG }}
+          path: artifacts/startup/
+          retention-days: 14
+          if-no-files-found: warn
       - name: Publicar release completa
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

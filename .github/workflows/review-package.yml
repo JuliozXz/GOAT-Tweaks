@@ -1,0 +1,48 @@
+name: Conferir abertura e pacote Windows
+
+on:
+  push:
+    branches: [fix/service-index-resource]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  review:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-2022, windows-11-arm]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 25
+    defaults:
+      run:
+        shell: pwsh
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: '1'
+      DOTNET_NOLOGO: '1'
+    steps:
+      - name: Obter código-fonte
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Preparar .NET 10
+        uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: global.json
+      - name: Compilar e conferir recursos do pacote
+        run: ./tools/Publish-Release.ps1 -Repository $env:GITHUB_REPOSITORY -Version ((Get-Content release.json -Raw | ConvertFrom-Json).version)
+      - name: Analisar recursos e pacote com Microsoft Defender
+        if: matrix.os == 'windows-11-arm'
+        run: ./tools/Inspect-PackageWithDefender.ps1
+      - name: Abrir somente a interface e registrar resultado
+        run: ./tools/Confirm-WindowsStartup.ps1
+      - name: Guardar evidências da conferência
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: conferência-${{ matrix.os }}
+          path: artifacts/
+          retention-days: 14
+          if-no-files-found: warn
