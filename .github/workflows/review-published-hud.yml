@@ -1,0 +1,31 @@
+name: Ver HUD publicada pelo PowerShell
+
+on:
+  push:
+    branches: [review/windows-hud-v202]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  hud:
+    runs-on: windows-2022
+    timeout-minutes: 15
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Abrir versão pública e conferir HUD sem aplicar ajustes
+        run: ./tools/Review-PublishedHud.ps1
+      - name: Guardar capturas e resultado
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: hud-publicada-windows-x64
+          path: artifacts/hud/
+          retention-days: 30
+          if-no-files-found: warn
