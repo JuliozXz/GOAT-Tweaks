@@ -14,6 +14,10 @@ Requer Windows 10 22H2 ou Windows 11 de 64 bits e PowerShell 5.1 ou posterior. A
 
 Na primeira abertura de cada versão, o inicializador baixa um pacote ZIP compacto, confere o SHA-256 do pacote e do executável extraído e abre a janela. Nas próximas aberturas, ele verifica e reaproveita o executável local sem baixar novamente o aplicativo ou consultar um arquivo de checksum separado. O comando ainda obtém o pequeno inicializador para localizar a versão mais recente. O cache é separado por versão. Nenhuma política permanente de execução do PowerShell é alterada.
 
+O download usa o `curl.exe` nativo do Windows, com progresso e até três tentativas. Uma transferência interrompida pode ser retomada dentro da mesma execução. Se esse mecanismo falhar ou não estiver disponível, o inicializador tenta duas vezes pelo PowerShell, com uma conexão nova. Todos os caminhos de sucesso exigem o SHA-256 correto; arquivos incompletos ou diferentes não são abertos.
+
+Se a rede continuar interrompendo o download, abra a [release mais recente](https://github.com/JuliozXz/GOAT-Tweaks/releases/latest) no navegador, baixe **GOATTweaks-win-x64.zip**, extraia e abra **GOATTweaks.exe**. A mensagem final do inicializador também fornece o link exato do ZIP. Essa alternativa dispensa o download pelo PowerShell.
+
 O runtime .NET está incluído no aplicativo e é responsável por boa parte do tamanho. O pacote comprimido reduz o download, e os recursos dos scripts só são preparados ao executar a fila. A primeira extração e a análise do Windows podem levar mais tempo do que as próximas aberturas.
 
 ## Uso
@@ -54,7 +58,7 @@ Detalhes da organização, identificação e limitações de hardware estão em 
 Instale .NET 10 SDK e PowerShell 7 em um ambiente de desenvolvimento e execute:
 
 ```powershell
-./tools/Publish-Release.ps1 -Repository JuliozXz/GOAT-Tweaks -Version v2.0.0
+./tools/Publish-Release.ps1 -Repository JuliozXz/GOAT-Tweaks -Version v2.0.1
 ```
 
 O script compila o aplicativo e gera `dist/GOATTweaks.exe`, seu SHA-256, `dist/GOATTweaks-win-x64.zip`, o SHA-256 do ZIP e `dist/goat.ps1`. O inicializador recebe os hashes da mesma compilação e permanece em ASCII sem BOM para compatibilidade com o Windows PowerShell 5.1. O script não executa testes nem ações de ajuste do Windows.

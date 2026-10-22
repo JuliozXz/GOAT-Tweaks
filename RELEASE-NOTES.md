@@ -1,20 +1,14 @@
-GOAT Tweaks v2.0.0 transforma a biblioteca em um painel de atendimento por área do computador.
+GOAT Tweaks v2.0.1 melhora a recuperação do download quando a conexão é encerrada antes de o painel abrir.
 
-- Novo HUD preto e vermelho, com navegação lateral, cartões de hardware, gráficos e serviços organizados. O layout reorganiza os cartões e a fila conforme o espaço disponível e a escala da tela.
-- Identificação local do usuário, computador, processador, placas de vídeo, versões dos drivers gráficos, RAM instalada, RAM utilizável, módulos, geração da memória e placa-mãe. A tela detalhada também mostra Windows e BIOS/UEFI.
-- Geração de memória obtida do SMBIOS, incluindo DDR3, DDR4, DDR5 e LPDDR. Campos ausentes são identificados. A geração de CPU só é exibida quando consta explicitamente no nome informado pelo fabricante.
-- Consulta de hardware em segundo plano, com limite de tempo, resultados parciais e atualização manual. Abrir o painel apenas consulta os dados locais.
-- Gráficos reais de CPU e RAM dos últimos 60 segundos, atualizados a cada dois segundos com APIs nativas do Windows. O histórico tem tamanho limitado e usa relógio monotônico. Máquinas com múltiplos grupos de processadores recebem indicação de leitura de CPU indisponível.
-- Todas as 619 ações distribuídas em 11 serviços: Limpeza; CPU e memória; Placa de vídeo; Drivers e periféricos; Rede e internet; Windows e interface; Privacidade e segurança; Energia e suspensão; Instalar programas; Preparação e reparos; Avançado e BIOS.
-- Assuntos dentro de cada serviço, filtro por origem, busca global sem exigir acentos e nomes das ações em português, preservando os nomes técnicos dos programas e os nomes originais nos detalhes.
-- Distinção visível entre instalar uma ferramenta, remover um aplicativo, executar um script interativo e aplicar uma ação do sistema.
-- Atendimento guiado em quatro etapas: identificar a máquina, preparar a recuperação, escolher serviços e revisar/aplicar a fila. O atalho de preparação abre o assunto de pontos de restauração e backup do Registro.
-- Revisão da fila em tela própria; em janelas maiores, a fila também aparece ao lado do catálogo. Cada ação indica sua área e mantém seu resultado após a execução.
-- Mantidos o modo avançado sem confirmação digitada, os parâmetros dos scripts, a elevação UAC do Windows, as verificações de integridade, os conflitos e a execução isolada do WinSux.
-- Mantida a abertura por uma linha no PowerShell, com download compacto por versão, verificação dos hashes e reutilização da cópia local válida. Inicializador ASCII sem BOM, compatível com Windows PowerShell 5.1.
+- O inicializador passa a usar o curl.exe nativo do Windows, com progresso e até três tentativas. Ele usa o caminho completo do executável para evitar o alias curl do Windows PowerShell 5.1.
+- Transferências parciais podem ser retomadas dentro da mesma execução. Se o servidor recusar a retomada, a tentativa seguinte começa com um arquivo novo.
+- Se o mecanismo nativo falhar ou estiver ausente, há duas tentativas alternativas pelo PowerShell, com UseBasicParsing, DisableKeepAlive e limite de tempo.
+- As tentativas têm intervalos curtos e mensagens em português. Se todas falharem, a mensagem fornece o endereço exato do ZIP para baixar pelo navegador, extrair e abrir GOATTweaks.exe.
+- Downloads exigem conexão HTTPS e o hash publicado. A validação SHA-256 continua obrigatória antes de extrair o pacote e abrir o executável.
+- O inicializador permanece ASCII sem BOM, com cache por versão e limpeza dos próprios arquivos temporários.
 
-Os scripts originais incorporados e seus créditos e licenças permanecem preservados. A classificação organiza o atendimento; ela não certifica que um ajuste seja apropriado para todas as máquinas. Restaurar padrão segue a origem e não recupera um backup anterior do cliente.
+O painel v2.0, a identificação de hardware, as 619 ações organizadas em 11 áreas e os scripts originais permanecem nesta versão.
 
-Requisitos: Windows 10 22H2 ou Windows 11 de 64 bits e PowerShell 5.1 ou posterior. Runtime .NET incluído.
+A imagem enviada mostra uma interrupção durante Invoke-WebRequest. Essa mensagem não determina a causa exata na rede do cliente; as mudanças permitem repetir, retomar e alternar o mecanismo de download.
 
-Validação desta revisão: compilação, empacotamento e conferência de integridade. Conforme solicitado, não foram executados novos testes nem ajustes de Windows. A conferência visual e funcional do painel em uma máquina Windows ainda está pendente.
+Validação: compilação, empacotamento e conferência dos arquivos publicados. Conforme solicitado, sem executar testes ou ações de Windows. A conexão específica que falhou no computador do usuário não foi reproduzida neste ambiente.
