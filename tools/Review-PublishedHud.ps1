@@ -42,6 +42,7 @@ public static class GoatHudDesktop {
     [DllImport("user32.dll", CharSet=CharSet.Unicode)] static extern int ChangeDisplaySettings(ref Mode mode, uint flags);
     [DllImport("user32.dll")] public static extern bool SetWindowPos(IntPtr hwnd, IntPtr after, int x, int y, int width, int height, uint flags);
     [DllImport("user32.dll")] public static extern bool SetForegroundWindow(IntPtr hwnd);
+    [DllImport("user32.dll")] public static extern bool SetCursorPos(int x, int y);
     [DllImport("user32.dll")] public static extern bool GetWindowRect(IntPtr hwnd, out Rect rect);
     [DllImport("user32.dll")] public static extern int GetSystemMetrics(int index);
     private static Mode original;
@@ -76,6 +77,7 @@ function Visible-Text {
 function Capture([string]$Name) {
     $null = Get-Root
     $null = [GoatHudDesktop]::SetForegroundWindow($App.MainWindowHandle)
+    $null = [GoatHudDesktop]::SetCursorPos(500, 20)
     Start-Sleep -Milliseconds 600
     $Rect = [GoatHudDesktop+Rect]::new()
     if (-not [GoatHudDesktop]::GetWindowRect($App.MainWindowHandle, [ref]$Rect)) { throw 'Não foi possível obter a posição do painel.' }
@@ -96,6 +98,21 @@ function Resize([int]$Width, [int]$Height) {
     $null = Get-Root
 }
 function Navigate([string]$Label, [string]$ExpectedTitle) {
+    if ($Label -eq 'Fila de atendimento') {
+        # The header button activates the queue even while that sidebar item is already selected.
+        # Selecting an already-selected ListBox item doesn't raise a WPF SelectionChanged event.
+        $Buttons = (Get-Root).FindAll([System.Windows.Automation.TreeScope]::Descendants,
+            [System.Windows.Automation.PropertyCondition]::new([System.Windows.Automation.AutomationElement]::ControlTypeProperty, [System.Windows.Automation.ControlType]::Button))
+        $Review = $Buttons | Where-Object { $_.Current.Name -match '^Revisar fila' -and -not $_.Current.IsOffscreen } | Select-Object -First 1
+        if ($null -eq $Review) { throw 'O botão de revisão da fila não está visível.' }
+        $Review.GetCurrentPattern([System.Windows.Automation.InvokePattern]::Pattern).Invoke()
+        Start-Sleep -Milliseconds 550
+        $Heading = (Find-Id 'SectionTitle').Current.Name
+        if ($Heading -ne $ExpectedTitle) { throw "O botão de revisão da fila abriu $Heading." }
+        $Report.pages += [ordered]@{ navigation = $Label; title = $Heading; responding = $true }
+        Write-Host "Área aberta: $Label."
+        return
+    }
     $Sidebar = Find-Id 'SectionsList'
     $Condition = [System.Windows.Automation.PropertyCondition]::new([System.Windows.Automation.AutomationElement]::ControlTypeProperty, [System.Windows.Automation.ControlType]::ListItem)
     $Items = $Sidebar.FindAll([System.Windows.Automation.TreeScope]::Children, $Condition)
