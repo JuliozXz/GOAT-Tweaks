@@ -16,10 +16,10 @@ public static class HardwareDiscovery
         [Console]::OutputEncoding = New-Object System.Text.UTF8Encoding($false)
         function Read-HardwareClass($kind, $class, $properties) {
             try {
-                $values = @(Get-CimInstance -ClassName $class -Property $properties -OperationTimeoutSec 3 -ErrorAction Stop | Select-Object -Property $properties)
+                $values = @(Get-CimInstance -Namespace root/cimv2 -ClassName $class -Property $properties -OperationTimeoutSec 8 -ErrorAction Stop | Select-Object -Property $properties)
                 @{ kind = $kind; values = $values; failed = $false } | ConvertTo-Json -Compress -Depth 5
             } catch {
-                @{ kind = $kind; values = @(); failed = $true } | ConvertTo-Json -Compress -Depth 5
+                @{ kind = $kind; values = @(); failed = $true; error = $_.Exception.Message } | ConvertTo-Json -Compress -Depth 5
             }
         }
         Read-HardwareClass 'cpu' 'Win32_Processor' @('Name','NumberOfCores','NumberOfLogicalProcessors')
@@ -80,7 +80,12 @@ public static class HardwareDiscovery
                         var root = document.RootElement;
                         var kind = root.GetProperty("kind").GetString();
                         if (kind is null) continue;
-                        if (root.GetProperty("failed").GetBoolean()) { failures++; continue; }
+                        if (root.GetProperty("failed").GetBoolean())
+                        {
+                            failures++;
+                            if(root.TryGetProperty("error",out var error)) warning+=kind+": "+error.GetString()+" | ";
+                            continue;
+                        }
                         packets[kind] = root.GetProperty("values").Clone();
                     }
                     catch (JsonException) { }

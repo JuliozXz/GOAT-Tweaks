@@ -355,6 +355,11 @@ public partial class IntelligenceWorkspace : UserControl
         catch(Exception ex) when(ex is IOException or UnauthorizedAccessException){Status(ex.Message,true);}
     }
     private async void RefreshSessions_Click(object sender,RoutedEventArgs e){if(!IsBusy) await RefreshSessionsAsync();}
+    private async void WorkspaceTabs_SelectionChanged(object sender,SelectionChangedEventArgs e)
+    {
+        if(_ready && ReferenceEquals(e.Source,WorkspaceTabs) && WorkspaceTabs.SelectedIndex==5 && !IsBusy)
+            await RefreshSessionsAsync();
+    }
     private async void Resume_Click(object sender,RoutedEventArgs e)
     {
         if(IsBusy || SessionsList.SelectedItem is not ServiceSession selected) return;

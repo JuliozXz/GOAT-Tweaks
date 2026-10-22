@@ -29,7 +29,7 @@ public sealed class WindowsDiagnostics
         ReadFact 'enclosure' 'Win32_SystemEnclosure' @('ChassisTypes')
         ReadFact 'os' 'Win32_OperatingSystem' @('Caption','BuildNumber','ProductType','LastBootUpTime')
         ReadFact 'physical' 'MSFT_PhysicalDisk' @('FriendlyName','MediaType','BusType','HealthStatus') 'root/Microsoft/Windows/Storage'
-        ReadFact 'devices' 'Win32_PnPEntity' @('Name','ConfigManagerErrorCode') 'root/cimv2' 'ConfigManagerErrorCode <> 0'
+        ReadFact 'devices' 'Win32_PnPEntity' @('Name','PNPDeviceID','ConfigManagerErrorCode') 'root/cimv2' 'ConfigManagerErrorCode <> 0'
         try {
             $events=@(Get-WinEvent -FilterHashtable @{LogName='System';Id=@(4101,17,18,19);StartTime=(Get-Date).AddDays(-1)} -MaxEvents 100 -ErrorAction SilentlyContinue |
                 Where-Object {$_.ProviderName -match 'WHEA|^Display$'} | Select-Object -First 30 |
@@ -157,7 +157,9 @@ public sealed class WindowsDiagnostics
             try { if(drive.IsReady) storage.Add(new(drive.Name,drive.TotalSize/1073741824d,drive.AvailableFreeSpace/1073741824d)); }
             catch(IOException) { unavailable.Add("Leitura de espaço indisponível em " + drive.Name); }
         var drivers = machine.Gpus.Select((name,i)=>new DriverObservation(name,machine.GraphicsDrivers.ElementAtOrDefault(i)??"Não disponível",0)).ToList();
-        drivers.AddRange(Values(packets,"devices").Select(d=>new DriverObservation(Text(d,"Name"),"Consulte o Gerenciador de Dispositivos",Number(d,"ConfigManagerErrorCode"))));
+        drivers.AddRange(Values(packets,"devices").Select(d=>new DriverObservation(
+            !string.IsNullOrWhiteSpace(Text(d,"Name"))?Text(d,"Name"):!string.IsNullOrWhiteSpace(Text(d,"PNPDeviceID"))?Text(d,"PNPDeviceID"):"Dispositivo sem nome informado pelo Windows",
+            "Consulte o Gerenciador de Dispositivos",Number(d,"ConfigManagerErrorCode"))));
         var issues = Values(packets,"events").Select(e=>new SystemIssue(DateTimeOffset.TryParse(Text(e,"At"),out var at)?at:started,Text(e,"ProviderName"),Number(e,"Id"),Text(e,"Message"))).ToList();
         return new DiagnosticSnapshot { StartedAt=started,FinishedAt=DateTimeOffset.UtcNow,Machine=machine, Samples=samples,Processes=processes,Storage=storage,
             Startup=ReadStartup(unavailable),Drivers=drivers,Issues=issues,Settings=settings,Unavailable=unavailable.Distinct().ToList() };

@@ -40,7 +40,8 @@ public sealed class SessionStore(string directory) : ISessionJournal
     public async Task<ServiceSession> LoadAsync(Guid id, CancellationToken token = default)
     {
         var path = Path.Combine(DirectoryPath, id.ToString("N") + ".json");
-        await using var stream = File.OpenRead(path);
+        // Keep a consistent old handle while an atomic journal replacement completes.
+        await using var stream = new FileStream(path,FileMode.Open,FileAccess.Read,FileShare.ReadWrite|FileShare.Delete);
         var session = await JsonSerializer.DeserializeAsync<ServiceSession>(stream, JsonOptions, token)
             ?? throw new InvalidDataException("Atendimento vazio ou inválido.");
         if (session.SchemaVersion != 1 || session.Id != id) throw new InvalidDataException("Versão ou identidade de atendimento incompatível.");
