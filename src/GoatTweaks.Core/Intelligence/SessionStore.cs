@@ -27,9 +27,10 @@ public sealed class SessionStore(string directory) : ISessionJournal
         var temporary = path + "." + Guid.NewGuid().ToString("N") + ".tmp";
         try
         {
+            var persisted = session.EphemeralScan ? CreateEphemeralJournalCopy(session) : session;
             await using (var stream = new FileStream(temporary, FileMode.CreateNew, FileAccess.Write, FileShare.None, 16384, FileOptions.WriteThrough))
             {
-                await JsonSerializer.SerializeAsync(stream, session, JsonOptions, cancellationToken);
+                await JsonSerializer.SerializeAsync(stream, persisted, JsonOptions, cancellationToken);
                 await stream.FlushAsync(cancellationToken);
                 stream.Flush(flushToDisk: true);
             }
@@ -37,6 +38,34 @@ public sealed class SessionStore(string directory) : ISessionJournal
         }
         finally { if (File.Exists(temporary)) File.Delete(temporary); }
     }
+    private static ServiceSession CreateEphemeralJournalCopy(ServiceSession session) => new()
+    {
+        SchemaVersion = session.SchemaVersion,
+        EphemeralScan = true,
+        Id = session.Id,
+        CreatedAt = session.CreatedAt,
+        UpdatedAt = session.UpdatedAt,
+        Profile = session.Profile,
+        Context = session.Context,
+        Stage = session.Stage,
+        Before = session.Before is null ? null : new DiagnosticSnapshot
+        {
+            StartedAt = session.Before.StartedAt,
+            FinishedAt = session.Before.FinishedAt,
+            Machine = session.Before.Machine
+        },
+        Findings = [],
+        Recommendations = session.Recommendations.Where(r => session.AuthorizedIds.Contains(r.Id, StringComparer.Ordinal) ||
+            session.Changes.Any(c => c.RecommendationId == r.Id)).ToList(),
+        AuthorizedIds = session.AuthorizedIds.ToList(),
+        ApprovedPlanHash = session.ApprovedPlanHash,
+        ApprovedAt = session.ApprovedAt,
+        Changes = session.Changes.ToList(),
+        Benchmarks = [],
+        Notes = [],
+        RestartConfirmed = session.RestartConfirmed
+    };
+
     public Task DeleteAsync(Guid id, CancellationToken token = default)
     {
         token.ThrowIfCancellationRequested();
