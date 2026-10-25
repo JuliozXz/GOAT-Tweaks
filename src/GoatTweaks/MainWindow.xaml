@@ -58,7 +58,7 @@
             <StackPanel Margin="0,0,8,20">
                 <Grid Margin="0,0,0,22"><Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
                     <StackPanel Margin="0,0,18,0"><TextBlock Text="{Binding Hardware.Greeting}" FontSize="30" FontWeight="SemiBold" TextWrapping="Wrap" /><TextBlock Text="Cada área do computador, no lugar certo." Foreground="{StaticResource MutedBrush}" Margin="0,7,0,0" FontSize="13" /><TextBlock Text="{Binding HardwareStatus}" Foreground="{StaticResource MutedBrush}" Margin="0,7,0,0" FontSize="10" TextWrapping="Wrap" /></StackPanel>
-                    <Button Grid.Column="1" Content="Iniciar GOAT Intelligence →" Tag="Intelligence" Click="Navigate_Click" Style="{StaticResource PrimaryButton}" VerticalAlignment="Top" Margin="0,6,0,0" FontSize="12" />
+                    <Button Grid.Column="1" Content="Iniciar GOAT Scanner →" Tag="Scanner" Click="Navigate_Click" Style="{StaticResource PrimaryButton}" VerticalAlignment="Top" Margin="0,6,0,0" FontSize="12" />
                 </Grid>
                 <UniformGrid x:Name="HardwareCardsGrid" Columns="4" Margin="0,0,-12,20">
                     <Border Style="{StaticResource PanelCard}" Margin="0,0,12,10" Padding="17" MinHeight="146"><StackPanel><DockPanel><TextBlock Text="&#xE950;" Style="{StaticResource Glyph}" Margin="0,0,10,0" /><TextBlock Text="PROCESSADOR" Style="{StaticResource Eyebrow}" VerticalAlignment="Center" /></DockPanel><TextBlock Text="{Binding Hardware.CpuName}" Style="{StaticResource HardwareName}" /><TextBlock Text="{Binding Hardware.CpuSummary}" Style="{StaticResource HardwareSubtext}" /></StackPanel></Border>
