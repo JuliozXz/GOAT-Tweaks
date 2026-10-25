@@ -202,6 +202,22 @@ public sealed class IntelligenceTests
         }
         finally{if(Directory.Exists(directory)) Directory.Delete(directory,true);}
     }
+    [Fact] public async Task EphemeralScannerPersistsOnlyTheMinimalRecoveryJournal()
+    {
+        var directory=System.IO.Path.Combine(System.IO.Path.GetTempPath(),"goat-ephemeral-test-"+Guid.NewGuid().ToString("N"));
+        try
+        {
+            var store=new SessionStore(directory);var session=Session(OptimizationProfile.MaximumFps);session.EphemeralScan=true;
+            session.Before=session.Before! with{Samples=[new MetricSample{CpuPercent=42}],Processes=[new ProcessObservation(10,"private-process",20,500)]};
+            session.Findings.Add(new Finding("scan.test","Full scan detail",EvidenceKind.Confirmed,"Private process evidence","No action"));
+            var selected=session.Recommendations.First(r=>r.CanAuthorize);session.AuthorizedIds=[selected.Id];session.ApprovedAt=DateTimeOffset.UtcNow;session.ApprovedPlanHash=session.PlanHash();
+            await store.SaveAsync(session);var restored=await store.LoadAsync(session.Id);
+            Assert.True(restored.EphemeralScan);Assert.Empty(restored.Findings);Assert.Empty(restored.Before!.Samples);Assert.Empty(restored.Before.Processes);
+            Assert.Equal(session.Before.Machine.Fingerprint,restored.Before.Machine.Fingerprint);Assert.Equal(selected.Id,Assert.Single(restored.Recommendations).Id);
+            Assert.Equal(session.PlanHash(),restored.PlanHash());
+        }
+        finally{if(Directory.Exists(directory)) Directory.Delete(directory,true);}
+    }
     [Fact] public void CsvMetricsUseIntervalsAndTheMeanOfTheSlowestOnePercent()
     {
         var frames=Enumerable.Repeat(16.6666666667,594).Concat(Enumerable.Repeat(100d,6)).ToArray();
