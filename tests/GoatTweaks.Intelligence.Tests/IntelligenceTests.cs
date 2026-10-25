@@ -190,6 +190,18 @@ public sealed class IntelligenceTests
         }
         finally{if(Directory.Exists(directory)) Directory.Delete(directory,true);}
     }
+    [Fact] public async Task FinalizingSessionDeletesOnlyItsSessionRecord()
+    {
+        var directory=System.IO.Path.Combine(System.IO.Path.GetTempPath(),"goat-finalize-test-"+Guid.NewGuid().ToString("N"));
+        try
+        {
+            var store=new SessionStore(directory);var session=Session();await store.SaveAsync(session);
+            var path=System.IO.Path.Combine(directory,session.Id.ToString("N")+".json");Assert.True(File.Exists(path));
+            await store.DeleteAsync(session.Id);
+            Assert.False(File.Exists(path));Assert.Empty((await store.ListAsync()).Sessions);
+        }
+        finally{if(Directory.Exists(directory)) Directory.Delete(directory,true);}
+    }
     [Fact] public void CsvMetricsUseIntervalsAndTheMeanOfTheSlowestOnePercent()
     {
         var frames=Enumerable.Repeat(16.6666666667,594).Concat(Enumerable.Repeat(100d,6)).ToArray();
