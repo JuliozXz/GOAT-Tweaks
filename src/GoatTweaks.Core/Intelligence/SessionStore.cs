@@ -37,6 +37,15 @@ public sealed class SessionStore(string directory) : ISessionJournal
         }
         finally { if (File.Exists(temporary)) File.Delete(temporary); }
     }
+    public Task DeleteAsync(Guid id, CancellationToken token = default)
+    {
+        token.ThrowIfCancellationRequested();
+        if (id == Guid.Empty) throw new ArgumentException("A identidade do atendimento é inválida.", nameof(id));
+        var path = Path.Combine(DirectoryPath, id.ToString("N") + ".json");
+        if (File.Exists(path)) File.Delete(path);
+        return Task.CompletedTask;
+    }
+
     public async Task<ServiceSession> LoadAsync(Guid id, CancellationToken token = default)
     {
         var path = Path.Combine(DirectoryPath, id.ToString("N") + ".json");
