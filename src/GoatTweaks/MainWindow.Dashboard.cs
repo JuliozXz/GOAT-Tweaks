@@ -36,7 +36,6 @@ public partial class MainWindow
         AddNavigation("Scanner", "GOAT Scanner", "\uE9D9");
         AddNavigation("ServiceMode", "GOAT Service Mode", "\uE8F1");
         AddNavigation("Hardware", "Meu hardware", "\uE950");
-        AddNavigation("Queue", "Fila de atendimento", "\uE8FD");
         AddNavigation("Logs", "Atividade e registros", "\uE9D9");
         AddNavHeading("SERVIÇOS POR ÁREA");
         foreach (var service in _workflow.Services)
@@ -113,16 +112,16 @@ public partial class MainWindow
         var logs = _activeSection == "Logs" && !searching;
         var intelligence = _activeSection is "Intelligence" or "ServiceMode" or "Scanner" && !searching;
         var library = !home && !hardware && !review && !intelligence;
-        var dockQueue = library && !logs && ActualWidth >= 1260;
+        var dockQueue = false;
         SidebarColumn.Width = new GridLength(ActualWidth < 1000 ? 166 : ActualWidth < 1260 ? 195 : 218);
         BrandVersionBadge.Visibility=ActualWidth<1000?Visibility.Collapsed:Visibility.Visible;
-        QueueColumn.Width = new GridLength(dockQueue ? 312 : 0);
+        QueueColumn.Width = new GridLength(0);
         SearchColumn.Width = new GridLength(dockQueue ? 210 : ActualWidth < 1080 ? 190 : 260);
         DashboardPanel.Visibility = home ? Visibility.Visible : Visibility.Collapsed;
         HardwarePanel.Visibility = hardware ? Visibility.Visible : Visibility.Collapsed;
         LibraryPanel.Visibility = library ? Visibility.Visible : Visibility.Collapsed;
         IntelligencePanel.Visibility = intelligence ? Visibility.Visible : Visibility.Collapsed;
-        QueuePanel.Visibility = review || dockQueue ? Visibility.Visible : Visibility.Collapsed;
+        QueuePanel.Visibility = Visibility.Collapsed;
         Grid.SetColumn(QueuePanel, review ? 1 : 2);
         Grid.SetRow(QueuePanel, review ? 1 : 0);
         Grid.SetRowSpan(QueuePanel, review ? 1 : 3);
