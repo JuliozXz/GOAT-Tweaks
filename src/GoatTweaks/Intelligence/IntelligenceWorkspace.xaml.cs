@@ -66,6 +66,7 @@ public partial class IntelligenceWorkspace : UserControl
     }
     private void Scanner_Click(object sender,RoutedEventArgs e)
     {
+        _session.EphemeralScan=true;
         var choices=(ProfileChoice[])ProfileBox.ItemsSource;
         ProfileBox.SelectedItem=choices.Single(p=>p.Value==OptimizationProfile.MaximumFps);
         if(string.IsNullOrWhiteSpace(SymptomBox.Text)) SymptomBox.Text="Analisar oportunidades comprováveis de desempenho, FPS e latência neste computador, preservando estabilidade e recursos essenciais.";
@@ -209,7 +210,7 @@ public partial class IntelligenceWorkspace : UserControl
             if(_session.Changes.Any(c=>c.State is "Aplicado e verificado" or "Preparado" or "Revisão necessária"))
                 throw new InvalidOperationException("Esse atendimento já possui alterações. Use a validação posterior ou restaure antes de abrir outro plano.");
             if(!_scannerMode) await _store.SaveAsync(_session,token);
-            _session=new ServiceSession{Context=ReadContext(),Profile=SelectedProfile};
+            _session=new ServiceSession{Context=ReadContext(),Profile=SelectedProfile,EphemeralScan=_scannerMode};
         }
         _session.Context=ReadContext();_session.Profile=SelectedProfile;_session.Stage=ServiceStage.Diagnosis;
         RefreshStage();WorkspaceTabs.SelectedIndex=3;_liveSamples.Clear();DrawChart();
