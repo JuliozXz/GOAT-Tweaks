@@ -207,6 +207,7 @@ public sealed class ChangeRecord
 public sealed class ServiceSession
 {
     public int SchemaVersion { get; set; } = 1;
+    public bool EphemeralScan { get; set; }
     public Guid Id { get; set; } = Guid.NewGuid();
     public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
     public DateTimeOffset UpdatedAt { get; set; } = DateTimeOffset.UtcNow;
