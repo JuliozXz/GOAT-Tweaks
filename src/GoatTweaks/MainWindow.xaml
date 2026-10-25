@@ -52,13 +52,13 @@
                 <TextBlock Text="Buscar no catálogo…" FontSize="12" Foreground="{StaticResource MutedBrush}" Margin="35,0,0,0" VerticalAlignment="Center" IsHitTestVisible="False"><TextBlock.Style><Style TargetType="TextBlock"><Setter Property="Visibility" Value="Collapsed" /><Style.Triggers><DataTrigger Binding="{Binding Text, ElementName=SearchBox}" Value=""><Setter Property="Visibility" Value="Visible" /></DataTrigger></Style.Triggers></Style></TextBlock.Style></TextBlock>
                 <Button Content="×" Click="ClearSearch_Click" HorizontalAlignment="Right" VerticalAlignment="Center" Padding="5,1" Margin="0,0,7,0" FontSize="13" BorderThickness="0" Background="Transparent" ToolTip="Limpar pesquisa" />
             </Grid>
-            <Button Grid.Column="2" Content="{Binding QueueButton}" Click="ReviewQueue_Click" Margin="12,0,0,0" VerticalAlignment="Center" FontSize="11" Padding="12,12" />
+            <Border Grid.Column="2" Width="0" />
         </Grid>
         <ScrollViewer x:Name="DashboardPanel" Grid.Column="1" Grid.Row="1" Margin="26,0,18,0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" CanContentScroll="False">
             <StackPanel Margin="0,0,8,20">
                 <Grid Margin="0,0,0,22"><Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
                     <StackPanel Margin="0,0,18,0"><TextBlock Text="{Binding Hardware.Greeting}" FontSize="30" FontWeight="SemiBold" TextWrapping="Wrap" /><TextBlock Text="Cada área do computador, no lugar certo." Foreground="{StaticResource MutedBrush}" Margin="0,7,0,0" FontSize="13" /><TextBlock Text="{Binding HardwareStatus}" Foreground="{StaticResource MutedBrush}" Margin="0,7,0,0" FontSize="10" TextWrapping="Wrap" /></StackPanel>
-                    <Button Grid.Column="1" Content="Iniciar GOAT Intelligence →" Tag="Intelligence" Click="Navigate_Click" Style="{StaticResource PrimaryButton}" VerticalAlignment="Top" Margin="0,6,0,0" FontSize="12" />
+                    <Button Grid.Column="1" Content="Iniciar GOAT Scanner →" Tag="Scanner" Click="Navigate_Click" Style="{StaticResource PrimaryButton}" VerticalAlignment="Top" Margin="0,6,0,0" FontSize="12" />
                 </Grid>
                 <UniformGrid x:Name="HardwareCardsGrid" Columns="4" Margin="0,0,-12,20">
                     <Border Style="{StaticResource PanelCard}" Margin="0,0,12,10" Padding="17" MinHeight="146"><StackPanel><DockPanel><TextBlock Text="&#xE950;" Style="{StaticResource Glyph}" Margin="0,0,10,0" /><TextBlock Text="PROCESSADOR" Style="{StaticResource Eyebrow}" VerticalAlignment="Center" /></DockPanel><TextBlock Text="{Binding Hardware.CpuName}" Style="{StaticResource HardwareName}" /><TextBlock Text="{Binding Hardware.CpuSummary}" Style="{StaticResource HardwareSubtext}" /></StackPanel></Border>
@@ -90,7 +90,7 @@
                             <Button Style="{StaticResource ServiceTile}" Tag="Hardware" Click="Navigate_Click" Padding="10,9" Margin="0,6,0,0"><Grid><Grid.ColumnDefinitions><ColumnDefinition Width="28" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions><TextBlock Text="01" Foreground="{StaticResource AccentBrush}" FontWeight="SemiBold" VerticalAlignment="Center" /><StackPanel Grid.Column="1"><TextBlock Text="Identificar o computador" FontSize="12" FontWeight="SemiBold" /><TextBlock Text="CPU, GPU, RAM e placa-mãe" FontSize="10" Foreground="{StaticResource MutedBrush}" Margin="0,3,0,0" TextWrapping="Wrap" /></StackPanel></Grid></Button>
                             <Button Style="{StaticResource ServiceTile}" Tag="Prepare" Click="Navigate_Click" Padding="10,9" Margin="0,6,0,0"><Grid><Grid.ColumnDefinitions><ColumnDefinition Width="28" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions><TextBlock Text="02" Foreground="{StaticResource AccentBrush}" FontWeight="SemiBold" VerticalAlignment="Center" /><StackPanel Grid.Column="1"><TextBlock Text="Preparar o atendimento" FontSize="12" FontWeight="SemiBold" /><TextBlock Text="Restauração e backup do Registro" FontSize="10" Foreground="{StaticResource MutedBrush}" Margin="0,3,0,0" TextWrapping="Wrap" /></StackPanel></Grid></Button>
                             <Button Style="{StaticResource ServiceTile}" Tag="clean" Click="Navigate_Click" Padding="10,9" Margin="0,6,0,0"><Grid><Grid.ColumnDefinitions><ColumnDefinition Width="28" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions><TextBlock Text="03" Foreground="{StaticResource AccentBrush}" FontWeight="SemiBold" VerticalAlignment="Center" /><StackPanel Grid.Column="1"><TextBlock Text="Escolher os serviços" FontSize="12" FontWeight="SemiBold" /><TextBlock Text="Áreas separadas por assunto" FontSize="10" Foreground="{StaticResource MutedBrush}" Margin="0,3,0,0" TextWrapping="Wrap" /></StackPanel></Grid></Button>
-                            <Button Style="{StaticResource ServiceTile}" Tag="Queue" Click="Navigate_Click" Padding="10,9" Margin="0,6,0,0"><Grid><Grid.ColumnDefinitions><ColumnDefinition Width="28" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions><TextBlock Text="04" Foreground="{StaticResource AccentBrush}" FontWeight="SemiBold" VerticalAlignment="Center" /><StackPanel Grid.Column="1"><TextBlock Text="Revisar e executar a fila" FontSize="12" FontWeight="SemiBold" /><TextBlock Text="{Binding QueueSummary}" FontSize="10" Foreground="{StaticResource MutedBrush}" Margin="0,3,0,0" TextWrapping="Wrap" /></StackPanel></Grid></Button>
+                            <Button Style="{StaticResource ServiceTile}" Tag="Scanner" Click="Navigate_Click" Padding="10,9" Margin="0,6,0,0"><Grid><Grid.ColumnDefinitions><ColumnDefinition Width="28" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions><TextBlock Text="04" Foreground="{StaticResource AccentBrush}" FontWeight="SemiBold" VerticalAlignment="Center" /><StackPanel Grid.Column="1"><TextBlock Text="Verificar o sistema" FontSize="12" FontWeight="SemiBold" /><TextBlock Text="Análise e sugestões para este computador" FontSize="10" Foreground="{StaticResource MutedBrush}" Margin="0,3,0,0" TextWrapping="Wrap" /></StackPanel></Grid></Button>
                         </StackPanel>
                     </Border>
                 </Grid>
@@ -124,14 +124,14 @@
                         <TextBlock Text="{Binding Description}" Foreground="{StaticResource MutedBrush}" FontSize="11" TextWrapping="Wrap" MaxHeight="34" ToolTip="{Binding Description}" Margin="0,0,0,9" />
                         <TextBlock Text="{Binding Metadata}" Foreground="{StaticResource MutedBrush}" FontSize="10" TextWrapping="Wrap" />
                         <TextBlock Text="{Binding Restriction}" Foreground="{StaticResource WarningBrush}" FontSize="10" TextWrapping="Wrap" Margin="0,7,0,0" Visibility="{Binding IsRestricted, Converter={StaticResource BoolVisibility}}" />
-                        <WrapPanel Margin="0,12,0,0"><Button Content="+ Adicionar à fila" Tag="{Binding Item}" Style="{StaticResource CardPrimaryButton}" Click="AddButton_Click" Padding="11,7" FontSize="11" Margin="0,0,8,3" /><Button Content="Detalhes" Tag="{Binding Item}" Click="PreviewButton_Click" Padding="11,7" FontSize="11" Margin="0,0,8,3" /><Button Content="Restaurar padrão" Tag="{Binding Item}" Click="RevertButton_Click" Style="{StaticResource CardButton}" Padding="11,7" FontSize="11" Margin="0,0,0,3" Visibility="{Binding CanRevert, Converter={StaticResource BoolVisibility}}" /></WrapPanel>
+                        <WrapPanel Margin="0,12,0,0"><Button Content="Aplicar ação" Tag="{Binding Item}" Style="{StaticResource CardPrimaryButton}" Click="AddButton_Click" Padding="11,7" FontSize="11" Margin="0,0,8,3" /><Button Content="Detalhes" Tag="{Binding Item}" Click="PreviewButton_Click" Padding="11,7" FontSize="11" Margin="0,0,8,3" /><Button Content="Restaurar padrão" Tag="{Binding Item}" Click="RevertButton_Click" Style="{StaticResource CardButton}" Padding="11,7" FontSize="11" Margin="0,0,0,3" Visibility="{Binding CanRevert, Converter={StaticResource BoolVisibility}}" /></WrapPanel>
                     </StackPanel></Border>
                 </DataTemplate></ListBox.ItemTemplate>
             </ListBox>
             <StackPanel x:Name="EmptyResultsPanel" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed" Margin="25"><TextBlock Text="Nenhuma ação encontrada" FontSize="19" FontWeight="SemiBold" HorizontalAlignment="Center" /><TextBlock Text="Altere a pesquisa ou limpe os filtros para ver outras opções." Foreground="{StaticResource MutedBrush}" TextWrapping="Wrap" TextAlignment="Center" Margin="0,10,0,0" /><Button Content="Limpar filtros" Click="ResetFilters_Click" HorizontalAlignment="Center" Margin="0,18,0,0" /></StackPanel>
             <ListBox x:Name="LogsDetailList" Grid.Row="4" Visibility="Collapsed" ItemContainerStyle="{StaticResource PlainRow}"><ListBox.ItemTemplate><DataTemplate><Border Style="{StaticResource PanelCard}" Padding="15" Margin="0,0,9,9"><StackPanel><DockPanel><TextBlock DockPanel.Dock="Right" Text="{Binding Time}" Foreground="{StaticResource MutedBrush}" FontSize="10" Margin="12,0,0,0" /><TextBlock Text="{Binding Title}" FontWeight="SemiBold" TextWrapping="Wrap" /></DockPanel><TextBlock Text="{Binding Summary}" Foreground="{StaticResource MutedBrush}" TextWrapping="Wrap" Margin="0,7,0,0" FontSize="12" ToolTip="{Binding Detail}" /></StackPanel></Border></DataTemplate></ListBox.ItemTemplate></ListBox>
         </Grid>
-        <Border x:Name="QueuePanel" Grid.Column="2" Grid.RowSpan="3" Background="{StaticResource SidebarBrush}" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1,0,0,0">
+        <Border x:Name="QueuePanel" Grid.Column="2" Grid.RowSpan="3" Background="{StaticResource SidebarBrush}" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1,0,0,0" Visibility="Collapsed">
             <Grid Margin="18,22,18,18">
                 <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="*" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition x:Name="RecentActivityRow" Height="125" /></Grid.RowDefinitions>
                 <Grid>
@@ -182,6 +182,25 @@
                 <ListBox x:Name="LogsList" Grid.Row="6" ItemContainerStyle="{StaticResource PlainRow}">
                     <ListBox.ItemTemplate><DataTemplate><StackPanel Margin="0,3,5,7" ToolTip="{Binding Detail}"><TextBlock Text="{Binding Title}" FontSize="11" TextTrimming="CharacterEllipsis" /><TextBlock Text="{Binding Summary}" FontSize="10" TextTrimming="CharacterEllipsis" Foreground="{StaticResource MutedBrush}" Margin="0,3,0,0" /></StackPanel></DataTemplate></ListBox.ItemTemplate>
                 </ListBox>
+            </Grid>
+        </Border>
+        <Border x:Name="LoginOverlay" Grid.RowSpan="3" Grid.ColumnSpan="3" Panel.ZIndex="100" Background="#F20B0B10" Visibility="Visible">
+            <Grid>
+                <Border Width="390" Padding="30" Background="{StaticResource SidebarBrush}" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" CornerRadius="14" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <StackPanel>
+                        <TextBlock Text="GOAT" FontSize="34" FontWeight="Black" HorizontalAlignment="Center"/>
+                        <TextBlock Text="T W E A K S" FontSize="10" FontWeight="SemiBold" Foreground="{StaticResource MutedBrush}" HorizontalAlignment="Center" Margin="0,0,0,24"/>
+                        <TextBlock Text="Acesso da equipe" FontSize="21" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,7"/>
+                        <TextBlock Text="Entre para abrir o painel de atendimento." Foreground="{StaticResource MutedBrush}" TextWrapping="Wrap" TextAlignment="Center" Margin="0,0,0,20"/>
+                        <TextBlock Text="Nome de usuário" FontSize="11" Margin="0,0,0,6"/>
+                        <TextBox x:Name="LoginUsername" Text="admin" Padding="12,10" Margin="0,0,0,14" AutomationProperties.Name="Nome de usuário"/>
+                        <TextBlock Text="Senha" FontSize="11" Margin="0,0,0,6"/>
+                        <PasswordBox x:Name="LoginPassword" Padding="12,10" Margin="0,0,0,8" KeyDown="LoginPassword_KeyDown" AutomationProperties.Name="Senha"/>
+                        <TextBlock x:Name="LoginErrorLabel" Foreground="{StaticResource WarningBrush}" FontSize="11" TextWrapping="Wrap" Margin="0,0,0,10"/>
+                        <Button Content="Entrar" Style="{StaticResource PrimaryButton}" Click="LoginButton_Click" Padding="12,11" FontSize="13"/>
+                        <TextBlock Text="Login local deste computador" Foreground="{StaticResource MutedBrush}" FontSize="10" HorizontalAlignment="Center" Margin="0,14,0,0"/>
+                    </StackPanel>
+                </Border>
             </Grid>
         </Border>
         <TextBlock x:Name="StatusLabel" Grid.Column="1" Grid.Row="2" Margin="26,0" Foreground="{StaticResource MutedBrush}" FontSize="10" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" Text="Pronto · escolha uma área para começar" ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}" />

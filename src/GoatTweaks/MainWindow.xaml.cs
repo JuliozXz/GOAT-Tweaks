@@ -68,6 +68,35 @@ public partial class MainWindow : Window
         UpdateQueueState();
     }
 
+    private void LoginButton_Click(object sender, RoutedEventArgs e) => TryLocalLogin();
+
+    private void LoginPassword_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+    {
+        if (e.Key == System.Windows.Input.Key.Enter)
+        {
+            e.Handled = true;
+            TryLocalLogin();
+        }
+    }
+
+    private void TryLocalLogin()
+    {
+        // Local-only bootstrap credentials, as requested for the preview build.
+        // This is a convenience gate, not server-enforced staff identity.
+        if (string.Equals(LoginUsername.Text.Trim(), "admin", StringComparison.Ordinal) &&
+            string.Equals(LoginPassword.Password, "321", StringComparison.Ordinal))
+        {
+            LoginErrorLabel.Text = "";
+            LoginOverlay.Visibility = Visibility.Collapsed;
+            SectionsList.Focus();
+            return;
+        }
+
+        LoginPassword.Clear();
+        LoginErrorLabel.Text = "Usuário ou senha incorretos.";
+        LoginPassword.Focus();
+    }
+
     private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
     {
         _searchDebounce.Stop();
@@ -116,33 +145,42 @@ public partial class MainWindow : Window
 
     private void AddButton_Click(object sender, RoutedEventArgs e)
     {
-        if (CanEditQueue && sender is Button { Tag: CatalogItem item }) QueueAction(item, false);
+        if (CanEditQueue && sender is Button { Tag: CatalogItem item }) ExecuteCatalogAction(item, false);
     }
 
     private void PreviewButton_Click(object sender, RoutedEventArgs e)
     {
-        if (sender is Button { Tag: CatalogItem item } && ShowActionDialog(item, false) is { } request)
-            AddToQueue(item, request);
+        if (CanEditQueue && sender is Button { Tag: CatalogItem item } && ShowActionDialog(item, false) is { } request)
+            ExecuteCatalogRequest(item, request);
     }
 
     private void RevertButton_Click(object sender, RoutedEventArgs e)
     {
         if (!CanEditQueue || sender is not Button { Tag: CatalogItem item }) return;
-        if (item.Revert is { } id && _catalog.ById.TryGetValue(id, out var revertItem)) QueueAction(revertItem, false);
-        else QueueAction(item, true);
+        if (item.Revert is { } id && _catalog.ById.TryGetValue(id, out var revertItem)) ExecuteCatalogAction(revertItem, false);
+        else ExecuteCatalogAction(item, true);
+    }
+
+    private void ExecuteCatalogAction(CatalogItem item, bool revert)
+    {
+        if (!CanEditQueue) return;
+        _queue.Clear();
+        QueueAction(item, revert);
+        if (_queue.Any(action => action.State == "pending")) ApplyButton_Click(this, new RoutedEventArgs());
+    }
+
+    private void ExecuteCatalogRequest(CatalogItem item, ActionRequest request)
+    {
+        if (!CanEditQueue) return;
+        _queue.Clear();
+        AddToQueue(item, request);
+        if (_queue.Any(action => action.State == "pending")) ApplyButton_Click(this, new RoutedEventArgs());
     }
 
     private void QueueAction(CatalogItem item, bool revert)
     {
         if (!CanEditQueue) return;
-        var request = item.Options.Count > 0 || item.FreeInputs.Count > 0 || ActionSafetyPolicy.RequiresManualReview(item)
-            ? ShowActionDialog(item, revert)
-            : new ActionRequest
-            {
-                ItemId = item.Id, Revert = revert, ConsoleWindow = item.ConsoleRequired,
-                Enabled = item.Source == "RyTuneX" && item.Kind == "toggle" ? true : null,
-                AdvancedModeEnabled = AdvancedModeCheck.IsChecked == true
-            };
+        var request = ShowActionDialog(item, revert);
         if (request is not null) AddToQueue(item, request);
     }
 
@@ -280,7 +318,7 @@ public partial class MainWindow : Window
         var validationMessage = new TextBlock { TextWrapping = TextWrapping.Wrap, Foreground = (Brush)FindResource("WarningBrush"), Margin = new Thickness(0, 10, 0, 0) };
         body.Children.Add(validationMessage);
         var buttons = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right, Margin = new Thickness(0, 14, 0, 0) };
-        var ok = new Button { Content = "Adicionar à fila", IsEnabled = !readOnly, IsDefault = !readOnly, Padding = new Thickness(10, 5, 10, 5) };
+        var ok = new Button { Content = "Executar ação", IsEnabled = !readOnly, IsDefault = !readOnly, Padding = new Thickness(10, 5, 10, 5) };
         var cancel = new Button { Content = "Fechar", IsCancel = true, Padding = new Thickness(10, 5, 10, 5), Margin = new Thickness(7, 0, 0, 0) };
         buttons.Children.Add(ok);
         buttons.Children.Add(cancel);
@@ -354,9 +392,9 @@ public partial class MainWindow : Window
         ExecutionProgress.Maximum = actions.Count;
         ExecutionProgress.Value = 0;
         ApplyButton.Content = "Executando...";
-        CurrentActionLabel.Text = "Preparando a fila";
+        CurrentActionLabel.Text = "Preparando a ação";
         RunSummaryLabel.Text = "Acompanhe o resultado abaixo";
-        ShowStatus("Fila em execução. Você pode continuar navegando pela biblioteca.");
+        ShowStatus("Executando a ação selecionada.");
         UpdateQueueState();
         _tailTimer.Start();
 
@@ -370,7 +408,7 @@ public partial class MainWindow : Window
             {
                 foreach (var action in regular)
                     await new JsonlLogWriter(_logPath).AppendAsync(new ActionLogEntry(DateTimeOffset.Now,
-                        action.Item.Id, action.Item.Source, "Fila cancelada", 1223, "", "A autorização do Windows foi cancelada."));
+                        action.Item.Id, action.Item.Source, "Ação cancelada", 1223, "", "A autorização do Windows foi cancelada."));
             }
             else if (regular.Count > 0)
             {
@@ -408,11 +446,11 @@ public partial class MainWindow : Window
         {
             foreach (var action in actions.Where(action => action.State is "pending" or "running"))
                 action.SetState("failed", "Interrompida · consulte os registros");
-            ShowStatus($"Não foi possível concluir a fila: {exception.Message}", true);
+            ShowStatus($"Não foi possível concluir a ação: {exception.Message}", true);
             try
             {
                 await new JsonlLogWriter(_logPath).AppendAsync(new ActionLogEntry(DateTimeOffset.Now,
-                    "batch:error", "GOAT Tweaks", "Falha na execução da fila", 1, "", exception.ToString()));
+                    "batch:error", "GOAT Tweaks", "Falha na execução da ação", 1, "", exception.ToString()));
             }
             catch (IOException) { }
             catch (UnauthorizedAccessException) { }
@@ -430,7 +468,7 @@ public partial class MainWindow : Window
             var failed = actions.Count(action => action.State == "failed");
             var canceled = actions.Count(action => action.State == "canceled");
             RunSummaryLabel.Text = $"{ok} concluídas · {failed} falharam · {canceled} canceladas";
-            CurrentActionLabel.Text = failed > 0 ? "Fila encerrada com falhas" : canceled > 0 ? "Fila cancelada" : "Fila concluída";
+            CurrentActionLabel.Text = failed > 0 ? "Ação encerrada com falhas" : canceled > 0 ? "Ação cancelada" : "Ação concluída";
             UpdateRunProgress();
             UpdateQueueState();
             ShowStatus(RunSummaryLabel.Text, failed > 0);
@@ -504,7 +542,7 @@ public partial class MainWindow : Window
         catch (Exception exception) { ShowStatus(exception.Message, true); return; }
         if(_queue.Any(a=>a.State=="pending" && a.Item.Id!=item.Id) &&
             (ActionSafetyPolicy.RequiresManualReview(item) || _queue.Any(a=>a.State=="pending" && ActionSafetyPolicy.RequiresManualReview(a.Item))))
-        {ShowStatus("Ferramentas de nível 3 exigem revisão manual e fila isolada. As demais funções continuam disponíveis no catálogo.",true);return;}
+        {ShowStatus("Ferramentas de nível 3 exigem revisão manual e execução isolada. As demais funções continuam disponíveis no catálogo.",true);return;}
         var ids = _queue.Where(action => action.State == "pending" && action.Item.Id != item.Id)
             .Select(action => action.Item.Id).Append(item.Id).ToList();
         if (_conflicts.FindExclusiveViolation(ids) is { } exclusive)
@@ -525,7 +563,7 @@ public partial class MainWindow : Window
         });
         ShowStatus(replaced.Count > 0
             ? $"Adicionada: {item.Title}. A escolha conflitante anterior foi substituída."
-            : $"Adicionada à fila: {item.Title}.");
+            : $"Ação selecionada: {item.Title}.");
     }
 
     private static void SetActionResult(QueuedAction action, int code) =>
@@ -605,8 +643,8 @@ public partial class MainWindow : Window
         _runById.Clear();
         ExecutionProgress.Value = 0;
         CurrentActionLabel.Text = "Pronto para executar";
-        RunSummaryLabel.Text = "Fila vazia";
-        ShowStatus("Fila limpa.");
+        RunSummaryLabel.Text = "Nenhuma ação selecionada";
+        ShowStatus("Seleção limpa.");
     }
 
     private void OpenLogsFolderButton_Click(object sender, RoutedEventArgs e)

@@ -33,9 +33,9 @@ public partial class MainWindow
         AddNavHeading("GERAL");
         AddNavigation("Home", "Visão geral", "\uE80F");
         AddNavigation("Intelligence", "GOAT Intelligence", "\uE945");
+        AddNavigation("Scanner", "GOAT Scanner", "\uE9D9");
         AddNavigation("ServiceMode", "GOAT Service Mode", "\uE8F1");
         AddNavigation("Hardware", "Meu hardware", "\uE950");
-        AddNavigation("Queue", "Fila de atendimento", "\uE8FD");
         AddNavigation("Logs", "Atividade e registros", "\uE9D9");
         AddNavHeading("SERVIÇOS POR ÁREA");
         foreach (var service in _workflow.Services)
@@ -110,18 +110,18 @@ public partial class MainWindow
         var hardware = _activeSection == "Hardware" && !searching;
         var review = _activeSection == "Queue" && !searching;
         var logs = _activeSection == "Logs" && !searching;
-        var intelligence = _activeSection is "Intelligence" or "ServiceMode" && !searching;
+        var intelligence = _activeSection is "Intelligence" or "ServiceMode" or "Scanner" && !searching;
         var library = !home && !hardware && !review && !intelligence;
-        var dockQueue = library && !logs && ActualWidth >= 1260;
+        var dockQueue = false;
         SidebarColumn.Width = new GridLength(ActualWidth < 1000 ? 166 : ActualWidth < 1260 ? 195 : 218);
         BrandVersionBadge.Visibility=ActualWidth<1000?Visibility.Collapsed:Visibility.Visible;
-        QueueColumn.Width = new GridLength(dockQueue ? 312 : 0);
+        QueueColumn.Width = new GridLength(0);
         SearchColumn.Width = new GridLength(dockQueue ? 210 : ActualWidth < 1080 ? 190 : 260);
         DashboardPanel.Visibility = home ? Visibility.Visible : Visibility.Collapsed;
         HardwarePanel.Visibility = hardware ? Visibility.Visible : Visibility.Collapsed;
         LibraryPanel.Visibility = library ? Visibility.Visible : Visibility.Collapsed;
         IntelligencePanel.Visibility = intelligence ? Visibility.Visible : Visibility.Collapsed;
-        QueuePanel.Visibility = review || dockQueue ? Visibility.Visible : Visibility.Collapsed;
+        QueuePanel.Visibility = Visibility.Collapsed;
         Grid.SetColumn(QueuePanel, review ? 1 : 2);
         Grid.SetRow(QueuePanel, review ? 1 : 0);
         Grid.SetRowSpan(QueuePanel, review ? 1 : 3);
@@ -162,7 +162,11 @@ public partial class MainWindow
         OriginFilter.SelectedIndex = 0;
         _navigating = false;
         RenderCards();
-        if (id is "Intelligence" or "ServiceMode") IntelligencePanel.SetServiceMode(id == "ServiceMode");
+        if (id is "Intelligence" or "ServiceMode" or "Scanner")
+        {
+            IntelligencePanel.SetScannerMode(id == "Scanner");
+            IntelligencePanel.SetServiceMode(id == "ServiceMode");
+        }
         if (id == "Logs") await RefreshLogsAsync();
     }
 
@@ -214,9 +218,9 @@ public partial class MainWindow
         SectionEyebrow.Text = searching ? "PESQUISA EM TODAS AS ÁREAS" : service is not null ? "SERVIÇO " + service.Number + " / COMPUTADOR" : "PAINEL DE ATENDIMENTO";
         SectionTitle.Text = searching ? "Pesquisar ações" : service?.Label ?? _activeSection switch
         {
-            "Hardware" => "Meu hardware", "Queue" => "Revisar atendimento", "Logs" => "Atividade", "Intelligence" => "GOAT Intelligence", "ServiceMode" => "GOAT Service Mode", _ => "Visão geral"
+            "Hardware" => "Meu hardware", "Queue" => "Revisar atendimento", "Logs" => "Atividade", "Intelligence" => "GOAT Intelligence", "ServiceMode" => "GOAT Service Mode", "Scanner" => "GOAT Scanner", _ => "Visão geral"
         };
-        if (!searching && _activeSection is "Home" or "Hardware" or "Queue" or "Intelligence" or "ServiceMode") return;
+        if (!searching && _activeSection is "Home" or "Hardware" or "Queue" or "Intelligence" or "ServiceMode" or "Scanner") return;
         ServiceHeading.Text = searching ? $"Resultados para “{query}”" : showingLogs ? "Atividade deste computador" : service?.Title ?? "Serviços";
         ServiceDescription.Text = searching ? "Busca por nome, área, assunto e origem. Abra os detalhes para consultar a implementação original."
             : showingLogs ? "Resultados e mensagens recentes. A pasta de registros contém os arquivos completos de cada execução."

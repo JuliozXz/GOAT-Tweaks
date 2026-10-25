@@ -23,12 +23,12 @@
   <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
   <Border Style="{StaticResource CompactCard}" Background="#171018" BorderBrush="#4F2431">
    <Grid><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
-    <StackPanel Margin="0,0,14,0"><TextBlock Text="INTELLIGENCE ENGINE" Foreground="{StaticResource AccentBrush}" FontSize="10" FontWeight="SemiBold"/><TextBlock x:Name="WorkspaceTitle" Text="Entenda. Planeje. Meça." FontSize="22" FontWeight="SemiBold" Margin="0,5,0,6"/><TextBlock Text="Evidências locais, alterações autorizadas e resultados rastreáveis. Sem ganhos de FPS inventados." Style="{StaticResource Body}"/></StackPanel>
-    <StackPanel Grid.Column="1" VerticalAlignment="Center"><TextBlock x:Name="SessionStatus" Text="Novo atendimento" Foreground="{StaticResource MutedBrush}" FontSize="11" TextAlignment="Right"/><Button Content="Novo atendimento" Click="NewSession_Click" Margin="0,8,0,0" FontSize="11"/></StackPanel>
+    <StackPanel Margin="0,0,14,0"><TextBlock Text="INTELLIGENCE ENGINE" Foreground="{StaticResource AccentBrush}" FontSize="10" FontWeight="SemiBold"/><TextBlock x:Name="WorkspaceTitle" Text="Entenda. Planeje. Meça." FontSize="22" FontWeight="SemiBold" Margin="0,5,0,6"/><TextBlock x:Name="ScannerFinishedLabel" Text="✓ Scan finalizado" Foreground="{StaticResource SuccessBrush}" FontWeight="SemiBold" FontSize="12" Visibility="Collapsed" Margin="0,0,0,6"/><TextBlock Text="Evidências locais, alterações autorizadas e resultados rastreáveis. Sem ganhos de FPS inventados." Style="{StaticResource Body}"/></StackPanel>
+    <StackPanel Grid.Column="1" VerticalAlignment="Center"><TextBlock x:Name="SessionStatus" Text="Novo atendimento" Foreground="{StaticResource MutedBrush}" FontSize="11" TextAlignment="Right"/><WrapPanel HorizontalAlignment="Right" Margin="0,8,0,0"><Button Content="Finalizar atendimento" Click="FinalizeSession_Click" FontSize="10" Margin="0,0,6,0"/><Button Content="Novo atendimento" Click="NewSession_Click" FontSize="10"/></WrapPanel></StackPanel>
    </Grid>
   </Border>
   <ItemsControl x:Name="StepsList" Grid.Row="1" Margin="0,0,0,5"><ItemsControl.ItemsPanel><ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate></ItemsControl.ItemsPanel><ItemsControl.ItemTemplate><DataTemplate><Button Content="{Binding Label}" Tag="{Binding Stage}" Click="Step_Click" Padding="9,6" FontSize="10" Margin="0,0,5,6" Foreground="{Binding Brush}"/></DataTemplate></ItemsControl.ItemTemplate></ItemsControl>
-  <ProgressBar x:Name="WorkProgress" Grid.Row="2" Margin="0,0,8,10" Height="3" Minimum="0" Maximum="1" Value="0"/>
+  <StackPanel Grid.Row="2" Margin="0,0,8,8"><ProgressBar x:Name="WorkProgress" Height="3" Minimum="0" Maximum="1" Value="0"/><TextBlock x:Name="ScannerProgressLabel" Margin="0,5,0,0" Foreground="{StaticResource MutedBrush}" FontSize="10" IsHitTestVisible="False"/></StackPanel>
   <TabControl x:Name="WorkspaceTabs" Grid.Row="3" SelectionChanged="WorkspaceTabs_SelectionChanged">
    <TabItem Header="Identificação">
     <Grid><Grid.RowDefinitions><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
@@ -62,7 +62,7 @@
       </StackPanel></Border>
      </StackPanel>
     </ScrollViewer>
-    <WrapPanel Grid.Row="1" Margin="0,10,0,0"><Button x:Name="DiagnoseButton" Content="Executar GOAT Intelligence" Style="{StaticResource PrimaryButton}" Click="Diagnose_Click" Margin="0,0,8,0"/><Button Content="Atendimentos salvos" Click="History_Click"/></WrapPanel>
+    <WrapPanel Grid.Row="1" Margin="0,10,0,0"><Button x:Name="ScannerButton" Content="Iniciar verificação do sistema operacional" Style="{StaticResource PrimaryButton}" Click="Scanner_Click" Margin="0,0,8,8" Visibility="Collapsed"/><Button x:Name="DiagnoseButton" Content="Executar GOAT Intelligence" Style="{StaticResource PrimaryButton}" Click="Diagnose_Click" Margin="0,0,8,0"/><Button Content="Atendimentos salvos" Click="History_Click"/></WrapPanel>
     </Grid>
    </TabItem>
    <TabItem Header="Diagnóstico">
@@ -85,8 +85,8 @@
       <Expander Header="Evidência, proposta, risco e restauração" Foreground="{StaticResource TextBrush}" FontSize="12"><TextBlock Text="{Binding Details}" Style="{StaticResource Body}" Margin="0,12,0,0"/></Expander>
      </StackPanel></Border></DataTemplate></ListBox.ItemTemplate></ListBox>
      <StackPanel Grid.Row="2" Margin="0,12,9,0"><WrapPanel>
-      <Button x:Name="ApproveButton" Content="Autorizar plano selecionado" Click="Approve_Click" Margin="0,0,7,7" IsEnabled="False" FontSize="11"/>
-      <Button x:Name="ExecuteButton" Content="Aplicar plano autorizado" Style="{StaticResource PrimaryButton}" Click="Execute_Click" Margin="0,0,7,7" IsEnabled="False" FontSize="11"/>
+      <Button x:Name="ApproveButton" Content="Autorizar aplicação de sugestão" Click="Approve_Click" Margin="0,0,7,7" IsEnabled="False" FontSize="11"/>
+      <Button x:Name="ExecuteButton" Content="Aplicar sugestão autorizada" Style="{StaticResource PrimaryButton}" Click="Execute_Click" Margin="0,0,7,7" IsEnabled="False" FontSize="11"/>
       <Button x:Name="RestoreButton" Content="Restaurar mudanças gerenciadas" Click="Restore_Click" Margin="0,0,7,7" IsEnabled="False" FontSize="11"/>
       <Button x:Name="RebootButton" Content="Salvar / conferir reinicialização" Click="Restart_Click" Margin="0,0,7,7" FontSize="11"/>
      </WrapPanel><TextBlock x:Name="RestartStatus" Text="O atendimento é salvo localmente. Ao reabrir, use Atendimentos para retomar; nenhuma alteração é reaplicada sozinha." Style="{StaticResource Body}" Margin="0,0,0,8"/>
