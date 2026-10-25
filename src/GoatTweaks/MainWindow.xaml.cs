@@ -68,6 +68,35 @@ public partial class MainWindow : Window
         UpdateQueueState();
     }
 
+    private void LoginButton_Click(object sender, RoutedEventArgs e) => TryLocalLogin();
+
+    private void LoginPassword_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+    {
+        if (e.Key == System.Windows.Input.Key.Enter)
+        {
+            e.Handled = true;
+            TryLocalLogin();
+        }
+    }
+
+    private void TryLocalLogin()
+    {
+        // Local-only bootstrap credentials, as requested for the preview build.
+        // This is a convenience gate, not server-enforced staff identity.
+        if (string.Equals(LoginUsername.Text.Trim(), "admin", StringComparison.Ordinal) &&
+            string.Equals(LoginPassword.Password, "321", StringComparison.Ordinal))
+        {
+            LoginErrorLabel.Text = "";
+            LoginOverlay.Visibility = Visibility.Collapsed;
+            SectionsList.Focus();
+            return;
+        }
+
+        LoginPassword.Clear();
+        LoginErrorLabel.Text = "Usuário ou senha incorretos.";
+        LoginPassword.Focus();
+    }
+
     private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
     {
         _searchDebounce.Stop();
