@@ -480,7 +480,7 @@ public partial class IntelligenceWorkspace : UserControl
     {
         if(IsBusy || LegacyExecutionActive){Status("Aguarde a operação atual.",true);return;}
         await WorkAsync(async token=>{
-        if(_session.Before is not null) await _store.SaveAsync(_session,token);
+        if(_session.Before is not null && !_scannerMode) await _store.SaveAsync(_session,token);
         _session=new();FillContext();_recommendations.Clear();FindingsList.ItemsSource=null;ProcessesList.ItemsSource=null;_liveSamples.Clear();DrawChart();
         MachineSummary.Text="Execute uma análise para identificar o computador.";CompatibilitySummary.Text="";ExecutionLog.Clear();
         StartupSummary.Text=StorageSummary.Text=PowerSummary.Text="";
