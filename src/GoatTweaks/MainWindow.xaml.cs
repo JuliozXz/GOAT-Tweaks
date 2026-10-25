@@ -520,7 +520,7 @@ public partial class MainWindow : Window
         catch (Exception exception) { ShowStatus(exception.Message, true); return; }
         if(_queue.Any(a=>a.State=="pending" && a.Item.Id!=item.Id) &&
             (ActionSafetyPolicy.RequiresManualReview(item) || _queue.Any(a=>a.State=="pending" && ActionSafetyPolicy.RequiresManualReview(a.Item))))
-        {ShowStatus("Ferramentas de nível 3 exigem revisão manual e fila isolada. As demais funções continuam disponíveis no catálogo.",true);return;}
+        {ShowStatus("Ferramentas de nível 3 exigem revisão manual e execução isolada. As demais funções continuam disponíveis no catálogo.",true);return;}
         var ids = _queue.Where(action => action.State == "pending" && action.Item.Id != item.Id)
             .Select(action => action.Item.Id).Append(item.Id).ToList();
         if (_conflicts.FindExclusiveViolation(ids) is { } exclusive)
@@ -541,7 +541,7 @@ public partial class MainWindow : Window
         });
         ShowStatus(replaced.Count > 0
             ? $"Adicionada: {item.Title}. A escolha conflitante anterior foi substituída."
-            : $"Adicionada à fila: {item.Title}.");
+            : $"Ação selecionada: {item.Title}.");
     }
 
     private static void SetActionResult(QueuedAction action, int code) =>
