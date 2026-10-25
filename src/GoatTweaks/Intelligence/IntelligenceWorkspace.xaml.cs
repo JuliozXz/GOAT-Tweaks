@@ -28,6 +28,7 @@ public partial class IntelligenceWorkspace : UserControl
     private bool _ready;
     private bool _filling;
     private bool _legacyExecution;
+    private bool _scannerMode;
     public bool IsBusy { get; private set; }
     public bool IsMutating { get; private set; }
     public bool LegacyExecutionActive { get=>_legacyExecution; set { _legacyExecution=value; UpdateControls(); } }
@@ -50,8 +51,26 @@ public partial class IntelligenceWorkspace : UserControl
     }
     public void SetServiceMode(bool guided)
     {
-        WorkspaceTitle.Text=guided?"GOAT Service Mode · atendimento guiado":"Entenda. Planeje. Meça.";
+        WorkspaceTitle.Text=guided?"GOAT Service Mode · atendimento guiado":_scannerMode?"GOAT Scanner · análise personalizada":"Entenda. Planeje. Meça.";
         if(guided && _session.Before is null) WorkspaceTabs.SelectedIndex=0;
+    }
+    public void SetScannerMode(bool scanner)
+    {
+        _scannerMode=scanner;
+        ScannerButton.Visibility=scanner?Visibility.Visible:Visibility.Collapsed;
+        DiagnoseButton.Visibility=scanner?Visibility.Collapsed:Visibility.Visible;
+        ScannerFinishedLabel.Visibility=Visibility.Collapsed;
+        ScannerProgressLabel.Text=scanner?"Pronto para verificar este computador.":"";
+        if(scanner && _session.Before is null) WorkspaceTabs.SelectedIndex=0;
+    }
+    private void Scanner_Click(object sender,RoutedEventArgs e)
+    {
+        var choices=(ProfileChoice[])ProfileBox.ItemsSource;
+        ProfileBox.SelectedItem=choices.Single(p=>p.Value==OptimizationProfile.MaximumFps);
+        if(string.IsNullOrWhiteSpace(SymptomBox.Text)) SymptomBox.Text="Analisar oportunidades comprováveis de desempenho, FPS e latência neste computador, preservando estabilidade e recursos essenciais.";
+        ScannerFinishedLabel.Visibility=Visibility.Collapsed;
+        ScannerProgressLabel.Text="0% · Preparando verificação do sistema operacional…";
+        Diagnose_Click(sender,e);
     }
     public void StopCollection() { if(!IsMutating) _operation?.Cancel(); }
     private GameContext ReadContext()=>new()
@@ -110,7 +129,7 @@ public partial class IntelligenceWorkspace : UserControl
     {
         if(IsBusy || LegacyExecutionActive) { Status("Aguarde a operação em andamento antes de iniciar outra.",true);return; }
         IsBusy=true;IsMutating=mutating;_operation=new();
-        WorkProgress.IsIndeterminate=true;UpdateControls();BusyChanged?.Invoke(this,EventArgs.Empty);
+        WorkProgress.IsIndeterminate=true;if(_scannerMode){ScannerFinishedLabel.Visibility=Visibility.Collapsed;ScannerProgressLabel.Text="Verificação em andamento…";}UpdateControls();BusyChanged?.Invoke(this,EventArgs.Empty);
         try { await work(_operation.Token); }
         catch(OperationCanceledException) { Status("Coleta interrompida. Dados incompletos não foram usados como resultado final."); }
         catch(Exception ex)
@@ -126,7 +145,7 @@ public partial class IntelligenceWorkspace : UserControl
             UpdateControls();RefreshStage();BusyChanged?.Invoke(this,EventArgs.Empty);
         }
     }
-    private IProgress<string> Progress()=>new Progress<string>(message=>{Status(message);AppendLog(message);});
+    private IProgress<string> Progress()=>new Progress<string>(message=>{Status(message);AppendLog(message);if(_scannerMode) ScannerProgressLabel.Text="Verificando · "+message;});
     private IProgress<MetricSample> SampleProgress()=>new Progress<MetricSample>(sample=>ShowSample(sample,true));
     private void Status(string text,bool error=false)
     { WorkspaceStatus.Text=text;WorkspaceStatus.Foreground=(Brush)FindResource(error?"WarningBrush":"MutedBrush"); }
@@ -142,6 +161,7 @@ public partial class IntelligenceWorkspace : UserControl
         var idle=!IsBusy && !LegacyExecutionActive;
         IdentificationFields.IsEnabled=idle;
         DiagnoseButton.IsEnabled=idle;
+        ScannerButton.IsEnabled=idle;
         RecommendationsList.IsEnabled=idle;
         ApproveButton.IsEnabled=idle && _session.Before is not null && _session.Profile!=OptimizationProfile.Diagnostic &&
             !_session.Changes.Any(c=>c.State is "Aplicado e verificado" or "Preparado" or "Revisão necessária") && _recommendations.Any(r=>r.Selected && r.CanAuthorize);
@@ -179,8 +199,9 @@ public partial class IntelligenceWorkspace : UserControl
         _session.Stage=ServiceStage.Plan;_session.InvalidateApproval();
         PopulateAnalysis();await _store.SaveAsync(_session,token);
         TelemetryStatus.Text="Última coleta inicial · "+_session.Before.FinishedAt.ToLocalTime().ToString("HH:mm:ss")+" · atualização encerrada";
-        WorkspaceTabs.SelectedIndex=1;
-        Status($"Diagnóstico salvo: {_session.Findings.Count(f=>f.Kind==EvidenceKind.Confirmed)} observações confirmadas; {_session.Findings.Count(f=>f.Kind==EvidenceKind.Hypothesis)} hipóteses. Nenhuma alteração aplicada.");
+        WorkspaceTabs.SelectedIndex=_scannerMode?2:1;
+        if(_scannerMode){ScannerFinishedLabel.Visibility=Visibility.Visible;ScannerProgressLabel.Text="100% · Verificação concluída. Revise as sugestões abaixo antes de autorizar qualquer alteração.";}
+        Status(_scannerMode?$"Scan finalizado · {_session.Recommendations.Count} sugestões avaliadas. Nenhuma alteração foi aplicada.":$"Diagnóstico salvo: {_session.Findings.Count(f=>f.Kind==EvidenceKind.Confirmed)} observações confirmadas; {_session.Findings.Count(f=>f.Kind==EvidenceKind.Hypothesis)} hipóteses. Nenhuma alteração aplicada.");
     });
     private void PopulateAnalysis(bool recompute=true)
     {
