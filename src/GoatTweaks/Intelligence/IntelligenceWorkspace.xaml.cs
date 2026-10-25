@@ -29,6 +29,7 @@ public partial class IntelligenceWorkspace : UserControl
     private bool _filling;
     private bool _legacyExecution;
     private bool _scannerMode;
+    private int _scannerSamplesSeen;
     public bool IsBusy { get; private set; }
     public bool IsMutating { get; private set; }
     public bool LegacyExecutionActive { get=>_legacyExecution; set { _legacyExecution=value; UpdateControls(); } }
@@ -68,8 +69,8 @@ public partial class IntelligenceWorkspace : UserControl
         var choices=(ProfileChoice[])ProfileBox.ItemsSource;
         ProfileBox.SelectedItem=choices.Single(p=>p.Value==OptimizationProfile.MaximumFps);
         if(string.IsNullOrWhiteSpace(SymptomBox.Text)) SymptomBox.Text="Analisar oportunidades comprováveis de desempenho, FPS e latência neste computador, preservando estabilidade e recursos essenciais.";
-        ScannerFinishedLabel.Visibility=Visibility.Collapsed;
-        ScannerProgressLabel.Text="0% · Preparando verificação do sistema operacional…";
+        ScannerFinishedLabel.Visibility=Visibility.Collapsed;_scannerSamplesSeen=0;WorkProgress.Value=0;
+        ScannerProgressLabel.Text="5% · Preparando verificação do sistema operacional…";
         Diagnose_Click(sender,e);
     }
     public void StopCollection() { if(!IsMutating) _operation?.Cancel(); }
@@ -129,7 +130,7 @@ public partial class IntelligenceWorkspace : UserControl
     {
         if(IsBusy || LegacyExecutionActive) { Status("Aguarde a operação em andamento antes de iniciar outra.",true);return; }
         IsBusy=true;IsMutating=mutating;_operation=new();
-        WorkProgress.IsIndeterminate=true;if(_scannerMode){ScannerFinishedLabel.Visibility=Visibility.Collapsed;ScannerProgressLabel.Text="Verificação em andamento…";}UpdateControls();BusyChanged?.Invoke(this,EventArgs.Empty);
+        WorkProgress.IsIndeterminate=!_scannerMode;if(_scannerMode){WorkProgress.Value=0;ScannerFinishedLabel.Visibility=Visibility.Collapsed;ScannerProgressLabel.Text="5% · Verificação em andamento…";}UpdateControls();BusyChanged?.Invoke(this,EventArgs.Empty);
         try { await work(_operation.Token); }
         catch(OperationCanceledException) { Status("Coleta interrompida. Dados incompletos não foram usados como resultado final."); }
         catch(Exception ex)
@@ -140,13 +141,31 @@ public partial class IntelligenceWorkspace : UserControl
         finally
         {
             IsBusy=IsMutating=false;_operation.Dispose();_operation=null;
-            WorkProgress.IsIndeterminate=false;WorkProgress.Value=1;
+            WorkProgress.IsIndeterminate=false;if(!_scannerMode || ScannerFinishedLabel.Visibility==Visibility.Visible) WorkProgress.Value=1;
             if(_liveSamples.Count>0) TelemetryStatus.Text="Última amostra · "+_liveSamples[^1].At.ToLocalTime().ToString("HH:mm:ss")+" · coleta encerrada";
             UpdateControls();RefreshStage();BusyChanged?.Invoke(this,EventArgs.Empty);
         }
     }
-    private IProgress<string> Progress()=>new Progress<string>(message=>{Status(message);AppendLog(message);if(_scannerMode) ScannerProgressLabel.Text="Verificando · "+message;});
-    private IProgress<MetricSample> SampleProgress()=>new Progress<MetricSample>(sample=>ShowSample(sample,true));
+    private IProgress<string> Progress()=>new Progress<string>(message=>
+    {
+        Status(message);AppendLog(message);
+        if(_scannerMode)
+        {
+            WorkProgress.Value=message.StartsWith("Consultando",StringComparison.OrdinalIgnoreCase)?0.1:message.StartsWith("Coletando",StringComparison.OrdinalIgnoreCase)?0.2:Math.Max(WorkProgress.Value,0.2);
+            ScannerProgressLabel.Text=$"{WorkProgress.Value:P0} · {message}";
+        }
+    });
+    private IProgress<MetricSample> SampleProgress()=>new Progress<MetricSample>(sample=>
+    {
+        ShowSample(sample,true);
+        if(_scannerMode)
+        {
+            _scannerSamplesSeen++;
+            var expected=Math.Max(1,(int)Math.Ceiling(Duration.TotalSeconds/2));
+            WorkProgress.Value=Math.Min(0.9,0.2+0.7*_scannerSamplesSeen/expected);
+            ScannerProgressLabel.Text=$"{WorkProgress.Value:P0} · Coletando amostras reais de desempenho…";
+        }
+    });
     private void Status(string text,bool error=false)
     { WorkspaceStatus.Text=text;WorkspaceStatus.Foreground=(Brush)FindResource(error?"WarningBrush":"MutedBrush"); }
     private void AppendLog(string text)
