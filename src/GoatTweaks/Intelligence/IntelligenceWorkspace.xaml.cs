@@ -468,6 +468,7 @@ public partial class IntelligenceWorkspace : UserControl
         if(IsBusy || LegacyExecutionActive){Status("Aguarde a operação atual.",true);return;}
         await WorkAsync(async token=>
         {
+            using var mutationLease=_store.AcquireMutationLock();
             if(_session.Changes.Any(c=>c.State is "Aplicado e verificado" or "Preparado" or "Revisão necessária"))
                 throw new InvalidOperationException("Este atendimento ainda possui alterações aplicadas ou pendentes. Restaure ou resolva essas alterações antes de excluir o registro de segurança.");
             if(Directory.Exists(CaptureDirectory)) await Task.Run(()=>Directory.Delete(CaptureDirectory,true),token);
