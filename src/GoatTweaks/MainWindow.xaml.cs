@@ -379,7 +379,7 @@ public partial class MainWindow : Window
             {
                 foreach (var action in regular)
                     await new JsonlLogWriter(_logPath).AppendAsync(new ActionLogEntry(DateTimeOffset.Now,
-                        action.Item.Id, action.Item.Source, "Fila cancelada", 1223, "", "A autorização do Windows foi cancelada."));
+                        action.Item.Id, action.Item.Source, "Ação cancelada", 1223, "", "A autorização do Windows foi cancelada."));
             }
             else if (regular.Count > 0)
             {
@@ -421,7 +421,7 @@ public partial class MainWindow : Window
             try
             {
                 await new JsonlLogWriter(_logPath).AppendAsync(new ActionLogEntry(DateTimeOffset.Now,
-                    "batch:error", "GOAT Tweaks", "Falha na execução da fila", 1, "", exception.ToString()));
+                    "batch:error", "GOAT Tweaks", "Falha na execução da ação", 1, "", exception.ToString()));
             }
             catch (IOException) { }
             catch (UnauthorizedAccessException) { }
@@ -614,8 +614,8 @@ public partial class MainWindow : Window
         _runById.Clear();
         ExecutionProgress.Value = 0;
         CurrentActionLabel.Text = "Pronto para executar";
-        RunSummaryLabel.Text = "Fila vazia";
-        ShowStatus("Fila limpa.");
+        RunSummaryLabel.Text = "Nenhuma ação selecionada";
+        ShowStatus("Seleção limpa.");
     }
 
     private void OpenLogsFolderButton_Click(object sender, RoutedEventArgs e)
