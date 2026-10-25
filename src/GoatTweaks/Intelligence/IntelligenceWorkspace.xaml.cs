@@ -189,7 +189,7 @@ public partial class IntelligenceWorkspace : UserControl
         {
             if(_session.Changes.Any(c=>c.State is "Aplicado e verificado" or "Preparado" or "Revisão necessária"))
                 throw new InvalidOperationException("Esse atendimento já possui alterações. Use a validação posterior ou restaure antes de abrir outro plano.");
-            await _store.SaveAsync(_session,token);
+            if(!_scannerMode) await _store.SaveAsync(_session,token);
             _session=new ServiceSession{Context=ReadContext(),Profile=SelectedProfile};
         }
         _session.Context=ReadContext();_session.Profile=SelectedProfile;_session.Stage=ServiceStage.Diagnosis;
@@ -197,7 +197,7 @@ public partial class IntelligenceWorkspace : UserControl
         var duration=Duration;
         _session.Before=await _diagnostics.CaptureAsync(duration,SampleProgress(),Progress(),token);
         _session.Stage=ServiceStage.Plan;_session.InvalidateApproval();
-        PopulateAnalysis();await _store.SaveAsync(_session,token);
+        PopulateAnalysis();if(!_scannerMode) await _store.SaveAsync(_session,token);
         TelemetryStatus.Text="Última coleta inicial · "+_session.Before.FinishedAt.ToLocalTime().ToString("HH:mm:ss")+" · atualização encerrada";
         WorkspaceTabs.SelectedIndex=_scannerMode?2:1;
         if(_scannerMode){ScannerFinishedLabel.Visibility=Visibility.Visible;ScannerProgressLabel.Text="100% · Verificação concluída. Revise as sugestões abaixo antes de autorizar qualquer alteração.";}
@@ -437,6 +437,24 @@ public partial class IntelligenceWorkspace : UserControl
     {
         foreach(var record in _session.Changes)
             AppendLog(record.Title+" · "+record.State+(record.Error.Length>0?" · "+record.Error:""));
+    }
+    private async void FinalizeSession_Click(object sender,RoutedEventArgs e)
+    {
+        if(IsBusy || LegacyExecutionActive){Status("Aguarde a operação atual.",true);return;}
+        await WorkAsync(async token=>
+        {
+            if(_session.Changes.Any(c=>c.State is "Aplicado e verificado" or "Preparado" or "Revisão necessária"))
+                throw new InvalidOperationException("Este atendimento ainda possui alterações aplicadas ou pendentes. Restaure ou resolva essas alterações antes de excluir o registro de segurança.");
+            if(Directory.Exists(CaptureDirectory)) await Task.Run(()=>Directory.Delete(CaptureDirectory,true),token);
+            await _store.DeleteAsync(_session.Id,token);
+            _session=new();_liveSamples.Clear();_recommendations.Clear();FillContext();DrawChart();RefreshStage();
+            FindingsList.ItemsSource=null;ProcessesList.ItemsSource=null;BenchmarksList.ItemsSource=null;
+            MachineSummary.Text="Execute uma análise para identificar o computador.";CompatibilitySummary.Text="";StartupSummary.Text=StorageSummary.Text=PowerSummary.Text="";
+            ExecutionLog.Clear();ComparisonSummary.Text="Inconclusivo · faltam testes antes/depois.";ComparisonDetails.Text="";
+            ScannerFinishedLabel.Visibility=Visibility.Collapsed;ScannerProgressLabel.Text="";WorkspaceTabs.SelectedIndex=0;
+            await RefreshSessionsAsync();
+            Status("Atendimento finalizado. O registro temporário e as capturas deste atendimento foram excluídos; backups e registros gerais foram preservados.");
+        });
     }
     private async void Save_Click(object sender,RoutedEventArgs e)=>await WorkAsync(async token=>{await _store.SaveAsync(_session,token);await RefreshSessionsAsync();Status("Atendimento salvo com configurações, plano, backups e medições disponíveis.");});
     private async void NewSession_Click(object sender,RoutedEventArgs e)
