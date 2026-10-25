@@ -151,14 +151,7 @@ public partial class MainWindow : Window
     private void QueueAction(CatalogItem item, bool revert)
     {
         if (!CanEditQueue) return;
-        var request = item.Options.Count > 0 || item.FreeInputs.Count > 0 || ActionSafetyPolicy.RequiresManualReview(item)
-            ? ShowActionDialog(item, revert)
-            : new ActionRequest
-            {
-                ItemId = item.Id, Revert = revert, ConsoleWindow = item.ConsoleRequired,
-                Enabled = item.Source == "RyTuneX" && item.Kind == "toggle" ? true : null,
-                AdvancedModeEnabled = AdvancedModeCheck.IsChecked == true
-            };
+        var request = ShowActionDialog(item, revert);
         if (request is not null) AddToQueue(item, request);
     }
 
@@ -296,7 +289,7 @@ public partial class MainWindow : Window
         var validationMessage = new TextBlock { TextWrapping = TextWrapping.Wrap, Foreground = (Brush)FindResource("WarningBrush"), Margin = new Thickness(0, 10, 0, 0) };
         body.Children.Add(validationMessage);
         var buttons = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right, Margin = new Thickness(0, 14, 0, 0) };
-        var ok = new Button { Content = "Adicionar à fila", IsEnabled = !readOnly, IsDefault = !readOnly, Padding = new Thickness(10, 5, 10, 5) };
+        var ok = new Button { Content = "Executar ação", IsEnabled = !readOnly, IsDefault = !readOnly, Padding = new Thickness(10, 5, 10, 5) };
         var cancel = new Button { Content = "Fechar", IsCancel = true, Padding = new Thickness(10, 5, 10, 5), Margin = new Thickness(7, 0, 0, 0) };
         buttons.Children.Add(ok);
         buttons.Children.Add(cancel);
