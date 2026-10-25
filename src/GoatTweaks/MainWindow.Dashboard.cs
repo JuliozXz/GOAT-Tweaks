@@ -33,6 +33,7 @@ public partial class MainWindow
         AddNavHeading("GERAL");
         AddNavigation("Home", "Visão geral", "\uE80F");
         AddNavigation("Intelligence", "GOAT Intelligence", "\uE945");
+        AddNavigation("Scanner", "GOAT Scanner", "\uE9D9");
         AddNavigation("ServiceMode", "GOAT Service Mode", "\uE8F1");
         AddNavigation("Hardware", "Meu hardware", "\uE950");
         AddNavigation("Queue", "Fila de atendimento", "\uE8FD");
@@ -110,7 +111,7 @@ public partial class MainWindow
         var hardware = _activeSection == "Hardware" && !searching;
         var review = _activeSection == "Queue" && !searching;
         var logs = _activeSection == "Logs" && !searching;
-        var intelligence = _activeSection is "Intelligence" or "ServiceMode" && !searching;
+        var intelligence = _activeSection is "Intelligence" or "ServiceMode" or "Scanner" && !searching;
         var library = !home && !hardware && !review && !intelligence;
         var dockQueue = library && !logs && ActualWidth >= 1260;
         SidebarColumn.Width = new GridLength(ActualWidth < 1000 ? 166 : ActualWidth < 1260 ? 195 : 218);
@@ -162,7 +163,11 @@ public partial class MainWindow
         OriginFilter.SelectedIndex = 0;
         _navigating = false;
         RenderCards();
-        if (id is "Intelligence" or "ServiceMode") IntelligencePanel.SetServiceMode(id == "ServiceMode");
+        if (id is "Intelligence" or "ServiceMode" or "Scanner")
+        {
+            IntelligencePanel.SetScannerMode(id == "Scanner");
+            IntelligencePanel.SetServiceMode(id == "ServiceMode");
+        }
         if (id == "Logs") await RefreshLogsAsync();
     }
 
@@ -214,9 +219,9 @@ public partial class MainWindow
         SectionEyebrow.Text = searching ? "PESQUISA EM TODAS AS ÁREAS" : service is not null ? "SERVIÇO " + service.Number + " / COMPUTADOR" : "PAINEL DE ATENDIMENTO";
         SectionTitle.Text = searching ? "Pesquisar ações" : service?.Label ?? _activeSection switch
         {
-            "Hardware" => "Meu hardware", "Queue" => "Revisar atendimento", "Logs" => "Atividade", "Intelligence" => "GOAT Intelligence", "ServiceMode" => "GOAT Service Mode", _ => "Visão geral"
+            "Hardware" => "Meu hardware", "Queue" => "Revisar atendimento", "Logs" => "Atividade", "Intelligence" => "GOAT Intelligence", "ServiceMode" => "GOAT Service Mode", "Scanner" => "GOAT Scanner", _ => "Visão geral"
         };
-        if (!searching && _activeSection is "Home" or "Hardware" or "Queue" or "Intelligence" or "ServiceMode") return;
+        if (!searching && _activeSection is "Home" or "Hardware" or "Queue" or "Intelligence" or "ServiceMode" or "Scanner") return;
         ServiceHeading.Text = searching ? $"Resultados para “{query}”" : showingLogs ? "Atividade deste computador" : service?.Title ?? "Serviços";
         ServiceDescription.Text = searching ? "Busca por nome, área, assunto e origem. Abra os detalhes para consultar a implementação original."
             : showingLogs ? "Resultados e mensagens recentes. A pasta de registros contém os arquivos completos de cada execução."
