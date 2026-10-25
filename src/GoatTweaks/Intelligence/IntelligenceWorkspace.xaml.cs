@@ -257,6 +257,12 @@ public partial class IntelligenceWorkspace : UserControl
     private void PlanSelection_Changed(object sender,RoutedEventArgs e)
     {
         if(!_ready || _filling) return;
+        if(_scannerMode && sender is CheckBox { IsChecked:true, DataContext:RecommendationRow selected })
+        {
+            _filling=true;
+            try { foreach(var row in _recommendations.Where(row=>!ReferenceEquals(row,selected))) row.Selected=false; }
+            finally { _filling=false; }
+        }
         _session.InvalidateApproval();
         Dispatcher.BeginInvoke(new Action(UpdateControls));
     }
