@@ -184,6 +184,25 @@
                 </ListBox>
             </Grid>
         </Border>
+        <Border x:Name="LoginOverlay" Grid.RowSpan="3" Grid.ColumnSpan="3" Panel.ZIndex="100" Background="#F20B0B10" Visibility="Visible">
+            <Grid>
+                <Border Width="390" Padding="30" Background="{StaticResource SidebarBrush}" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" CornerRadius="14" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <StackPanel>
+                        <TextBlock Text="GOAT" FontSize="34" FontWeight="Black" HorizontalAlignment="Center"/>
+                        <TextBlock Text="T W E A K S" FontSize="10" FontWeight="SemiBold" Foreground="{StaticResource MutedBrush}" HorizontalAlignment="Center" Margin="0,0,0,24"/>
+                        <TextBlock Text="Acesso da equipe" FontSize="21" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,7"/>
+                        <TextBlock Text="Entre para abrir o painel de atendimento." Foreground="{StaticResource MutedBrush}" TextWrapping="Wrap" TextAlignment="Center" Margin="0,0,0,20"/>
+                        <TextBlock Text="Nome de usuário" FontSize="11" Margin="0,0,0,6"/>
+                        <TextBox x:Name="LoginUsername" Text="admin" Padding="12,10" Margin="0,0,0,14" AutomationProperties.Name="Nome de usuário"/>
+                        <TextBlock Text="Senha" FontSize="11" Margin="0,0,0,6"/>
+                        <PasswordBox x:Name="LoginPassword" Padding="12,10" Margin="0,0,0,8" KeyDown="LoginPassword_KeyDown" AutomationProperties.Name="Senha"/>
+                        <TextBlock x:Name="LoginErrorLabel" Foreground="{StaticResource WarningBrush}" FontSize="11" TextWrapping="Wrap" Margin="0,0,0,10"/>
+                        <Button Content="Entrar" Style="{StaticResource PrimaryButton}" Click="LoginButton_Click" Padding="12,11" FontSize="13"/>
+                        <TextBlock Text="Login local deste computador" Foreground="{StaticResource MutedBrush}" FontSize="10" HorizontalAlignment="Center" Margin="0,14,0,0"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Border>
         <TextBlock x:Name="StatusLabel" Grid.Column="1" Grid.Row="2" Margin="26,0" Foreground="{StaticResource MutedBrush}" FontSize="10" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" Text="Pronto · escolha uma área para começar" ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}" />
     </Grid>
 </Window>
